@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
+  <testCase name="Enterprise\Banner\Test\TestCase\CreateBannerEntityTest">
+    <variation name="CreateBannerEntityTestVariation1" firstConstraint="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" method="test">
+      <data name="description" xsi:type="string">Create default banner</data>
+      <data name="banner/data/name" xsi:type="string">banner_%isolation%</data>
+      <data name="banner/data/is_enabled" xsi:type="string">Yes</data>
+      <data name="banner/data/banner_properties_is_types" xsi:type="string">Any Banner Type</data>
+      <data name="banner/data/types/0" xsi:type="string">-</data>
+      <data name="banner/data/use_customer_segment" xsi:type="string">All</data>
+      <data name="banner/data/customer_segment/dataSet" xsi:type="string">-</data>
+      <data name="banner/data/store_contents/preset" xsi:type="string">default</data>
+      <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" next="Enterprise\Banner\Test\Constraint\AssertBannerInGrid"/>
+      <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" next="Enterprise\Banner\Test\Constraint\AssertBannerForm" prev="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage"/>
+      <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerForm" prev="Enterprise\Banner\Test\Constraint\AssertBannerInGrid"/>
+    </variation>
+    <variation name="CreateBannerEntityTestVariation2" firstConstraint="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" method="test">
+      <data name="description" xsi:type="string">Create Footer banner types with customer segment</data>
+      <data name="banner/data/name" xsi:type="string">banner_%isolation%</data>
+      <data name="banner/data/is_enabled" xsi:type="string">No</data>
+      <data name="banner/data/banner_properties_is_types" xsi:type="string">Specified Banner Types</data>
+      <data name="banner/data/types/0" xsi:type="string">Footer</data>
+      <data name="banner/data/use_customer_segment" xsi:type="string">Specified</data>
+      <data name="banner/data/customer_segment/dataSet" xsi:type="string">default</data>
+      <data name="banner/data/store_contents/preset" xsi:type="string">custom</data>
+      <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" next="Enterprise\Banner\Test\Constraint\AssertBannerInGrid"/>
+      <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" next="Enterprise\Banner\Test\Constraint\AssertBannerForm" prev="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage"/>
+      <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerForm" prev="Enterprise\Banner\Test\Constraint\AssertBannerInGrid"/>
+    </variation>
+  </testCase>
+</config>

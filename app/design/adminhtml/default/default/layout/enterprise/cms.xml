@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<layout>
+    <adminhtml_cms_page_index>
+        <reference name="cms_page">
+            <block type="enterprise_cms/adminhtml_cms_page" name="cms_page_extender" />
+        </reference>
+    </adminhtml_cms_page_index>
+
+    <adminhtml_cms_page_edit>
+        <reference name="cms_page_edit_tabs">
+            <block type="enterprise_cms/adminhtml_cms_page_edit" name="cms_page_edit_extender" />
+            <block type="enterprise_cms/adminhtml_cms_page_edit_tab_hierarchy" name="cms_page_edit_tab_hierarchy" template="enterprise/cms/page/tab/hierarchy.phtml"></block>
+            <action method="addTab"><name>hierarchy</name><block>cms_page_edit_tab_hierarchy</block></action>
+        </reference>
+    </adminhtml_cms_page_edit>
+<!--
+    Custom layout changes to native adminhtml_cms_page_edit handle
+-->
+    <adminhtml_cms_page_edit_changes>
+        <reference name="head">
+            <action method="addJs"><script>enterprise/adminhtml/cms.js</script></action>
+        </reference>
+        <reference name="cms_page_edit_tabs">
+            <action method="removeTab"><name>content_section</name></action>
+            <action method="removeTab"><name>design_section</name></action>
+            <action method="removeTab"><name>meta_section</name></action>
+            <block type="enterprise_cms/adminhtml_cms_page_edit_tab_versions" name="cms_page_edit_tab_versions" />
+            <action method="addTab"><name>versions</name><block>cms_page_edit_tab_versions</block></action>
+        </reference>
+    </adminhtml_cms_page_edit_changes>
+
+<!--
+    Grid with versions on tab versions
+-->
+    <adminhtml_cms_page_versions>
+        <remove name="root" />
+        <block type="enterprise_cms/adminhtml_cms_page_edit_tab_versions"  output="toHtml" name="cms_page_edit_versions" />
+        <update handle="formkey" />
+    </adminhtml_cms_page_versions>
+
+<!--
+    Revision edit interface
+-->
+    <adminhtml_cms_page_revision_edit>
+        <update handle="editor"/>
+        <reference name="head">
+            <action method="addJs"><script>enterprise/adminhtml/cms.js</script></action>
+        </reference>
+        <reference name="content">
+            <block type="enterprise_cms/adminhtml_cms_page_revision_edit" name="cms_page_revision_edit">
+                <block type="enterprise_cms/adminhtml_cms_page_revision_edit_info" name="revision_info" template="enterprise/cms/page/revision/info.phtml" />
+            </block>
+        </reference>
+        <reference name="left">
+            <block type="enterprise_cms/adminhtml_cms_page_revision_edit_tabs" name="cms_page_revision_edit_tabs">
+                <action method="addTab"><name>content_section</name><block>enterprise_cms/adminhtml_cms_page_revision_edit_tab_content</block></action>
+                <action method="addTab"><name>design_section</name><block>enterprise_cms/adminhtml_cms_page_revision_edit_tab_design</block></action>
+                <action method="addTab"><name>meta_section</name><block>enterprise_cms/adminhtml_cms_page_revision_edit_tab_meta</block></action>
+            </block>
+        </reference>
+    </adminhtml_cms_page_revision_edit>
+
+<!--
+    Revision preview page
+-->
+    <adminhtml_cms_page_revision_preview>
+        <reference name="root">
+            <action method="setTemplate"><template>enterprise/cms/page/preview.phtml</template></action>
+            <block type="enterprise_cms/adminhtml_cms_page_preview_form" name="preview_form" />
+            <block type="core/text_list" name="tools" as="tools">
+                <block type="enterprise_cms/adminhtml_cms_page_preview_store" name="store_switcher" template="enterprise/cms/page/preview/store.phtml" />
+                <block type="enterprise_cms/adminhtml_cms_page_preview_revision" name="revision_switcher" template="enterprise/cms/page/preview/revision.phtml" />
+                <block type="enterprise_cms/adminhtml_cms_page_preview_buttons" name="preview_control_buttons" />
+            </block>
+        </reference>
+    </adminhtml_cms_page_revision_preview>
+
+<!--
+    Version edit interface
+-->
+    <adminhtml_cms_page_version_edit>
+        <reference name="content">
+            <block type="enterprise_cms/adminhtml_cms_page_version_edit" name="cms_page_version_edit">
+                <block type="enterprise_cms/adminhtml_cms_page_version_edit_revisions" name="cms_page_version_edit_revisions_grid" />
+            </block>
+        </reference>
+    </adminhtml_cms_page_version_edit>
+
+<!--
+    Grid with revisions on version edit page
+-->
+    <adminhtml_cms_page_version_revisions>
+        <remove name="root" />
+        <block type="enterprise_cms/adminhtml_cms_page_version_edit_revisions"  output="toHtml" name="cms_page_edit_version_edit_revisions" />
+    </adminhtml_cms_page_version_revisions>
+
+<!--
+    Main Page of Hierarchy Editor
+-->
+    <adminhtml_cms_hierarchy_index>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+        </reference>
+        <reference name="content">
+            <block type="enterprise_cms/adminhtml_cms_hierarchy_edit" name="enterprise_cms_hierarchy_edit_tree">
+                <block type="enterprise_cms/adminhtml_cms_hierarchy_manage" name="hierarchy_manage" template="enterprise/cms/hierarchy/manage.phtml" />
+                <block type="enterprise_cms/adminhtml_cms_hierarchy_edit_form_grid" name="cms_page_grid" />
+            </block>
+        </reference>
+        <block type="enterprise_cms/adminhtml_scope_switcher" name="scope_switcher" template="enterprise/cms/hierarchy/scope/switcher.phtml" />
+    </adminhtml_cms_hierarchy_index>
+
+<!--
+    Adding ExtJs scripts on cms page edit page for tree functionality
+-->
+    <adminhtml_cms_page_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+        </reference>
+    </adminhtml_cms_page_edit>
+
+<!--
+    Layout handle for grid ajax loading
+-->
+    <adminhtml_cms_hierarchy_pagegrid>
+        <remove name="root" />
+        <block type="enterprise_cms/adminhtml_cms_hierarchy_edit_form_grid" name="cms_page_grid" output="toHtml" />
+    </adminhtml_cms_hierarchy_pagegrid>
+
+</layout>

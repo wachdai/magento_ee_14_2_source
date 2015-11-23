@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+    name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+            <complexType name="enterpriseCustomerbalanceHistoryItemEntity">
+                <all>
+                    <element name="history_id" type="xsd:string" />
+                    <element name="balance_id" type="xsd:string" />
+                    <element name="updated_at" type="xsd:string" />
+                    <element name="action" type="xsd:string" />
+                    <element name="balance_amount" type="xsd:string" />
+                    <element name="balance_delta" type="xsd:string" />
+                    <element name="additional_info" type="xsd:string" />
+                    <element name="is_customer_notified" type="xsd:string" />
+                    <element name="customer_id" type="xsd:string" />
+                    <element name="website_id" type="xsd:string" />
+                    <element name="base_currency_code" type="xsd:string" />
+                </all>
+            </complexType>
+            <complexType name="enterpriseCustomerbalanceHistoryItemEntityArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:enterpriseCustomerbalanceHistoryItemEntity[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+        </schema>
+    </types>
+    <message name="enterpriseCustomerbalanceBalanceRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="customerId" type="xsd:string" />
+        <part name="websiteId" type="xsd:string" />
+    </message>
+    <message name="enterpriseCustomerbalanceBalanceResponse">
+        <part name="result" type="xsd:string" />
+    </message>
+    <message name="enterpriseCustomerbalanceHistoryRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="customerId" type="xsd:string" />
+        <part name="websiteId" type="xsd:string" />
+    </message>
+    <message name="enterpriseCustomerbalanceHistoryResponse">
+        <part name="result" type="typens:enterpriseCustomerbalanceHistoryItemEntityArray" />
+    </message>
+    <message name="shoppingCartCustomerbalanceSetAmountRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="quoteId" type="xsd:string" />
+        <part name="store" type="xsd:string" />
+    </message>
+    <message name="shoppingCartCustomerbalanceSetAmountResponse">
+        <part name="amount" type="xsd:float" />
+    </message>
+    <message name="shoppingCartCustomerbalanceRemoveAmountRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="quoteId" type="xsd:string" />
+        <part name="store" type="xsd:string" />
+    </message>
+    <message name="shoppingCartCustomerbalanceRemoveAmountResponse">
+        <part name="isRemoved" type="xsd:boolean" />
+    </message>
+    <portType>
+        <operation name="enterpriseCustomerbalanceBalance">
+            <documentation>Retrieve customer store credit balance information</documentation>
+            <input message="typens:enterpriseCustomerbalanceBalanceRequest" />
+            <output message="typens:enterpriseCustomerbalanceBalanceResponse" />
+        </operation>
+        <operation name="enterpriseCustomerbalanceHistory">
+            <documentation>Retrieve customer store credit history information</documentation>
+            <input message="typens:enterpriseCustomerbalanceHistoryRequest" />
+            <output message="typens:enterpriseCustomerbalanceHistoryResponse" />
+        </operation>
+        <operation name="shoppingCartCustomerbalanceSetAmount">
+            <documentation>Set amount from customer store credit into shopping cart (quote)</documentation>
+            <input message="typens:shoppingCartCustomerbalanceSetAmountRequest" />
+            <output message="typens:shoppingCartCustomerbalanceSetAmountResponse" />
+        </operation>
+        <operation name="shoppingCartCustomerbalanceRemoveAmount">
+            <documentation>Remove amount from shopping cart (quote) and increase customer store credit</documentation>
+            <input message="typens:shoppingCartCustomerbalanceRemoveAmountRequest" />
+            <output message="typens:shoppingCartCustomerbalanceRemoveAmountResponse" />
+        </operation>
+    </portType>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="enterpriseCustomerbalanceBalance">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="enterpriseCustomerbalanceHistory">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="shoppingCartCustomerbalanceSetAmount">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="shoppingCartCustomerbalanceRemoveAmount">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+    </binding>
+    <service name="{{var wsdl.name}}Service">
+        <port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+            <soap:address location="{{var wsdl.url}}" />
+        </port>
+    </service>
+</definitions>

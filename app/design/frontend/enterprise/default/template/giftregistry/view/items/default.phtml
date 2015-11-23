@@ -1,0 +1,88 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php $_item = $this->getItem()?>
+<tr>
+    <td><?php if ($this->hasProductUrl()):?><a href="<?php echo $this->getProductUrl() ?>" class="product-image" title="<?php echo $this->escapeHtml($this->getProductName()) ?>"><?php endif;?><img src="<?php echo $this->getProductThumbnail()->resize(75); ?>" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" /><?php if ($this->hasProductUrl()):?></a><?php endif;?></td>
+    <td>
+        <h3 class="product-name">
+        <?php if ($this->hasProductUrl()):?>
+            <a href="<?php echo $this->getProductUrl() ?>"><?php echo $this->escapeHtml($this->getProductName()) ?></a>
+        <?php else: ?>
+            <?php echo $this->escapeHtml($this->getProductName()) ?>
+        <?php endif; ?>
+        </h3>
+        <?php if ($_options = $this->getOptionList()):?>
+
+        <dl class="item-options">
+            <?php foreach ($_options as $_option) : ?>
+            <?php $_formatedOptionValue = $this->getFormatedOptionValue($_option) ?>
+            <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+            <dd<?php if (isset($_formatedOptionValue['full_view'])): ?> class="truncated"<?php endif; ?>><?php echo $_formatedOptionValue['value'] ?>
+                <?php if (isset($_formatedOptionValue['full_view'])): ?>
+                <div class="truncated_full_value">
+                    <dl class="item-options">
+                        <dt><?php echo $this->escapeHtml($_option['label']) ?></dt>
+                        <dd><?php echo $this->escapeHtml($_formatedOptionValue['full_view']) ?></dd>
+                    </dl>
+                </div>
+                <?php endif; ?>
+            </dd>
+            <?php endforeach; ?>
+        </dl>
+        <?php endif;?>
+        <?php if ($messages = $this->getMessages()): ?>
+        <?php foreach ($messages as $message): ?>
+            <p class="item-msg <?php echo $message['type'] ?>">* <?php echo $message['text'] ?></p>
+        <?php endforeach; ?>
+        <?php endif; ?>
+    </td>
+    <td class="a-center">
+        <?php echo $_item->getQty()*1 ?>
+    </td>
+    <td class="a-center">
+        <?php echo $_item->getQtyFulfilled()*1 ?>
+    </td>
+    <td class="a-center">
+        <?php echo ($_item->getRemainingQty())*1 ?>
+    </td>
+    <td class="a-right">
+        <span class="cart-price">
+            <?php if ($_item->getCanApplyMsrp()): ?>
+                <?php echo $this->getMsrpHtml($_item); ?>
+            <?php else: ?>
+                <?php echo $this->helper('core')->currency($_item->getGiftRegistryPrice()) ?>
+            <?php endif; ?>
+        </span>
+    </td>
+    <td class="a-center">
+        <?php if ($_item->getRemainingQty() < 1):?>
+            <?php echo $this->__('Fulfilled')?>
+        <?php else:?>
+            <input name="items[<?php echo $_item->getItemId() ?>][qty]" value="0" size="4" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" maxlength="12" />
+        <?php endif;?>
+    </td>
+</tr>

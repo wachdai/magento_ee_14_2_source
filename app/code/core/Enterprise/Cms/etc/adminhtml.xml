@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Cms
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <cms>
+                        <children>
+                            <page>
+                                <children>
+                                    <save_revision translate="title" module="enterprise_cms">
+                                        <title>Save Revision and Version</title>
+                                        <sort_order>17</sort_order>
+                                    </save_revision>
+                                    <delete_revision translate="title" module="enterprise_cms">
+                                        <title>Delete Revision and Version</title>
+                                        <sort_order>25</sort_order>
+                                    </delete_revision>
+                                    <publish_revision translate="title" module="enterprise_cms">
+                                        <title>Publish Revision</title>
+                                        <sort_order>30</sort_order>
+                                    </publish_revision>
+                                </children>
+                            </page>
+                            <hierarchy translate="title" module="enterprise_cms">
+                                <title>Pages Hierarchy</title>
+                                <sort_order>5</sort_order>
+                            </hierarchy>
+                        </children>
+                    </cms>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <menu>
+        <cms>
+            <children>
+                <page><disabled>1</disabled></page>
+                <enterprise_page translate="title" module="cms">
+                    <title>Pages</title>
+                    <resource>cms/page</resource>
+                    <children>
+                        <page translate="title" module="enterprise_cms">
+                            <title>Manage Content</title>
+                            <action>adminhtml/cms_page</action>
+                            <sort_order>0</sort_order>
+                            <resource>cms/page</resource>
+                        </page>
+                        <hierarchy translate="title" module="enterprise_cms">
+                            <title>Manage Hierarchy</title>
+                            <sort_order>5</sort_order>
+                            <action>adminhtml/cms_hierarchy</action>
+                            <depends>
+                                <config>cms/hierarchy/enabled</config>
+                            </depends>
+                            <sort_order>10</sort_order>
+                            <resource>cms/hierarchy</resource>
+                       </hierarchy>
+                    </children>
+                </enterprise_page>
+            </children>
+        </cms>
+    </menu>
+</config>

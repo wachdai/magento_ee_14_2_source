@@ -1,0 +1,102 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/* @var $this Enterprise_Reward_Block_Checkout_Payment_Additional */
+?>
+<?php if ($this->getCanUseRewardPoints()): ?>
+<dl class="sp-methods checkout-reward checkout-multishipping-payment-reward" id="reward_block">
+    <dt>
+        <input type="checkbox" name="payment[use_reward_points]" value="1" id="use_reward_points"<?php echo $this->useRewardPoints()?' checked="checked"':'' ?> class="checkbox" />
+        <label for="use_reward_points"><?php echo Mage::helper('enterprise_reward')->__('Use my reward points, %s available', Mage::helper('enterprise_reward')->formatReward($this->getPointsBalance(), $this->getCurrencyAmount())); ?></label>
+    </dt>
+</dl>
+<script type="text/javascript">
+//<![CDATA[
+    var rewardPointsSubstracted = <?php if ($this->useRewardPoints()): ?>true<?php else: ?>false<?php endif; ?>;
+    if (rewardPointsSubstracted) {
+        quoteBaseGrandTotal += <?php echo (float)$this->getQuote()->getBaseRewardCurrencyAmount(); ?>;
+        rewardPointsSubstracted = false;
+    }
+    function switchRewardPointsCheckbox()
+    {
+        if (!rewardPointsSubstracted && $('use_reward_points').checked) {
+            quoteBaseGrandTotal -= <?php echo (float)$this->getCurrencyAmount(); ?>;
+            rewardPointsSubstracted = true;
+        }
+        if (rewardPointsSubstracted && !$('use_reward_points').checked) {
+            quoteBaseGrandTotal += <?php echo (float)$this->getCurrencyAmount(); ?>;
+            rewardPointsSubstracted = false;
+        }
+        if (quoteBaseGrandTotal < 0.0001) {
+            var elements = Form.getElements('multishipping-billing-form');
+            for (var i=0; i<elements.length; i++) {
+                if ($('use_reward_points').checked) {
+                    if (elements[i].name=='payment[method]') {
+                        elements[i].disabled = true;
+                        if (elements[i].value == 'free' && elements[i].type == 'radio'){
+                            elements[i].disabled = true;
+                            $(elements[i].parentNode).hide();
+                        }
+                    }
+                } else {
+                    if (elements[i].name=='payment[method]' && elements[i].value != 'free') {
+                        elements[i].disabled = false;
+                    }
+                }
+            }
+            if ($('use_reward_points').checked) {
+                $('payment-methods').hide();
+                hidden = document.createElement('input');
+                hidden.type  = 'hidden';
+                hidden.name  = 'payment[method]';
+                hidden.value = 'free';
+                hidden.id    = 'reward_hidden_payment';
+                $('reward_block').appendChild(hidden);
+            } else {
+                if ($('reward_hidden_payment')) {
+                    $('reward_block').removeChild($('reward_hidden_payment'));
+                }
+                $('payment-methods').show();
+            }
+        } else {
+            var elements = Form.getElements('multishipping-billing-form');
+            for (var i=0; i<elements.length; i++) {
+                if (elements[i].name=='payment[method]' && elements[i].value != 'free') {
+                    elements[i].disabled = false;
+                }
+            }
+            $('payment-methods').show();
+        }
+    }
+    Event.observe($('use_reward_points'), 'click', switchRewardPointsCheckbox);
+    Event.observe(window, 'load', switchRewardPointsCheckbox);
+    function setUseRewardPointsEnabled() {
+        $('use_reward_points').disabled = false;
+    }
+    Event.observe(window, 'load', setUseRewardPointsEnabled);
+//]]>
+</script>
+<?php endif; ?>

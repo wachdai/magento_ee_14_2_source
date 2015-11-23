@@ -1,0 +1,52 @@
+<!--@subject Gift Registry shared at {{var store.getFrontendName()}} @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"store url=\"customer/account/\"":"Customer Account Url",
+"var logo_url":"Email Logo Image Url",
+"var logo_alt":"Email Logo Image Alt",
+"var store.getFrontendName()":"Store Name",
+"var recipient_name|escape":"Recipient Name",
+"var message|escape|nl2br":"Message",
+"var entity.getTitle()|escape":"Registry Title",
+"var entity.getRegistrants()|escape":"Registry Recipients",
+"var entity.getUrlKey()|escape":"Registry Url Key",
+"var url|escape":"Registry Url"}
+@-->
+<!--@styles
+@-->
+
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td>
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td class="action-content">
+                        {{if recipient_name}}<h1>{{var recipient_name|escape}},</h1>{{/if}}
+                        <p>A gift registry has been shared with you.</p>
+                        {{if message}}
+                        <table cellspacing="0" cellpadding="0" class="message-container">
+                            <tr>
+                                <td>Message: {{var message|escape|nl2br}}</td>
+                            </tr>
+                        </table>
+                        {{/if}}
+                        <p>You can view and purchase items from this gift registry at <a href="{{store url="customer/account/"}}">{{var store.getFrontendName()}}</a>:<br/><br/>
+                            Gift registry: {{var entity.getTitle()|escape}}<br/>
+                            Created for: {{var entity.getRegistrants()|escape}}<br/>
+                            Gift registry ID: {{var entity.getUrlKey()|escape}}
+                        </p>
+                        <p>
+                            Gift registry location: <a href="{{var url|escape}}">{{var url|escape}}</a>
+                        </p>
+                        <p>You can create your own gift registry on <a href="{{store url="customer/account/"}}">{{var store.getFrontendName()}}</a> and share it with friends and family.</p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer"}}

@@ -1,0 +1,139 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<layout>
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tabs">
+            <block type="enterprise_reward/adminhtml_customer_edit_tab_reward" name="customer_edit_tab_reward" template="enterprise/reward/customer/reward.phtml">
+                <block type="enterprise_reward/adminhtml_customer_edit_tab_reward_management" name="reward_management"/>
+            </block>
+            <action method="addTab"><name>customer_edit_tab_reward</name><block>customer_edit_tab_reward</block></action>
+        </reference>
+        <reference name="customer_edit_tab_view">
+            <block type="enterprise_reward/adminhtml_customer_edit_tab_reward_management_balance" name="reward.points.balance" before="-"/>
+        </reference>
+    </adminhtml_customer_edit>
+
+    <adminhtml_reward_rate_index>
+        <reference name="content">
+            <block type="enterprise_reward/adminhtml_reward_rate" name="reward.rate.container"/>
+        </reference>
+    </adminhtml_reward_rate_index>
+
+    <adminhtml_reward_rate_edit>
+        <reference name="content">
+            <block type="enterprise_reward/adminhtml_reward_rate_edit" name="reward.rate.edit.container"/>
+        </reference>
+    </adminhtml_reward_rate_edit>
+
+    <adminhtml_sales_order_create_index>
+        <reference name="billing_method">
+            <block type="enterprise_reward/adminhtml_sales_order_create_payment" template="enterprise/reward/sales/order/create/payment.phtml" name="reward_points" before="-" />
+        </reference>
+    </adminhtml_sales_order_create_index>
+    
+    <adminhtml_sales_order_create_load_block_billing_method>
+        <reference name="billing_method">
+            <block type="enterprise_reward/adminhtml_sales_order_create_payment" template="enterprise/reward/sales/order/create/payment.phtml" name="reward_points" before="-" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_billing_method>
+
+    <adminhtml_sales_order_create_load_block_data>
+        <reference name="billing_method">
+            <block type="enterprise_reward/adminhtml_sales_order_create_payment" template="enterprise/reward/sales/order/create/payment.phtml" name="reward_points" before="-" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_data>
+
+    <adminhtml_sales_order_view>
+        <reference name="order_totals">
+            <block type="adminhtml/sales_order_totals_item" name="reward_points" template="enterprise/reward/sales/order/total.phtml">
+                <action method="setBeforeCondition"><condition>customerbalance</condition></action>
+            </block>
+            <block type="adminhtml/sales_order_totals_item" name="reward.points.refunded" template="enterprise/reward/sales/order/refunded.phtml">
+                <action method="setDisplayArea"><area>footer</area></action>
+                <action method="setAfterCondition"><condition>last</condition></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_invoice_new>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="reward_points" template="enterprise/reward/sales/order/total.phtml">
+                <action method="setBeforeCondition"><condition>customerbalance</condition></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="reward_points" template="enterprise/reward/sales/order/total.phtml">
+                <action method="setBeforeCondition"><condition>customerbalance</condition></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="reward_points" template="enterprise/reward/sales/order/total.phtml">
+                <action method="setBeforeCondition"><condition>customerbalance</condition></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="creditmemo_totals">
+            <block type="adminhtml/sales_order_totals_item" name="reward_points" template="enterprise/reward/sales/order/total.phtml">
+                <action method="setBeforeCondition"><condition>customerbalance</condition></action>
+            </block>
+        </reference>
+        <reference name="submit_before">
+            <block type="enterprise_reward/adminhtml_sales_order_creditmemo_reward" name="reward_points" template="enterprise/reward/sales/order/creditmemo/reward.phtml" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="creditmemo_totals">
+            <block type="adminhtml/sales_order_totals_item" name="reward_points" template="enterprise/reward/sales/order/total.phtml">
+                <action method="setBeforeCondition"><condition>customerbalance</condition></action>
+            </block>
+        </reference>
+        <reference name="submit_before">
+            <block type="enterprise_reward/adminhtml_sales_order_creditmemo_reward" name="reward_points" template="enterprise/reward/sales/order/creditmemo/reward.phtml" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_totals">
+            <block type="adminhtml/sales_order_totals_item" name="reward.points.refunded" template="enterprise/reward/sales/order/refunded.phtml">
+                <action method="setDisplayArea"><area>footer</area></action>
+                <action method="setBeforeCondition"><condition>customerbalance_refunded</condition></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+
+</layout>

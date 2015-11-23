@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<layout version="0.1.0">
+    <catalog_product_view>
+        <reference name="product.info">
+            <!-- remove name="catalog.product.related" / -->
+            <block type="enterprise_targetrule/catalog_product_list_related" name="catalog.product.related" as="relatedProducts" template="targetrule/catalog/product/list/related.phtml">
+                <action method="setColumnCount"><columns>3</columns></action>
+                <block type="enterprise_targetrule/catalog_product_item" name="catalog.product.related.item" template="targetrule/catalog/product/list/related/item.phtml" />
+            </block>
+            <!-- remove name="product.info.upsell" / -->
+            <block type="enterprise_targetrule/catalog_product_list_upsell" name="product.info.upsell" as="upsell_products" template="targetrule/catalog/product/list/upsell.phtml">
+                <action method="setColumnCount"><columns>4</columns></action>
+                <block type="enterprise_targetrule/catalog_product_item" name="catalog.product.upsell.item" template="targetrule/catalog/product/list/upsell/item.phtml" />
+            </block>
+        </reference>
+    </catalog_product_view>
+
+    <checkout_cart_index>
+        <reference name="checkout.cart">
+            <!-- remove name="checkout.cart.crosssell" / -->
+            <block type="enterprise_targetrule/checkout_cart_crosssell" name="checkout.cart.crosssell" as="crosssell" template="targetrule/checkout/cart/crosssell.phtml">
+            </block>
+        </reference>
+    </checkout_cart_index>
+</layout>

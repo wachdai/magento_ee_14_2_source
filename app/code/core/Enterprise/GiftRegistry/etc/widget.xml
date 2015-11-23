@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_GiftRegistry
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<widgets>
+    <enterprise_giftregistry_search type="enterprise_giftregistry/search_widget_form" translate="name description" module="enterprise_giftregistry">
+        <name>Gift Registry Search</name>
+        <description>Gift Registry Quick Search Form</description>
+        <is_email_compatible>0</is_email_compatible>
+        <parameters>
+            <types translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Quick Search Form Types</label>
+                <type>multiselect</type>
+                <source_model>enterprise_giftregistry/source_search</source_model>
+            </types>
+            <template>
+                <required>1</required>
+                <visible>1</visible>
+                <label>Template</label>
+                <type>select</type>
+                <value>giftregistry/search/widget/form.phtml</value>
+                <values>
+                    <default_template translate="label">
+                        <label>Default Template</label>
+                        <value>giftregistry/search/widget/form.phtml</value>
+                    </default_template>
+                </values>
+            </template>
+        </parameters>
+        <supported_blocks>
+            <left_column>
+                <block_name>left</block_name>
+                <template>
+                    <default>default_template</default>
+                </template>
+            </left_column>
+            <!--main_content>
+                <block_name>content</block_name>
+                <template>
+                    <default>default_template</default>
+                </template>
+            </main_content-->
+            <right_column>
+                <block_name>right</block_name>
+                <template>
+                    <default>default_template</default>
+                </template>
+            </right_column>
+        </supported_blocks>
+    </enterprise_giftregistry_search>
+</widgets>

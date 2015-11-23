@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_GoogleAnalyticsUniversal
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<config>
+    <modules>
+        <Enterprise_GoogleAnalyticsUniversal>
+            <version>0.0.1</version>
+        </Enterprise_GoogleAnalyticsUniversal>
+    </modules>
+    <global>
+        <helpers>
+            <enterprise_googleanalyticsuniversal>
+                <class>Enterprise_GoogleAnalyticsUniversal_Helper</class>
+            </enterprise_googleanalyticsuniversal>
+        </helpers>
+        <models>
+            <enterprise_googleanalyticsuniversal>
+                <class>Enterprise_GoogleAnalyticsUniversal_Model</class>
+            </enterprise_googleanalyticsuniversal>
+        </models>
+        <blocks>
+            <enterprise_googleanalyticsuniversal>
+                <class>Enterprise_GoogleAnalyticsUniversal_Block</class>
+            </enterprise_googleanalyticsuniversal>
+        </blocks>
+        <resources>
+            <enterprise_googleanalyticsuniversal_setup>
+                <setup>
+                    <module>Enterprise_GoogleAnalyticsUniversal</module>
+                </setup>
+            </enterprise_googleanalyticsuniversal_setup>
+        </resources>
+    </global>
+    <frontend>
+        <translate>
+            <modules>
+                <Enterprise_GoogleAnalyticsUniversal>
+                    <files>
+                        <default>Enterprise_GoogleAnalyticsUniversal.csv</default>
+                    </files>
+                </Enterprise_GoogleAnalyticsUniversal>
+            </modules>
+        </translate>
+        <events>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <googleanalytics_order_success>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>setGoogleAnalyticsOnOrderSuccessPageView</method>
+                    </googleanalytics_order_success>
+                </observers>
+            </checkout_onepage_controller_success_action>
+            <checkout_multishipping_controller_success_action>
+                <observers>
+                    <googleanalytics_order_success>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>setGoogleAnalyticsOnOrderSuccessPageView</method>
+                    </googleanalytics_order_success>
+                </observers>
+            </checkout_multishipping_controller_success_action>
+
+            <core_layout_block_create_after>
+                <observers>
+                    <googleanalytics_banner_impression>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>setGoogleAnalyticsOnBanners</method>
+                    </googleanalytics_banner_impression>
+                </observers>
+            </core_layout_block_create_after>
+
+            <checkout_block_cart_sidebar_aftertohtml>
+                <observers>
+                    <googleanalytics_minicart_update>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>setGoogleAnalyticsOnMinishoppingCart</method>
+                    </googleanalytics_minicart_update>
+                </observers>
+            </checkout_block_cart_sidebar_aftertohtml>
+
+
+            <controller_action_postdispatch_checkout>
+                <observers>
+                    <googleanalytics_checkout_steps>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>setGoogleAnalyticsOnCheckout</method>
+                    </googleanalytics_checkout_steps>
+                </observers>
+            </controller_action_postdispatch_checkout>
+
+            <sales_quote_load_after>
+                <observers>
+                    <googleanalytics_remember_cart_qty>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>rememberCartQuantity</method>
+                    </googleanalytics_remember_cart_qty>
+                </observers>
+            </sales_quote_load_after>
+
+            <controller_action_postdispatch_checkout_cart_updatePost>
+                <observers>
+                    <googleanalytics_clear_session_cache>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>clearSessionCartQuantity</method>
+                    </googleanalytics_clear_session_cache>
+                </observers>
+            </controller_action_postdispatch_checkout_cart_updatePost>
+
+            <sales_quote_product_add_after>
+                <observers>
+                    <googleanalytics_add_to_cart>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>setGoogleAnalyticsOnCartAdd</method>
+                    </googleanalytics_add_to_cart>
+                </observers>
+            </sales_quote_product_add_after>
+            <controller_action_postdispatch>
+                <observers>
+                    <googleanalytics_postdispatch>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>sendCookieOnCartActionComplete</method>
+                    </googleanalytics_postdispatch>
+                </observers>
+            </controller_action_postdispatch>
+            <sales_quote_remove_item>
+                <observers>
+                    <googleanalytics_cart_remove>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>setGoogleAnalyticsOnCartRemove</method>
+                    </googleanalytics_cart_remove>
+                </observers>
+            </sales_quote_remove_item>
+
+            <render_block>
+                <observers>
+                    <googleanalytics_update_placeholder>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>updatePlaceholderInfo</method>
+                    </googleanalytics_update_placeholder>
+                </observers>
+            </render_block>
+            <fpc_linked_block_render_after>
+                <observers>
+                    <googleanalytics_update_linked_product_placeholder>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>updateLinkedProductPlaceholderInfo</method>
+                    </googleanalytics_update_linked_product_placeholder>
+                </observers>
+            </fpc_linked_block_render_after>
+            <controller_action_postdispatch_enterprise_pagecache>
+                <observers>
+                    <googleanalytics_update_banner_placeholder>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>updateBannerPlaceholderInfo</method>
+                    </googleanalytics_update_banner_placeholder>
+                </observers>
+            </controller_action_postdispatch_enterprise_pagecache>
+        </events>
+        <layout>
+            <updates>
+                <enterprise_googleanalyticsuniversal>
+                    <file>googleanalyticsuniversal.xml</file>
+                </enterprise_googleanalyticsuniversal>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <events>
+            <sales_order_creditmemo_save_after>
+                <observers>
+                    <googleanalytics_creditmemo_save_after>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>setGoogleAnalyticsOnCreditmemoSave</method>
+                    </googleanalytics_creditmemo_save_after>
+                </observers>
+            </sales_order_creditmemo_save_after>
+            <admin_system_config_changed_section_google>
+                <observers>
+                    <flush_enterprise_pagecache>
+                        <class>enterprise_googleanalyticsuniversal/observer</class>
+                        <method>invalidateFpcCache</method>
+                    </flush_enterprise_pagecache>
+                </observers>
+            </admin_system_config_changed_section_google>
+        </events>
+        <layout>
+            <updates>
+                <enterprise_googleanalyticsuniversal>
+                    <file>googleanalyticsuniversal.xml</file>
+                </enterprise_googleanalyticsuniversal>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_GoogleAnalyticsUniversal>
+                    <files>
+                        <default>Enterprise_GoogleAnalyticsUniversal.csv</default>
+                    </files>
+                </Enterprise_GoogleAnalyticsUniversal>
+            </modules>
+        </translate>
+    </adminhtml>
+    <default>
+        <google>
+            <analytics>
+                <account_type>1</account_type>
+                <catalog_page_list_value>Catalog Page</catalog_page_list_value>
+                <crosssell_block_list_value>Cross-sell</crosssell_block_list_value>
+                <upsell_block_list_value>Up-sell</upsell_block_list_value>
+                <related_block_list_value>Related Products</related_block_list_value>
+                <search_page_list_value>Search Results</search_page_list_value>
+                <promotions_list_value>Label</promotions_list_value>
+            </analytics>
+        </google>
+    </default>
+
+</config>

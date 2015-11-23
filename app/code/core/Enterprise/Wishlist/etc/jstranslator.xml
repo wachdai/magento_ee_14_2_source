@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Wishlist
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<jstranslator>
+    <!-- enterprise/wishlist.js -->
+    <enterprise-wishlist-name translate="message" module="enterprise_wishlist">
+        <message>Wishlist Name</message>
+    </enterprise-wishlist-name>
+    <enterprise-wishlist-save translate="message" module="enterprise_wishlist">
+        <message>Save</message>
+    </enterprise-wishlist-save>
+    <enterprise-wishlist-cancel translate="message" module="enterprise_wishlist">
+        <message>Cancel</message>
+    </enterprise-wishlist-cancel>
+    <enterprise-wishlist-make-wishlist-public translate="message" module="enterprise_wishlist">
+        <message>Make This Wishlist Public</message>
+    </enterprise-wishlist-make-wishlist-public>
+    <enterprise-wishlist-error-while-creating translate="message" module="enterprise_wishlist">
+        <message>Error happened during wishlist creation. Try again later</message>
+    </enterprise-wishlist-error-while-creating>
+    <enterprise-wishlist-create-new translate="message" module="enterprise_wishlist">
+        <message>Create New Wishlist</message>
+    </enterprise-wishlist-create-new>
+    <enterprise-wishlist-edit translate="message" module="enterprise_wishlist">
+        <message>Edit Wishlist</message>
+    </enterprise-wishlist-edit>
+    <enterprise-wishlist-select-items-to-move translate="message" module="enterprise_wishlist">
+        <message>Select items to move</message>
+    </enterprise-wishlist-select-items-to-move>
+    <enterprise-wishlist-select-items-to-copy translate="message" module="enterprise_wishlist">
+        <message>Select items to copy</message>
+    </enterprise-wishlist-select-items-to-copy>
+    <enterprise-wishlist-add-to translate="message" module="enterprise_wishlist">
+        <message>Add to:</message>
+    </enterprise-wishlist-add-to>
+    <enterprise-wishlist-add-to-wishlist translate="message" module="enterprise_wishlist">
+        <message>Add to Wishlist</message>
+    </enterprise-wishlist-add-to-wishlist>
+    <!-- / entrprise/wishlist.js -->
+</jstranslator>

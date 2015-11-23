@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Reward
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <customer>
+                        <children>
+                            <manage translate="title" module="enterprise_reward">
+                                <children>
+                                    <reward_balance translate="title" module="enterprise_reward">
+                                        <title>Manage Reward Points Balances</title>
+                                        <sort_order>10</sort_order>
+                                    </reward_balance>
+                                </children>
+                            </manage>
+                        </children>
+                    </customer>
+                    <sales>
+                        <children>
+                            <order>
+                                <children>
+                                    <actions>
+                                        <children>
+                                            <create>
+                                                <children>
+                                                    <reward_spend translate="title" module="enterprise_reward">
+                                                        <title>Can Spend Reward Points</title>
+                                                        <sort_order>30</sort_order>
+                                                    </reward_spend>
+                                                </children>
+                                            </create>
+                                        </children>
+                                    </actions>
+                                </children>
+                            </order>
+                        </children>
+                    </sales>
+                    <customer>
+                        <children>
+                            <rates translate="title">
+                                <title>Reward Exchange Rates</title>
+                                <sort_order>80</sort_order>
+                            </rates>
+                        </children>
+                    </customer>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <enterprise_reward translate="title" module="enterprise_reward">
+                                        <title>Reward Points</title>
+                                        <sort_order>10</sort_order>
+                                    </enterprise_reward>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <menu>
+        <customer>
+            <children>
+                <reward translate="title" module="enterprise_reward">
+                    <title>Reward Exchange Rates</title>
+                    <action>adminhtml/reward_rate</action>
+                    <sort_order>100</sort_order>
+                    <depends>
+                        <module>Enterprise_Reward</module>
+                        <config>enterprise_reward/general/is_enabled</config>
+                    </depends>
+                    <resource>customer/rates</resource>
+                </reward>
+            </children>
+        </customer>
+    </menu>
+</config>

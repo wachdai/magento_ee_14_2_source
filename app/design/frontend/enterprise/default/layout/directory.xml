@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+-->
+<layout version="0.1.0">
+
+<!--
+default layout
+-->
+
+    <default>
+        <reference name="top.switches">
+            <block type="directory/currency" name="currency" before="store_language" template="directory/currency.phtml"/>
+        </reference>
+        <reference name="head">
+            <block type="core/template" name="optional_zip_countries" as="optional_zip_countries" template="directory/js/optional_zip_countries.phtml" />
+        </reference>
+    </default>
+
+    
+<!--
+Category default layout
+-->
+
+<!--     <catalog_category_default>
+        <reference name="top.switches">
+            <block type="directory/currency" name="currency" after="store_language" template="directory/currency.phtml"/>
+        </reference>
+    </catalog_category_default> -->
+
+<!--
+Category layered navigation layout
+-->
+
+<!--     <catalog_category_layered>
+        <reference name="top.switches">
+            <block type="directory/currency" name="currency" after="store_language" template="directory/currency.phtml"/>
+        </reference>
+    </catalog_category_layered> -->
+
+<!--
+Catalog Search layout
+-->
+
+<!--     <catalogsearch_advanced_index>
+        <reference name="top.switches">
+            <block type="directory/currency" name="right_currency" after="store_language" template="directory/currency.phtml"/>
+        </reference>
+    </catalogsearch_advanced_index>
+
+    <catalogsearch_result_index>
+        <reference name="top.switches">
+            <block type="directory/currency" name="currency" after="store_language" template="directory/currency.phtml"/>
+        </reference>
+    </catalogsearch_result_index>
+
+    <catalogsearch_advanced_result>
+        <reference name="top.switches">
+            <block type="directory/currency" name="right_currency" after="store_language" template="directory/currency.phtml"/>
+        </reference>
+    </catalogsearch_advanced_result> -->
+
+</layout>

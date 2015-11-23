@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Cms
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<logging>
+    <actions>
+        <preview translate="label" module="enterprise_cms">
+            <label>Preview</label>
+        </preview>
+        <publish translate="label" module="enterprise_cms">
+            <label>Publish</label>
+        </publish>
+    </actions>
+
+    <enterprise_cms_hierarchy translate="label">
+        <label>CMS Hierarchy</label>
+        <expected_models>
+            <enterprise_cms__hierarchy_node/>
+        </expected_models>
+        <actions>
+            <adminhtml_cms_hierarchy_index>
+                <action>view</action>
+                <expected_models />
+                <post_dispatch>Enterprise_Cms_Model_Observer::postDispatchCmsHierachyView</post_dispatch>
+            </adminhtml_cms_hierarchy_index>
+            <adminhtml_cms_hierarchy_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_cms_hierarchy_index />
+                </skip_on_back>
+            </adminhtml_cms_hierarchy_save>
+        </actions>
+    </enterprise_cms_hierarchy>
+
+    <enterprise_cms_page_versioning translate="label">
+        <label>CMS Versioning</label>
+        <actions>
+<!--
+    Versions
+-->
+            <adminhtml_cms_page_massDeleteVersions>
+                <action>massDelete</action>
+                <expected_models>
+                    <enterprise_cms__page_version/>
+                </expected_models>
+            </adminhtml_cms_page_massDeleteVersions>
+
+            <adminhtml_cms_page_version_edit>
+                <action>view</action>
+                <expected_models>
+                    <enterprise_cms__page_version/>
+                </expected_models>
+            </adminhtml_cms_page_version_edit>
+
+            <adminhtml_cms_page_version_save>
+                <action>save</action>
+                <expected_models>
+                    <enterprise_cms__page_version/>
+                </expected_models>
+                <skip_on_back>
+                    <adminhtml_cms_page_version_edit />
+                </skip_on_back>
+            </adminhtml_cms_page_version_save>
+
+            <adminhtml_cms_page_version_new>
+                <action>save</action>
+                <expected_models>
+                    <enterprise_cms__page_version/>
+                </expected_models>
+                <skip_on_back>
+                    <adminhtml_cms_page_revision_edit />
+                </skip_on_back>
+            </adminhtml_cms_page_version_new>
+
+            <adminhtml_cms_page_version_delete>
+                <action>delete</action>
+                <expected_models>
+                    <enterprise_cms__page_version/>
+                </expected_models>
+            </adminhtml_cms_page_version_delete>
+<!--
+    Revisions
+-->
+            <adminhtml_cms_page_version_massDeleteRevisions>
+                <action>massDelete</action>
+                <expected_models>
+                    <enterprise_cms__page_revision/>
+                </expected_models>
+            </adminhtml_cms_page_version_massDeleteRevisions>
+
+            <adminhtml_cms_page_revision_edit>
+                <action>view</action>
+                <expected_models>
+                    <enterprise_cms__page_revision/>
+                </expected_models>
+            </adminhtml_cms_page_revision_edit>
+
+            <adminhtml_cms_page_revision_preview>
+                <action>preview</action>
+                <expected_models />
+                <post_dispatch>Enterprise_Cms_Model_Observer::postDispatchCmsRevisionPreview</post_dispatch>
+            </adminhtml_cms_page_revision_preview>
+
+            <adminhtml_cms_page_revision_save>
+                <action>save</action>
+                <expected_models>
+                    <enterprise_cms__page_revision/>
+                </expected_models>
+                <skip_on_back>
+                    <adminhtml_cms_page_revision_edit />
+                </skip_on_back>
+            </adminhtml_cms_page_revision_save>
+
+            <adminhtml_cms_page_revision_delete>
+                <action>delete</action>
+                <expected_models>
+                    <enterprise_cms__page_revision/>
+                </expected_models>
+            </adminhtml_cms_page_revision_delete>
+
+            <adminhtml_cms_page_revision_publish>
+                <action>publish</action>
+                <post_dispatch>Enterprise_Cms_Model_Observer::postDispatchCmsRevisionPublish</post_dispatch>
+                <skip_on_back>
+                    <adminhtml_cms_page_revision_edit />
+                </skip_on_back>
+            </adminhtml_cms_page_revision_publish>
+        </actions>
+    </enterprise_cms_page_versioning>
+</logging>

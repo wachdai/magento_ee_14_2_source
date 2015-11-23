@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Reminder
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_Reminder>
+            <version>1.11.0.1</version>
+        </Enterprise_Reminder>
+    </modules>
+    <global>
+        <models>
+            <enterprise_reminder>
+                <class>Enterprise_Reminder_Model</class>
+                <resourceModel>enterprise_reminder_resource</resourceModel>
+            </enterprise_reminder>
+            <enterprise_reminder_resource>
+                <class>Enterprise_Reminder_Model_Resource</class>
+                <deprecatedNode>enterprise_reminder_mysql4</deprecatedNode>
+                <entities>
+                    <rule>
+                        <table>enterprise_reminder_rule</table>
+                    </rule>
+                    <website>
+                        <table>enterprise_reminder_rule_website</table>
+                    </website>
+                    <template>
+                        <table>enterprise_reminder_template</table>
+                    </template>
+                    <coupon>
+                        <table>enterprise_reminder_rule_coupon</table>
+                    </coupon>
+                    <log>
+                        <table>enterprise_reminder_rule_log</table>
+                    </log>
+                </entities>
+            </enterprise_reminder_resource>
+        </models>
+        <helpers>
+            <enterprise_reminder>
+                <class>Enterprise_Reminder_Helper</class>
+            </enterprise_reminder>
+        </helpers>
+        <blocks>
+            <enterprise_reminder>
+                <class>Enterprise_Reminder_Block</class>
+            </enterprise_reminder>
+        </blocks>
+        <resources>
+            <enterprise_reminder_setup>
+                <setup>
+                    <module>Enterprise_Reminder</module>
+                    <class>Enterprise_Reminder_Model_Resource_Setup</class>
+                </setup>
+            </enterprise_reminder_setup>
+        </resources>
+        <template>
+            <email>
+                <enterprise_reminder_email_template translate="label" module="enterprise_reminder">
+                    <label>Rule Reminder</label>
+                    <file>enterprise/reminder.html</file>
+                    <type>html</type>
+                </enterprise_reminder_email_template>
+            </email>
+        </template>
+        <events>
+            <salesrule_rule_get_coupon_types>
+                <observers>
+                    <enterprise_reminder>
+                        <class>enterprise_reminder/observer</class>
+                        <method>getCouponTypes</method>
+                    </enterprise_reminder>
+                </observers>
+            </salesrule_rule_get_coupon_types>
+            <adminhtml_promo_quote_edit_tab_main_prepare_form>
+                <observers>
+                    <enterprise_reminder>
+                        <class>enterprise_reminder/observer</class>
+                        <method>updatePromoQuoteTabMainForm</method>
+                    </enterprise_reminder>
+                </observers>
+            </adminhtml_promo_quote_edit_tab_main_prepare_form>
+            <salesrule_rule_save_after>
+                <observers>
+                    <enterprise_reminder>
+                        <class>enterprise_reminder/observer</class>
+                        <method>detachUnsupportedSalesRule</method>
+                    </enterprise_reminder>
+                </observers>
+            </salesrule_rule_save_after>
+            <adminhtml_block_promo_widget_chooser_prepare_collection>
+                <observers>
+                    <enterprise_reminder>
+                        <class>enterprise_reminder/observer</class>
+                        <method>addSalesRuleFilter</method>
+                    </enterprise_reminder>
+                </observers>
+            </adminhtml_block_promo_widget_chooser_prepare_collection>
+            <adminhtml_promo_quote_edit_tab_main_prepare_form>
+                <observers>
+                    <enterprise_reminder>
+                        <class>enterprise_reminder/observer</class>
+                        <method>addUseAutoGenerationNotice</method>
+                    </enterprise_reminder>
+                </observers>
+            </adminhtml_promo_quote_edit_tab_main_prepare_form>
+        </events>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <enterprise_reminder before="Mage_Adminhtml">Enterprise_Reminder_Adminhtml</enterprise_reminder>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_reminder>
+                    <file>enterprise/reminder.xml</file>
+                </enterprise_reminder>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_Reminder>
+                    <files>
+                        <default>Enterprise_Reminder.csv</default>
+                    </files>
+                </Enterprise_Reminder>
+            </modules>
+        </translate>
+    </adminhtml>
+    <default>
+        <promo>
+            <enterprise_reminder>
+                <enabled>1</enabled>
+                <frequency>I</frequency>
+                <interval>15</interval>
+                <minutes>0</minutes>
+                <limit>100</limit>
+                <threshold>1</threshold>
+                <identity>general</identity>
+            </enterprise_reminder>
+        </promo>
+    </default>
+    <crontab>
+        <jobs>
+            <send_notification>
+                <schedule>
+                    <cron_expr>*/15 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>enterprise_reminder/observer::scheduledNotification</model>
+                </run>
+            </send_notification>
+        </jobs>
+    </crontab>
+</config>

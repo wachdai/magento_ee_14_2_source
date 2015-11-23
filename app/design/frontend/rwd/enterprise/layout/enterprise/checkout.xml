@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<layout version="0.1.0">
+
+    <checkout_cart_index translate="label">
+        <reference name="checkout.cart.form.before">
+            <action method="setElementClass"><value>rewards</value></action>
+            <action method="setMayBeInvisible"><value>1</value></action>
+        </reference>
+    </checkout_cart_index>
+
+    <checkout_multishipping_customer_address translate="label">
+        <reference name="customer_address_edit">
+            <block type="enterprise_customer/form" template="customer/form/userattributes.phtml" name="customer_form_user_attributes">
+                <action method="setFormCode"><code>customer_address_edit</code></action>
+            </block>
+        </reference>
+        <update handle="customer_form_template_handle"/>
+    </checkout_multishipping_customer_address>
+
+    <checkout_onepage_index translate="label">
+        <reference name="checkout.onepage.billing">
+            <block type="enterprise_customer/form" template="customer/form/userattributes.phtml" name="customer_form_customer_user_defined_attributes">
+                <action method="setFormCode"><code>checkout_register</code></action>
+            </block>
+            <block type="enterprise_customer/form" template="customer/form/userattributes.phtml" name="customer_form_billing_address_user_defined_attributes">
+                <action method="setFormCode"><code>customer_register_address</code></action>
+            </block>
+        </reference>
+        <reference name="checkout.onepage.shipping">
+            <block type="enterprise_customer/form" template="customer/form/userattributes.phtml" name="customer_form_shipping_address_user_defined_attributes">
+                <action method="setFormCode"><code>customer_register_address</code></action>
+            </block>
+        </reference>
+        <update handle="customer_form_template_handle"/>
+    </checkout_onepage_index>
+
+    <sku_failed_products_handle>
+        <reference name="checkout.cart">
+            <block type="enterprise_checkout/sku_products" name="sku.failed.products" template="checkout/cart/sku/failed.phtml" as="shopping.cart.table.after">
+                <block type="enterprise_checkout/sku_products_info" name='additional.product.info' template="checkout/cart/sku/failed/info.phtml" />
+                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/cart/item/failed.phtml</template></action>
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer</block><template>checkout/cart/item/failed.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>giftcard</type><block>enterprise_giftcard/checkout_cart_item_renderer</block><template>checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>downloadable</type><block>downloadable/checkout_cart_item_renderer</block><template>checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>virtual</type><block>checkout/cart_item_renderer</block><template>checkout/cart/item/default.phtml</template></action>
+                <action method="addItemRender"><type>undefined</type><block>checkout/cart_item_renderer</block><template>checkout/cart/item/failed.phtml</template></action>
+            </block>
+        </reference>
+    </sku_failed_products_handle>
+
+    <checkout_cart_configurefailed translate="label">
+        <label>Configure Cart Item</label>
+        <update handle="catalog_product_view"/>
+        <reference name="product.info">
+            <block type="enterprise_checkout/cart_item_configure" name="checkout.cart.item.configure.block"></block>
+        </reference>
+    </checkout_cart_configurefailed>
+
+    <!--
+    Customer Account Dashboard
+    -->
+
+    <customer_account>
+        <block type="enterprise_checkout/customer_link" name="customer_link_sku">
+            <action method="addDashboardLink" translate="label" module="enterprise_checkout">
+                <block>customer_account_navigation</block><name>checkout</name><path>enterprise_checkout/sku</path><label>Order by SKU</label>
+            </action>
+        </block>
+    </customer_account>
+
+    <enterprise_checkout_sku_index>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="core/template" name="checkout.customer.order" template="checkout/customer/sku.phtml">
+                <block type="enterprise_checkout/customer_sku" name="checkout.customer.sku" template="checkout/widget/sku.phtml">
+                    <action method="setIsTitleHidden"><value>true</value></action>
+                    <block type="core/template" template="checkout/customer/file.phtml"></block>
+                </block>
+            </block>
+        </reference>
+    </enterprise_checkout_sku_index>
+    
+</layout>

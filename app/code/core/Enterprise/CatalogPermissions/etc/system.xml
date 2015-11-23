@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_CatalogPermissions
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <sections>
+        <catalog>
+            <groups>
+                <enterprise_catalogpermissions translate="label" module="enterprise_catalogpermissions">
+                    <label>Category Permissions</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>500</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label comment">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[<strong style="color:red">Warning!</strong> By default this feature restricts all categories.]]></comment>
+                        </enabled>
+                        <grant_catalog_category_view translate="label">
+                            <label>Allow Browsing Category</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_class>enterprise-grant-select browsing-catagories</frontend_class>
+                            <source_model>enterprise_catalogpermissions/adminhtml_system_config_source_grant_landing</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </grant_catalog_category_view>
+                        <grant_catalog_category_view_groups translate="label">
+                            <label>Customer Groups</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>enterprise_catalogpermissions/adminhtml_system_config_source_customer_group</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </grant_catalog_category_view_groups>
+                        <grant_catalog_product_price translate="label">
+                            <label>Display Product Prices</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_class>enterprise-grant-select</frontend_class>
+                            <source_model>enterprise_catalogpermissions/adminhtml_system_config_source_grant</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </grant_catalog_product_price>
+                        <grant_catalog_product_price_groups translate="label">
+                            <label>Customer Groups</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>enterprise_catalogpermissions/adminhtml_system_config_source_customer_group</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </grant_catalog_product_price_groups>
+                        <grant_checkout_items translate="label">
+                            <label>Allow Adding to Cart</label>
+                            <frontend_type>select</frontend_type>
+                            <frontend_class>enterprise-grant-select</frontend_class>
+                            <source_model>enterprise_catalogpermissions/adminhtml_system_config_source_grant</source_model>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </grant_checkout_items>
+                        <grant_checkout_items_groups translate="label">
+                            <label>Customer Groups</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>enterprise_catalogpermissions/adminhtml_system_config_source_customer_group</source_model>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </grant_checkout_items_groups>
+                        <restricted_landing_page translate="label">
+                            <label>Landing Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_cms_page</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </restricted_landing_page>
+                        <deny_catalog_search translate="label">
+                            <label>Disallow Catalog Search By</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>enterprise_catalogpermissions/adminhtml_system_config_source_customer_group</source_model>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </deny_catalog_search>
+                    </fields>
+                </enterprise_catalogpermissions>
+            </groups>
+        </catalog>
+    </sections>
+</config>

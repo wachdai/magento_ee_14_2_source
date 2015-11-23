@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Cms
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<widgets>
+    <cms_hierarchy_node type="enterprise_cms/widget_node" translate="name description" module="enterprise_cms">
+        <name>CMS Hierarchy Node Link</name>
+        <description>Link to Specified CMS Hierarchy Node</description>
+        <is_email_compatible>1</is_email_compatible>
+        <parameters>
+            <node_id translate="label">
+                <label>Node</label>
+                <visible>1</visible>
+                <required>1</required>
+                <type>label</type>
+                <helper_block>
+                    <type>enterprise_cms/adminhtml_cms_hierarchy_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Page or Node...</open>
+                        </button>
+                    </data>
+                </helper_block>
+                <sort_order>10</sort_order>
+            </node_id>
+            <anchor_text translate="label description">
+                <visible>1</visible>
+                <label>Anchor Custom Text</label>
+                <description>If empty, will use the Node or Page Name</description>
+                <type>text</type>
+            </anchor_text>
+            <title translate="label">
+                <visible>1</visible>
+                <label>Anchor Custom Title</label>
+                <type>text</type>
+            </title>
+            <template translate="label">
+                <label>Template</label>
+                <visible>1</visible>
+                <type>select</type>
+                <value>cms/hierarchy/widget/link/link_block.phtml</value>
+                <values>
+                    <default translate="label">
+                        <value>cms/hierarchy/widget/link/link_block.phtml</value>
+                        <label>CMS Page Link Block Template</label>
+                    </default>
+                    <link_inline translate="label">
+                        <value>cms/hierarchy/widget/link/link_inline.phtml</value>
+                        <label>CMS Page Link Inline Template</label>
+                    </link_inline>
+                </values>
+            </template>
+        </parameters>
+    </cms_hierarchy_node>
+</widgets>

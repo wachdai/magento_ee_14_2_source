@@ -1,0 +1,66 @@
+<!--@subject {{var store.getFrontendName()}}: New Return # {{var rma.getIncrementId()}} @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var logo_url":"Email Logo Image Url",
+"var logo_alt":"Email Logo Image Alt",
+"htmlescape var=$rma.getCustomerName()":"Customer Name",
+"var store.getFrontendName()":"Store Name",
+"store url=\"sales/guest/form/\"":"Guest Form Url",
+"var rma.getIncrementId()":"Return Id",
+"var rma.getStatusLabel().format('html')":"Return Status",
+"var return_address":"Return Address",
+"var order.getShippingAddress().format('html')":"Shipping Address",
+"var item_collection":"Items Collection",
+"layout handle=\"enterprise_rma_email_rma_items\" collection=$item_collection":"Return Items Collection"}
+@-->
+<!--@styles
+@-->
+
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="action-content">
+            <h1>{{htmlescape var=$order.getCustomerName()}},</h1>
+            <p>
+                Your return request has been updated. Please see below.
+            </p>
+            <p>
+                You can check the status of your return <a href="{{store url="sales/guest/form/"}}">using your order number</a>.
+                If you have any questions about your return please contact us at
+                <a href="mailto:{{config path='trans_email/ident_support/email'}}">{{config path='trans_email/ident_support/email'}}</a>.
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td class="order-details">
+            <h3>Your Return <span class="no-link">#{{var rma.getIncrementId()}}</span></h3>
+            <p>{{var rma.getStatusLabel().format('html')}}</p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <tr class="order-information">
+                <td>
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td class="method-info">
+                                <h6>Shipping Address:</h6>
+                                <p>{{var order.getShippingAddress().format('html')}}</p>
+                            </td>
+                            <td class="method-info">
+                                <h6>Return Address:</h6>
+                                {{var return_address}}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <br/>
+            {{layout handle="enterprise_rma_email_rma_items" collection=$item_collection}}
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer"}}

@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="../../../../../../vendor/magento/mtf/etc/fixture.xsd">
+    <fixture name="reward" module="Enterprise_Reward" type="flat" entity_type="enterprise_reward" collection="Enterprise\Reward\Model\Resource\Reward\Collection" repository_class="Enterprise\Reward\Test\Repository\Reward" handler_interface="Enterprise\Reward\Test\Handler\Reward\RewardInterface" class="Enterprise\Reward\Test\Fixture\Reward">
+        <dataset name="default">
+            <field name="points_delta" xsi:type="string">10</field>
+            <field name="customer_id" xsi:type="array">
+                <item name="dataSet" xsi:type="string">default</item>
+            </field>
+        </dataset>
+        <field name="reward_id" is_required="1">
+            <default_value xsi:type="null" />
+        </field>
+        <field name="customer_id" is_required="0" source="Enterprise\Reward\Test\Fixture\Reward\CustomerId">
+            <default_value xsi:type="array">
+                <item name="dataSet" xsi:type="string">default</item>
+            </default_value>
+        </field>
+        <field name="website_id" is_required="0" group="reward_points">
+            <default_value xsi:type="number">0</default_value>
+        </field>
+        <field name="points_balance" is_required="0">
+            <default_value xsi:type="number">0</default_value>
+        </field>
+        <field name="website_currency_code" is_required="">
+            <default_value xsi:type="null" />
+        </field>
+        <field name="reward_update_notification" />
+        <field name="reward_warning_notification" />
+        <field name="points_delta">
+            <default_value xsi:type="number">10</default_value>
+        </field>
+    </fixture>
+</config>

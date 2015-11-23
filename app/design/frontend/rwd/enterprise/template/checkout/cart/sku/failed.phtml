@@ -1,0 +1,161 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/**
+ * Order by SKU Failed Items grid
+ *
+ * @see Enterprise_Checkout_Block_Sku_Products
+ */
+?>
+<div class="failed-products">
+    <h2 class="sub-title"><?php echo $this->__('Products Requiring Attention') ?></h2>
+    <form action="<?php echo $this->getFormActionUrl() ?>" method="post">
+        <?php echo $this->getBlockHtml('formkey') ?>
+        <div class="fieldset">
+            <table id="failed-products-table" class="data-table cart-table">
+                <col width="1" />
+                <col />
+                <col width="1" />
+            <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
+                <col width="1" />
+            <?php endif ?>
+            <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+                <col width="1" />
+            <?php endif; ?>
+            <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+                <col width="1" />
+            <?php endif; ?>
+                <col width="1" />
+            <?php if ($this->helper('tax')->displayCartPriceExclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+                <col width="1" />
+            <?php endif; ?>
+            <?php if ($this->helper('tax')->displayCartPriceInclTax() || $this->helper('tax')->displayCartBothPrices()): ?>
+                <col width="1" />
+            <?php endif; ?>
+                <col width="1" />
+
+            <?php $mergedCells = ($this->helper('tax')->displayCartBothPrices() ? 2 : 1); ?>
+                <thead>
+                    <tr>
+                        <th rowspan="<?php echo $mergedCells; ?>">&nbsp;</th>
+                        <th rowspan="<?php echo $mergedCells; ?>"><span class="nobr"><?php echo $this->__('Product Name') ?></span></th>
+                        <th rowspan="<?php echo $mergedCells; ?>"></th>
+                        <?php if ($this->helper('wishlist')->isAllowInCart()) : ?>
+                        <th rowspan="<?php echo $mergedCells; ?>" class="a-center"><span class="nobr"></span></th>
+                        <?php endif ?>
+                        <th class="a-center" colspan="<?php echo $mergedCells; ?>"><span class="nobr"><?php echo $this->__('Unit Price') ?></span></th>
+                        <th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Qty') ?></th>
+                        <th rowspan="<?php echo $mergedCells; ?>" class="a-center"><?php echo $this->__('Remove') ?></th>
+                    </tr>
+                    <?php if ($this->helper('tax')->displayCartBothPrices()): ?>
+                    <tr>
+                        <th class="a-right"><?php echo $this->helper('tax')->getIncExcTaxLabel(false) ?></th>
+                        <th><?php echo $this->helper('tax')->getIncExcTaxLabel(true) ?></th>
+                    </tr>
+                    <?php endif; ?>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <td colspan="50" class="a-right">
+                            <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-update"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                            <button id="remove_all_failed_items" type="button" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove All')) ?>" class="button"><span><span><?php echo $this->__('Remove All') ?></span></span></button>
+                        </td>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <?php foreach($this->getItems() as $_item): ?>
+                        <?php echo $this->getItemHtml($_item) ?>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+            <script type="text/javascript">decorateTable('failed-products-table')</script>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+if($('remove_all_failed_items')) {
+    $('remove_all_failed_items').observe('click', function() {
+        setLocation('<?php echo $this->getDeleteAllItemsUrl(); ?>')
+    });
+}
+
+$$('.sku-out-of-stock').each(function(e) {
+    var qtyElement = $(e.ancestors()[2]).select('td input.qty')[0];
+    if (qtyElement) {
+        qtyElement.addClassName('disabled');
+        qtyElement.disable();
+    }
+});
+
+$$('input.sku_failed_qty').each(function(e) {
+    var qtyElement = $(e.ancestors()[1]).select('td input.qty')[0];
+    if (qtyElement) {
+        qtyElement.observe('change', function() {
+            $(e).value = $(qtyElement).value;
+        })
+    }
+});
+
+var validateErrorGrid = function (event)
+{
+    var $errorTable = event ? event.findElement('#failed-products-table') : $('failed-products-table');
+    if ($errorTable) {
+        $errorTable.select('input.qty').each(function ($qty)
+        {
+            if ($qty.disabled) {
+                $qty.removeClassName('validation-failed');
+                return;
+            }
+            var tr = $qty.up('tr');
+            var $maxAllowed = tr.select('.qty_max_allowed');
+            var $minAllowed = tr.select('.qty_min_allowed');
+            var $qtyIncrements = tr.select('.qty_increments');
+            var qty = parseFloat($qty.value);
+            var isMaxAllowedValid = !$maxAllowed.length || (qty <= parseFloat($maxAllowed[0].value));
+            var isMinAllowedValid = !$minAllowed.length || (qty >= parseFloat($minAllowed[0].value));
+            var isQtyIncrementsValid = !$qtyIncrements.length || (modulo(qty, parseFloat($qtyIncrements[0].value)) == 0);
+            if (isMaxAllowedValid && isMinAllowedValid && isQtyIncrementsValid && qty > 0) {
+                $qty.removeClassName('validation-failed');
+            } else {
+                $qty.addClassName('validation-failed');
+            }
+        });
+    }
+};
+
+// Initially mark invalid qty inputs
+validateErrorGrid();
+
+/**
+ * Live qty field validation
+ */
+document.observe('keyup', function (event)
+{
+    validateErrorGrid(event);
+});
+//]]>
+</script>

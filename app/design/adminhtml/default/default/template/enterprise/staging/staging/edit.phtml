@@ -1,0 +1,87 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<?php
+/**
+ * Template for Enterprise_Staging_Block_Manage_Staging_Edit
+ * @var $this Enterprise_Staging_Block_Manage_Staging_Edit
+ */
+?>
+<div id="enterprise_staging">
+    <div class="content-header">
+        <h3 class="icon-head head-staging"><?php echo $this->getHeader() ?></h3>
+        <p class="content-buttons form-buttons"><?php echo $this->getChildHtml('back_button') ?>
+            <?php echo $this->getChildHtml('cancel_button') ?>
+            <?php echo $this->getChildHtml('sync_button') ?>
+            <?php echo $this->getChildHtml('merge_button') ?>
+            <?php echo $this->getChildHtml('unschedule_button') ?>
+            <?php echo $this->getChildHtml('rollback_button') ?>
+            <?php echo $this->getChildHtml('save_button') ?>
+            <?php echo $this->getChildHtml('save_and_edit_button') ?>
+            <?php echo $this->getChildHtml('create_button') ?>
+            <?php echo $this->getChildHtml('reset_status_button') ?>
+        </p>
+    </div>
+    <form action="<?php echo $this->getSaveUrl() ?>" method="post" id="enterprise_staging_form" enctype="multipart/form-data">
+        <?php echo $this->getBlockHtml('formkey')?>
+        <div style="display:none"></div>
+    </form>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+
+Validation.addAllThese([
+    ['staging_website_item_check', '<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('catalog')->__('Website Item Must be checked')) ?>', function(v) {
+
+                var isChecked = false;
+                $$('#staging_website_items input[type=checkbox]').each(function(el){
+                    if (el.checked == true) {
+                        isChecked = true;
+                    }
+                });
+
+                return isChecked;
+            }],
+    ['staging_website_stores_check', '<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('catalog')->__('Website Store Must be checked')) ?>', function(v) {
+
+                var isChecked = false;
+                $$('#staging_website_stores input[type=checkbox]').each(function(el){
+                    if (el.checked== true) {
+                        isChecked = true;
+                    }
+                });
+
+                return isChecked;
+            }],
+    ['validate-secure-url', '<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('catalog')->__('Please enter a valid URL. https:// is required')) ?>', function (v) {
+        return Validation.get('IsEmpty').test(v) || /^https:\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)(:(\d+))?\/?/i.test(v)
+    }]
+]);
+
+var <?php echo $this->getEditFormJsObject(); ?> = new Enterprise.Staging.Form('enterprise_staging', 'enterprise_staging_form', '<?php echo $this->getValidationUrl() ?>', {}, {}, <?php echo $this->getMasterWebsiteId()?>);
+//]]>
+</script>

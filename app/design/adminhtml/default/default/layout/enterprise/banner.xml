@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<layout>
+    <adminhtml_banner_index>
+        <reference name="content">
+            <block type="enterprise_banner/adminhtml_banner" name="banner_list"/>
+        </reference>
+    </adminhtml_banner_index>
+    <adminhtml_banner_edit>
+        <update handle="editor"/>
+        <reference name="left">
+            <block type="enterprise_banner/adminhtml_banner_edit_tabs" name="banner_edit_tabs">
+                <block type="enterprise_banner/adminhtml_banner_edit_tab_properties" name="banner_edit_tab_properties"/>
+                <block type="enterprise_banner/adminhtml_banner_edit_tab_content" name="banner_edit_tab_content"/>
+                <block type="enterprise_banner/adminhtml_banner_edit_tab_promotions" name="banner_edit_tab_promotions" template="enterprise/banner/edit/tab/promotions.phtml">
+                    <block type="enterprise_banner/adminhtml_banner_edit_tab_promotions_salesrule" name="banner_salesrule_grid"/>
+                    <block type="adminhtml/widget_grid_serializer" name="salesrule_grid_serializer">
+                        <reference name="salesrule_grid_serializer">
+                            <action method="initSerializerBlock">
+                                <grid_block_name>banner_salesrule_grid</grid_block_name>
+                                <data_callback>getRelatedSalesRule</data_callback>
+                                <hidden_input_name>banner_sales_rules</hidden_input_name>
+                                <reload_param_name>selected_salesrules</reload_param_name>
+                            </action>
+                        </reference>
+                    </block>
+                    <block type="enterprise_banner/adminhtml_banner_edit_tab_promotions_catalogrule" name="banner_catalogrule_grid"/>
+                    <block type="adminhtml/widget_grid_serializer" name="catalogrule_grid_serializer">
+                        <reference name="catalogrule_grid_serializer">
+                            <action method="initSerializerBlock">
+                                <grid_block_name>banner_catalogrule_grid</grid_block_name>
+                                <data_callback>getRelatedCatalogRule</data_callback>
+                                <hidden_input_name>banner_catalog_rules</hidden_input_name>
+                                <reload_param_name>selected_catalogrules</reload_param_name>
+                            </action>
+                        </reference>
+                    </block>
+                </block>
+                <action method="addTab"><name>properties_section</name><block>banner_edit_tab_properties</block></action>
+                <action method="addTab"><name>content_section</name><block>banner_edit_tab_content</block></action>
+                <action method="addTab"><name>promotions_section</name><block>banner_edit_tab_promotions</block></action>
+            </block>
+        </reference>
+        <reference name="content">
+            <block type="enterprise_banner/adminhtml_banner_edit" name="banner_edit_content"/>
+        </reference>
+    </adminhtml_banner_edit>
+
+    <adminhtml_banner_grid>
+        <remove name="root"/>
+        <block type="enterprise_banner/adminhtml_banner_grid" name="banner_grid" output="toHtml"/>
+    </adminhtml_banner_grid>
+    <adminhtml_banner_salesrulegrid>
+        <remove name="root"/>
+        <block type="enterprise_banner/adminhtml_banner_edit_tab_promotions_salesrule" name="banner_salesrule_grid" output="toHtml"/>
+    </adminhtml_banner_salesrulegrid>
+    <adminhtml_banner_catalogrulegrid>
+        <remove name="root"/>
+        <block type="enterprise_banner/adminhtml_banner_edit_tab_promotions_catalogrule" name="banner_catalogrule_grid" output="toHtml"/>
+    </adminhtml_banner_catalogrulegrid>
+
+     <!-- Binding Banners Tab for Catalog Price Rule -->
+    <adminhtml_promo_catalog_edit>
+        <reference name="promo_catalog_edit_tabs">
+            <block type="enterprise_banner/adminhtml_promo_catalogrule_edit_tab_banners" name="catalogrule.related.banners">
+                <block type="enterprise_banner/adminhtml_promo_catalogrule_edit_tab_banners_grid" name="related_catalogrule_banners_grid"/>
+                <block type="adminhtml/widget_grid_serializer" name="banners_grid_serializer">
+                    <reference name="banners_grid_serializer">
+                        <action method="initSerializerBlock">
+                            <grid_block_name>related_catalogrule_banners_grid</grid_block_name>
+                            <data_callback>getRelatedBannersByRule</data_callback>
+                            <hidden_input_name>related_banners</hidden_input_name>
+                            <reload_param_name>selected_catalogrule_banners</reload_param_name>
+                        </action>
+                    </reference>
+                </block>
+            </block>
+            <action method="addTab"><name>banners_section</name><block>catalogrule.related.banners</block></action>
+            <block type="enterprise_banner/adminhtml_permission_monitor" name="bannner.permission.monitor"/>
+        </reference>
+    </adminhtml_promo_catalog_edit>
+
+    <!-- Binding Banners Grid for Shopping Cart Price Rule -->
+    <adminhtml_banner_catalogrulebannersgrid>
+        <remove name="root"/>
+        <block type="enterprise_banner/adminhtml_promo_catalogrule_edit_tab_banners_grid" name="related_catalogrule_banners_grid" output="toHtml"/>
+    </adminhtml_banner_catalogrulebannersgrid>
+
+
+    <!-- Binding Banners Tab for Shopping Cart Price Rule -->
+    <adminhtml_promo_quote_edit>
+        <reference name="promo_quote_edit_tabs">
+            <block type="enterprise_banner/adminhtml_promo_salesrule_edit_tab_banners" name="salesrule.related.banners">
+                <block type="enterprise_banner/adminhtml_promo_salesrule_edit_tab_banners_grid" name="related_salesrule_banners_grid"/>
+                <block type="adminhtml/widget_grid_serializer" name="banners_grid_serializer">
+                    <reference name="banners_grid_serializer">
+                        <action method="initSerializerBlock">
+                            <grid_block_name>related_salesrule_banners_grid</grid_block_name>
+                            <data_callback>getRelatedBannersByRule</data_callback>
+                            <hidden_input_name>related_banners</hidden_input_name>
+                            <reload_param_name>selected_salesrule_banners</reload_param_name>
+                        </action>
+                    </reference>
+                </block>
+            </block>
+            <action method="addTab"><name>banners_section</name><block>salesrule.related.banners</block></action>
+            <block type="enterprise_banner/adminhtml_permission_monitor" name="bannner.permission.monitor"/>
+        </reference>
+    </adminhtml_promo_quote_edit>
+
+    <!-- Binding Banners Grid for Shopping Cart Price Rule -->
+    <adminhtml_banner_salesrulebannersgrid>
+        <remove name="root"/>
+        <block type="enterprise_banner/adminhtml_promo_salesrule_edit_tab_banners_grid" name="related_salesrule_banners_grid" output="toHtml"/>
+    </adminhtml_banner_salesrulebannersgrid>
+</layout>

@@ -1,0 +1,59 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<?php $_item = $this->getItem() ?>
+<tr>
+    <td class="first"><?php echo $this->__('Gift Wrapping'); ?></td>
+    <td></td>
+    <td class="price">
+        <?php if ($this->helper('enterprise_giftwrapping')->displayCartWrappingBothPrices($this->getStore()) || $this->helper('enterprise_giftwrapping')->displayCartWrappingExcludeTaxPrice($this->getStore())): ?>
+            <?php if ($this->helper('enterprise_giftwrapping')->displayCartWrappingBothPrices($this->getStore())): ?>
+                <span class="label"><?php echo $this->__('Excl. Tax'); ?>:</span>
+            <?php endif; ?>
+            <?php echo $this->formatPrice($_item->getGwPrice());?>
+        <?php endif; ?>
+        <?php if ($this->helper('enterprise_giftwrapping')->displayCartWrappingBothPrices($this->getStore()) || $this->helper('enterprise_giftwrapping')->displayCartWrappingIncludeTaxPrice($this->getStore())): ?>
+            <?php if ($this->helper('enterprise_giftwrapping')->displayCartWrappingBothPrices($this->getStore())): ?>
+                <br />
+                <span class="label"><?php echo $this->__('Incl. Tax'); ?>:</span>
+            <?php endif; ?>
+            <?php echo $this->formatPrice($_item->getGwPrice() + $_item->getGwTaxAmount());?>
+        <?php endif; ?>
+
+        <?php $_isCustomPrice = $this->hasCustomPrice($_item) ?>
+        <div class="nobr">
+        <input type="checkbox" id="item_use_custom_price_<?php echo $_item->getId() ?>"<?php if ($_isCustomPrice): ?> checked="checked"<?php endif; ?> onclick="order.toggleCustomPrice(this, 'item_gw_custom_price_<?php echo $_item->getId() ?>');"/>
+        <label class="normal" for="item_use_custom_price_<?php echo $_item->getId() ?>"><?php echo $this->helper('sales')->__('Custom Price') ?>*</label>
+        </div>
+        <input id="item_gw_custom_price_<?php echo $_item->getId() ?>" name="item[<?php echo $_item->getId() ?>][gw_custom_price]" value="<?php echo sprintf("%.2f", $this->getCustomPrice($_item))?>"<?php if (!$_isCustomPrice): ?> style="display:none" disabled="disabled"<?php endif; ?> class="input-text item-price"/>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td class="last"></td>
+</tr>

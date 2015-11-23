@@ -1,0 +1,51 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+/** @var Enterprise_GoogleAnalyticsUniversal_Block_List_Json $this */
+$item = $this->getFpcBlock()->getItem();
+?>
+
+<?php if (is_object($item)): ?>
+<script type="text/javascript">
+
+updatedImpressions = updatedImpressions || [];
+updatedImpressions['<?php echo $this->getBlockName() ?>'] = updatedImpressions['<?php echo $this->getBlockName() ?>'] || [];
+
+updatedImpressions['<?php echo $this->getBlockName() ?>'] =
+    updatedImpressions['<?php echo $this->getBlockName() ?>'].concat ([
+    {
+        "id":"<?php echo $this->jsQuoteEscape($item->getSku()) ?>",
+        "type":"<?php echo $item->getTypeId() ?>",
+        "name":"<?php echo $this->jsQuoteEscape($item->getName()); ?>",
+        "category":"<?php echo $this->jsQuoteEscape($this->getCurrentCategoryName()) ?>",
+        "list":"<?php echo $this->jsQuoteEscape($this->getCurrentListName()) ?>",
+        "position": updatedImpressions['<?php echo $this->getBlockName() ?>'].length + 1,
+        "listPosition": updatedImpressions['<?php echo $this->getBlockName() ?>'].length
+    }
+]);
+</script>
+<?php endif?>

@@ -1,0 +1,193 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_PageCache
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <placeholders>
+        <last_viewed_products>
+            <block>reports/product_viewed</block>
+            <placeholder>VIEWED_PRODUCTS</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Viewedproducts</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </last_viewed_products>
+        <last_viewed_products_widget>
+            <block>reports/product_widget_viewed</block>
+            <placeholder>VIEWED_PRODUCTS_WIDGET</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Viewedproducts</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </last_viewed_products_widget>
+        <catalog_navigation>
+            <block>page/html_topmenu</block>
+            <name>catalog.topnav</name>
+            <placeholder>TOPMENU</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Catalognavigation</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </catalog_navigation>
+        <catalog_navigation_left>
+            <block>catalog/navigation</block>
+            <name>catalog.leftnav</name>
+            <placeholder>LEFTMENU</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Leftnavigation</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </catalog_navigation_left>
+        <cart_sidebar>
+            <block>checkout/cart_sidebar</block>
+            <placeholder>CART_SIDEBAR</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Sidebar_Cart</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </cart_sidebar>
+        <minicart>
+            <block>checkout/cart_minicart</block>
+            <placeholder>MINICART</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Minicart</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </minicart>
+        <compare_list_sidebar>
+            <block>catalog/product_compare_sidebar</block>
+            <placeholder>COMPARELIST_SIDEBAR</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Sidebar_Comparelist</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </compare_list_sidebar>
+        <messages>
+            <block>core/messages</block>
+            <placeholder>MESSAGES</placeholder>
+            <name>messages</name>
+            <container>Enterprise_PageCache_Model_Container_Messages</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </messages>
+        <global_messages>
+            <block>core/messages</block>
+            <placeholder>GLOBAL_MESSAGES</placeholder>
+            <name>global_messages</name>
+            <container>Enterprise_PageCache_Model_Container_Messages</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </global_messages>
+        <recently_compared_sidebar>
+            <block>reports/product_compared</block>
+            <placeholder>RECENTLYCOMPARED_SIDEBAR</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Sidebar_Recentlycompared</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </recently_compared_sidebar>
+        <welcome_message>
+            <block>page/html_welcome</block>
+            <placeholder>WELCOME</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Welcome</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </welcome_message>
+        <account_links>
+            <block>page/template_links</block>
+            <name>account.links</name>
+            <placeholder>ACCLINKS</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Accountlinks</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </account_links>
+        <wishlist>
+            <block>wishlist/customer_sidebar</block>
+            <placeholder>WISHLIST</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Wishlist</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </wishlist>
+        <orders>
+            <block>sales/reorder_sidebar</block>
+            <placeholder>ORDERS</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Orders</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </orders>
+        <wishlist_links>
+            <block>wishlist/links</block>
+            <placeholder>WISHLISTLINKS</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Wishlistlinks</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </wishlist_links>
+        <poll_activepoll>
+            <block>poll/activePoll</block>
+            <placeholder>POLL</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Sidebar_Poll</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </poll_activepoll>
+        <widget_enterprise_banner>
+            <block>enterprise_banner/widget_banner</block>
+            <placeholder>WIDGET_ENTERPRISE_BANNER</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Banner</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </widget_enterprise_banner>
+        <catalog_product_item_related>
+            <block>enterprise_targetrule/catalog_product_item</block>
+            <name>catalog.product.related.item</name>
+            <placeholder>CATALOG_PRODUCT_ITEM_RELATED</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Item_Related</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </catalog_product_item_related>
+        <catalog_product_item_upsell>
+            <block>enterprise_targetrule/catalog_product_item</block>
+            <name>catalog.product.upsell.item</name>
+            <placeholder>CATALOG_PRODUCT_ITEM_UPSELL</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Item_Upsell</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </catalog_product_item_upsell>
+        <giftcard_form>
+            <block>enterprise_giftcard/catalog_product_view_type_giftcard_form</block>
+            <name>product.info.giftcard.form</name>
+            <placeholder>GIFTCARD</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Giftcard</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </giftcard_form>
+        <catalog_product_list_related>
+            <block>catalog/product_list_related</block>
+            <name>catalog.product.related</name>
+            <placeholder>CATALOG_PRODUCT_LIST_RELATED</placeholder>
+            <container>Enterprise_PageCache_Model_Container_CatalogProductList</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </catalog_product_list_related>
+        <targetrule_catalog_product_list_related>
+            <block>enterprise_targetrule/catalog_product_list_related</block>
+            <name>catalog.product.related</name>
+            <placeholder>TARGETRULE_CATALOG_PRODUCT_LIST_RELATED</placeholder>
+            <container>Enterprise_PageCache_Model_Container_List_Related</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </targetrule_catalog_product_list_related>
+        <catalog_product_list_upsell>
+            <block>catalog/product_list_upsell</block>
+            <name>product.info.upsell</name>
+            <placeholder>CATALOG_PRODUCT_LIST_UPSELL</placeholder>
+            <container>Enterprise_PageCache_Model_Container_CatalogProductList</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </catalog_product_list_upsell>
+        <targetrule_catalog_product_list_upsell>
+            <block>enterprise_targetrule/catalog_product_list_upsell</block>
+            <name>product.info.upsell</name>
+            <placeholder>TARGETRULE_CATALOG_PRODUCT_LIST_UPSELL</placeholder>
+            <container>Enterprise_PageCache_Model_Container_List_Upsell</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </targetrule_catalog_product_list_upsell>
+        <widget_recently_compared>
+            <block>reports/product_widget_compared</block>
+            <placeholder>WIDGET_RECENTLY_COMPARED_GG</placeholder>
+            <container>Enterprise_PageCache_Model_Container_Sidebar_Recentlycompared</container>
+            <cache_lifetime>86400</cache_lifetime>
+        </widget_recently_compared>
+    </placeholders>
+</config>

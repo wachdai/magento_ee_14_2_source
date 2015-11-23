@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<tabs>
+    <banner_properties>
+        <class>\Mage\Adminhtml\Test\Block\Widget\Tab</class>
+        <selector>#banner_info_tabs_properties_section</selector>
+        <strategy>css selector</strategy>
+        <fields>
+            <is_enabled>
+                <input>select</input>
+            </is_enabled>
+            <banner_properties_is_types>
+                <selector>#banner_properties_is_types</selector>
+                <input>select</input>
+            </banner_properties_is_types>
+            <types>
+                <selector>#banner_properties_types</selector>
+                <input>multiselect</input>
+            </types>
+            <use_customer_segment>
+                <input>select</input>
+            </use_customer_segment>
+            <customer_segment>
+                <selector>[name="customer_segment_ids[]"]</selector>
+                <input>multiselect</input>
+            </customer_segment>
+        </fields>
+    </banner_properties>
+    <content>
+        <class>\Enterprise\Banner\Test\Block\Adminhtml\Banner\Edit\Tab\Content</class>
+        <selector>#banner_info_tabs_content_section</selector>
+        <strategy>css selector</strategy>
+        <fields>
+            <store_contents_not_use>
+                <selector>[name="store_contents_not_use[0]"]</selector>
+                <input>checkbox</input>
+            </store_contents_not_use>
+            <store_content>
+                <selector>[name="store_contents[0]"]</selector>
+            </store_content>
+            <store_view>
+                <selector>[name="store_contents_not_use[%d]"]</selector>
+                <input>checkbox</input>
+            </store_view>
+            <store_view_content>
+                <selector>[name="store_contents[%d]"]</selector>
+            </store_view_content>
+        </fields>
+    </content>
+    <related_promotions>
+        <class>\Enterprise\Banner\Test\Block\Adminhtml\Banner\Edit\Tab\RelatedPromotions</class>
+        <selector>#banner_info_tabs_promotions_section</selector>
+        <strategy>css selector</strategy>
+    </related_promotions>
+</tabs>

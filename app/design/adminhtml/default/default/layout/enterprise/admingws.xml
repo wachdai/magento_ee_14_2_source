@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<layout>
+    <!-- add gws multiselect to admin roles edit page -->
+    <adminhtml_permissions_role_editrole>
+        <reference name="adminhtml.permissions.tab.rolesedit">
+            <block type="enterprise_admingws/adminhtml_permissions_tab_rolesedit_gws" as="gws" template="enterprise/admingws/permissions/rolesedit/gws.phtml"/>
+        </reference>
+    </adminhtml_permissions_role_editrole>
+
+    <!-- override roles grid to add website/store columns -->
+    <adminhtml_permissions_role_index>
+        <reference name="adminhtml.permission.role.index">
+            <action method="unsetChild"><alias>grid</alias></action>
+            <block type="enterprise_admingws/adminhtml_permissions_grid_role" name="adminhtml.permission.role.grid" as="grid"/>
+        </reference>
+    </adminhtml_permissions_role_index>
+    <adminhtml_permissions_role_rolegrid>
+        <block type="enterprise_admingws/adminhtml_permissions_grid_role" name="adminhtml.permission.role.grid"/>
+    </adminhtml_permissions_role_rolegrid>
+<!--
+    <adminhtml_system_config_edit>
+        <reference name="left">
+            <remove name="adminhtml.system.config.switcher"/>
+            <block type="enterprise_permissions/system_config_switcher" name="enterprise.system.config.switcher" template="enterprise/permissions/system/config/switcher.phtml" before="-"/>
+        </reference>
+    </adminhtml_system_config_edit>
+
+    <adminhtml_catalog_product_edit>
+        <reference name="left">
+            <remove name="store_switcher"/>
+            <block type="enterprise_permissions/store_switcher" name="permissions_store_switcher" template="enterprise/permissions/store/switcher.phtml" before="-"></block>
+        </reference>
+    </adminhtml_catalog_product_edit>
+
+    <adminhtml_catalog_product_index>
+        <reference name="products_list">
+            <remove name="store_switcher"/>
+            <block type="enterprise_permissions/store_switcher" name="permissions_store_switcher" as="store_switcher" template="enterprise/permissions/store/switcher.phtml">
+                <action method="setUseConfirm"><params>0</params></action>
+            </block>
+        </reference>
+    </adminhtml_catalog_product_index>
+
+    <adminhtml_dashboard_index>
+        <reference name="dashboard">
+            <remove name="store_switcher"/>
+            <block type="enterprise_permissions/store_switcher" name="permissions_store_switcher" as="store_switcher" template="enterprise/permissions/store/switcher.phtml">
+                <action method="setUseConfirm"><params>0</params></action>
+            </block>
+        </reference>
+    </adminhtml_dashboard_index>
+
+    <adminhtml_catalog_product_action_attribute_edit>
+        <reference name="left">
+            <remove name="store_switcher"/>
+            <block type="enterprise_permissions/store_switcher" name="permissions_store_switcher" template="enterprise/permissions/store/switcher.phtml" before="-"></block>
+        </reference>
+    </adminhtml_catalog_product_action_attribute_edit>
+-->
+</layout>

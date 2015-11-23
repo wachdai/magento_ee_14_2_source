@@ -1,0 +1,60 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+ ?>
+<?php
+/**
+ * @see Enterprise_Logging_Block_Adminhtml_System_Config_Actions
+ */
+?>
+
+<input type="hidden" name="<?php echo $this->getNamePrefix() ?>[__empty]" value="1" id="<?php echo $this->getHtmlId() ?>" />
+<ul class="checkboxes">
+<?php foreach ($this->getLabels() as $name => $label): ?>
+    <li>
+        <input type="checkbox" value="1" name="<?php echo $this->getNamePrefix() ?>[<?php echo $name ?>]" id="<?php echo $this->getHtmlId() . '_' . $name ?>"<?php echo ($this->getIsChecked($name) ? ' checked="checked"' : '') ?>/><label for="<?php echo $this->getHtmlId() . '_' . $name ?>">
+            <?php echo $label ?>
+        </label>
+    </li>
+<?php endforeach;?>
+</ul>
+
+<script type="text/javascript">
+//<![CDATA[
+    var enterpriseLoggingActionsLabel = $('<?php echo $this->getHtmlId() ?>').up('table').select('td.label label');
+    if (enterpriseLoggingActionsLabel) {
+        var enterpriseLoggingActions = $('<?php echo $this->getHtmlId() ?>').parentNode.select('ul.checkboxes input');
+        if (enterpriseLoggingActions) {
+            var enterpriseLoggingShouldBeChecked = true;
+            Event.observe(enterpriseLoggingActionsLabel[0], 'click', function () {
+                for (var i = 0; i < enterpriseLoggingActions.length; i++) {
+                    enterpriseLoggingActions[i].checked = enterpriseLoggingShouldBeChecked;
+                }
+                enterpriseLoggingShouldBeChecked = !enterpriseLoggingShouldBeChecked;
+            });
+        }
+    }
+//]]>
+</script>

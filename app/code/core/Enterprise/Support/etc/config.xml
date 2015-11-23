@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Support
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_Support>
+            <version>1.13.1.0</version>
+        </Enterprise_Support>
+    </modules>
+    <global>
+        <helpers>
+            <enterprise_support>
+                <class>Enterprise_Support_Helper</class>
+            </enterprise_support>
+        </helpers>
+        <models>
+            <enterprise_support>
+                <class>Enterprise_Support_Model</class>
+                <resourceModel>enterprise_support_resource</resourceModel>
+            </enterprise_support>
+            <enterprise_support_resource>
+                <class>Enterprise_Support_Model_Resource</class>
+                <entities>
+                    <backup>
+                        <table>enterprise_support_backup</table>
+                    </backup>
+                    <backup_item>
+                        <table>enterprise_support_backup_item</table>
+                    </backup_item>
+                    <sysreport>
+                        <table>enterprise_support_sysreport</table>
+                    </sysreport>
+                </entities>
+            </enterprise_support_resource>
+        </models>
+        <blocks>
+            <enterprise_support>
+                <class>Enterprise_Support_Block</class>
+            </enterprise_support>
+        </blocks>
+        <resources>
+            <enterprise_support_setup>
+                <setup>
+                    <module>Enterprise_Support</module>
+                </setup>
+            </enterprise_support_setup>
+        </resources>
+        <sysreport>
+            <types>
+                <general translate="title">
+                    <title>General</title>
+                    <priority>10</priority>
+                    <commands>version,datacount,cachestatus,indexstatus,compilerstatus</commands>
+                </general>
+                <data translate="title">
+                    <title>Data</title>
+                    <priority>20</priority>
+                    <commands>categoryduplicates,productduplicates,orderduplicates,userduplicates,corruptedcategoriesdata</commands>
+                </data>
+                <environment translate="title">
+                    <title>Environment</title>
+                    <priority>30</priority>
+                    <commands>environment,mysqlstatus</commands>
+                </environment>
+                <modules translate="title">
+                    <title>Modules</title>
+                    <priority>40</priority>
+                    <commands>custommodules,disabledmodules,coremodules,eemodules,allmodules</commands>
+                </modules>
+                <configuration translate="title">
+                    <title>Configuration</title>
+                    <priority>50</priority>
+                    <commands>configuration,localxml,etcenterprisexml,etcconfigxml,shippingmethods,paymentmethods,paymentsmatrix</commands>
+                </configuration>
+                <rewrites translate="title">
+                    <title>Rewrites</title>
+                    <priority>60</priority>
+                    <commands>classrewrites,classrewriteconflicts,hardclassrewrites,controllerrewrites,routerrewrites</commands>
+                </rewrites>
+                <files translate="title">
+                    <title>Files</title>
+                    <priority>70</priority>
+                    <commands>corruptedfiles,missingfiles,newfiles,patches,filepermissions</commands>
+                </files>
+                <dbtables translate="title">
+                    <title>DB Tables</title>
+                    <priority>80</priority>
+                    <commands>corruptedtables,missingtables,newtables,dbroutines,missingdbroutines,newdbroutines,dbtriggers,missingdbtriggers,newdbtriggers,tablesstatus</commands>
+                </dbtables>
+                <logs translate="title">
+                    <title>Logs</title>
+                    <priority>90</priority>
+                    <commands>logfiles</commands>
+                </logs>
+                <attributes>
+                    <title>Attributes</title>
+                    <priority>100</priority>
+                    <commands>userattributes,newattributes,entitytypes,allattributes,categoryattributes,productattributes,customerattributes,customeraddressattributes,rmaitemattributes</commands>
+                </attributes>
+                <events translate="title">
+                    <title>Events</title>
+                    <priority>110</priority>
+                    <commands>customevents,coreevents,eeevents,allevents</commands>
+                </events>
+                <cron translate="title">
+                    <title>Cron</title>
+                    <priority>120</priority>
+                    <commands>cronstatus,cronerrors,cronschedules,customcronjobs,corecronjobs,eecronjobs,allcronjobs</commands>
+                </cron>
+                <design translate="title">
+                    <title>Design</title>
+                    <priority>130</priority>
+                    <commands>themes,skins,themesconfig</commands>
+                </design>
+                <stores translate="title">
+                    <title>Stores</title>
+                    <priority>140</priority>
+                    <commands>websitestree,websiteslist,storeslist,storeviewslist</commands>
+                </stores>
+            </types>
+        </sysreport>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_support>
+                    <file>enterprise/support.xml</file>
+                </enterprise_support>
+            </updates>
+        </layout>
+        <events>
+            <enterprise_support_backups_controller_index_action>
+                <observers>
+                    <enterprise_support>
+                        <class>enterprise_support/observer</class>
+                        <method>updateStatus</method>
+                    </enterprise_support>
+                </observers>
+            </enterprise_support_backups_controller_index_action>
+        </events>
+        <translate>
+            <modules>
+                <Enterprise_Support>
+                    <files>
+                        <default>Enterprise_Support.csv</default>
+                    </files>
+                </Enterprise_Support>
+            </modules>
+        </translate>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <enterprise_support before="Mage_Adminhtml">Enterprise_Support_Adminhtml</enterprise_support>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <default>
+        <enterprise_support>
+            <backup_items>
+                <code>
+                    <class>enterprise_support/backup_item_code</class>
+                    <params>
+                        <output_file_extension>tar.gz</output_file_extension>
+                        <type>1</type>
+                    </params>
+                </code>
+                <db>
+                    <class>enterprise_support/backup_item_db</class>
+                    <params>
+                        <output_file_extension>sql.gz</output_file_extension>
+                        <type>2</type>
+                    </params>
+                </db>
+            </backup_items>
+            <scripts_path>shell/support/</scripts_path>
+            <output_path>var/support/</output_path>
+        </enterprise_support>
+    </default>
+</config>

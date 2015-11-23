@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Reward
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<logging>
+    <enterprise_reward_rate translate="label">
+        <label>Reward Points Rates</label>
+        <expected_models>
+            <enterprise_reward__reward_rate/>
+        </expected_models>
+        <actions>
+            <adminhtml_reward_rate_edit>
+                <action>edit</action>
+            </adminhtml_reward_rate_edit>
+            <adminhtml_reward_rate_save>
+                <action>save</action>
+            </adminhtml_reward_rate_save>
+            <adminhtml_reward_rate_delete>
+                <action>delete</action>
+            </adminhtml_reward_rate_delete>
+        </actions>
+    </enterprise_reward_rate>
+
+    <customer>
+        <actions>
+            <adminhtml_customer_save>
+                <expected_models extends="merge">
+                    <enterprise_reward__reward_history>
+                        <skip_data>
+                            <history_id/>
+                            <action/>
+                            <additional_data/>
+                            <notification_sent/>
+                            <created_at/>
+                            <expired_at/>
+                        </skip_data>
+                    </enterprise_reward__reward_history>
+                </expected_models>
+            </adminhtml_customer_save>
+        </actions>
+    </customer>
+    <!--enterprise_reward translate="label">
+        <label>Reward Points balance</label>
+        <expected_models>
+            <enterprise_reward__reward_history>
+                <skip_data>
+                    <new_password/>
+                    <password/>
+                    <password_hash/>
+                </skip_data>
+            </enterprise_reward__reward_history>
+        </expected_models>
+        <actions>
+            <adminhtml_customer_save>
+                <expected_models extends="merge">
+                    <enterprise_reward__reward_history/>
+                </expected_models>
+            </adminhtml_customer_save>
+        </actions>
+    </enterprise_reward-->
+</logging>

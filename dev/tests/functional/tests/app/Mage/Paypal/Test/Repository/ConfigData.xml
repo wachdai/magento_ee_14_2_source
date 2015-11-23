@@ -1,0 +1,401 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/Magento/Mtf/Repository/etc/repository.xsd">
+    <repository class="Mage\Core\Test\Repository\ConfigData">
+        <dataset name="payflow_express_authorization_line_items">
+            <field path="payment/payflow_link_payflow_link/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/payflow_link_payflow_link/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_express_checkout/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_required/enable_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/line_items_enabled" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="payflow_express_authorization_line_items_rollback">
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/payflow_link_required/enable_express_checkout" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/line_items_enabled" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="payflow_express_authorization_specificcountry_us">
+            <field path="payment/payflow_link_payflow_link/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/payflow_link_payflow_link/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_express_checkout/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_required/enable_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/allowspecific" scope="payment" scope_id="1" label="Specific Countries" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/specificcountry" scope="payment" scope_id="1" xsi:type="array">
+                <item label="United States" xsi:type="string">US</item>
+            </field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="payflow_express_authorization_specificcountry_us_rollback">
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/payflow_link_required/enable_express_checkout" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/allowspecific" scope="payment" scope_id="1" label="All Allowed Countries" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="payflow_express_sale">
+            <field path="payment/payflow_link_payflow_link/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/payflow_link_payflow_link/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_express_checkout/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link_express_checkout/payment_action" scope="payment" scope_id="1" label="Sale" xsi:type="string">Sale</field>
+            <field path="payment/payflow_link_required/enable_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="payflow_express_sale_rollback">
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/payflow_link_required/enable_express_checkout" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_payflow_link_express_checkout/payment_action" scope="payment" scope_id="1" label="Authorization" xsi:type="string">Authorization</field>
+        </dataset>
+        <dataset name="payflow_express_sale_specificcountry_gb_line_items">
+            <field path="payment/payflow_link_payflow_link/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/payflow_link_payflow_link/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/sandbox_flag" scope="payment" scope_id="1" xsi:type="string">1</field>
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_express_checkout/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_express_checkout/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_required/enable_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/allowspecific" scope="payment" scope_id="1" label="Specific Countries" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/specificcountry" scope="payment" scope_id="1" xsi:type="array">
+                <item label="United States" xsi:type="string">US</item>
+            </field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="payflow_express_sale_specificcountry_gb_line_items_rollback">
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/payflow_link_required/enable_express_checkout" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_payflow_link_express_checkout_advanced/allowspecific" scope="payment" scope_id="1" label="All Allowed Countries" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_express_sale_specificcountry_us_shipping_options_mark">
+            <field path="payment/express_checkout_required_express_checkout/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express_checkout_required_express_checkout/api_authentication" scope="payment" scope_id="1" label="API Signature" xsi:type="string">0</field>
+            <field path="payment/express_checkout_required_express_checkout/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express_checkout_required_express_checkout/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express_checkout_required_express_checkout/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express_checkout_required_express_checkout/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/express_checkout_required_express_checkout/use_proxy" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/express_checkout_required/enable_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_ec_advanced/allowspecific" scope="payment" scope_id="1" label="Specific Countries" xsi:type="string">1</field>
+            <field path="payment/settings_ec_advanced/specificcountry" scope="payment" scope_id="1" xsi:type="array">
+                <item label="United States" xsi:type="string">US</item>
+            </field>
+            <field path="payment/settings_ec_advanced/transfer_shipping_options" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_ec_advanced/solution_type" scope="payment" scope_id="1" label="No" xsi:type="string">Mark</field>
+            <field path="payment/settings_ec_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_express_sale_specificcountry_us_shipping_options_mark_rollback">
+            <field path="payment/express_checkout_required/enable_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_ec_advanced/allowspecific" scope="payment" scope_id="1" label="All Allowed Countries" xsi:type="string">0</field>
+            <field path="payment/settings_ec_advanced/transfer_shipping_options" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_ec_advanced/solution_type" scope="payment" scope_id="1" label="No" xsi:type="string">Mark</field>
+        </dataset>
+        <dataset name="paypal_express_order_line_items_mark_require_billing_address">
+            <field path="payment/express_checkout_required_express_checkout/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express_checkout_required_express_checkout/api_authentication" scope="payment" scope_id="1" label="API Signature" xsi:type="string">0</field>
+            <field path="payment/express_checkout_required_express_checkout/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express_checkout_required_express_checkout/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express_checkout_required_express_checkout/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express_checkout_required_express_checkout/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/express_checkout_required_express_checkout/use_proxy" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/express_checkout_required/enable_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_ec_advanced/line_items_enabled" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_ec_advanced/require_billing_address" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_ec_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_express_order_line_items_mark_require_billing_address_rollback">
+            <field path="payment/express_checkout_required/enable_express_checkout" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_ec_advanced/line_items_enabled" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_ec_advanced/require_billing_address" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_standard">
+            <field path="payment/wps_express_checkout_required_express_checkout/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wps_express_checkout_required_express_checkout/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wps_express_checkout_required_express_checkout/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wps_express_checkout_required_express_checkout/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wps_express_checkout_required_express_checkout/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wps_express_checkout_required/enable_wps_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_wps_express_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_wps_express_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/express_checkout_required/enable_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+        </dataset>
+        <dataset name="paypal_standard_rollback">
+            <field path="payment/wps_express_checkout_required/enable_wps_express_checkout" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/express_checkout_required/enable_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payments_pro">
+            <field path="payment/wpp_and_express_checkout/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_required_settings/enable_wpp" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_required_settings/enable_express_checkout_bml" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_settings/payment_action" scope="payment" scope_id="1" label="Authorization" xsi:type="string">Authorization</field>
+            <field path="payment/wpp_settings_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_settings_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payments_pro_rollback">
+            <field path="payment/wpp_required_settings/enable_wpp" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/wpp_required_settings/enable_express_checkout_bml" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payments_pro_action_sale">
+            <field path="payment/wpp_and_express_checkout/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_required_settings/enable_wpp" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_required_settings/enable_express_checkout_bml" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_settings/payment_action" scope="payment" scope_id="1" label="Sale" xsi:type="string">Sale</field>
+            <field path="payment/wpp_settings_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_settings_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payments_pro_action_sale_rollback">
+            <field path="payment/wpp_required_settings/enable_wpp" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/wpp_required_settings/enable_express_checkout_bml" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payflow_pro">
+            <field path="payment/paypal_payflow_api_settings/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/paypal_payflow_api_settings/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/paypal_payflow_api_settings/use_proxy" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/paypal_payflow_required/enable_paypal_payflow" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/paypal_payflow_required/enable_express_checkout_bml_uk" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_paypal_payflow/payment_action" scope="payment" scope_id="1" label="Authorization" xsi:type="string">Authorization</field>
+            <field path="payment/settings_paypal_payflow_advanced/allowspecific" scope="payment" scope_id="1" label="All Allowed Countries" xsi:type="string">0</field>
+            <field path="payment/settings_paypal_payflow_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_paypal_payflow_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payflow_pro_rollback">
+            <field path="payment/paypal_payflow_required/enable_paypal_payflow" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/paypal_payflow_required/enable_express_checkout_bml_uk" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payflow_pro_action_sale">
+            <field path="payment/paypal_payflow_api_settings/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/paypal_payflow_api_settings/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/paypal_payflow_required/enable_paypal_payflow" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/paypal_payflow_required/enable_express_checkout_bml_uk" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_paypal_payflow/payment_action" scope="payment" scope_id="1" label="Sale" xsi:type="string">Sale</field>
+            <field path="payment/settings_paypal_payflow_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_paypal_payflow_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payflow_pro_action_sale_rollback">
+            <field path="payment/paypal_payflow_required/enable_paypal_payflow" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/paypal_payflow_required/enable_express_checkout_bml_uk" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payflow_link">
+            <field path="payment/payflow_link_payflow_link/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/payflow_link_payflow_link/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link/payment_action" scope="payment" scope_id="1" label="Authorization" xsi:type="string">Authorization</field>
+            <field path="payment/settings_payflow_link_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payflow_link_rollback">
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payflow_link_action_sale">
+            <field path="payment/payflow_link_payflow_link/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/payflow_link_payflow_link/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payflow_link_payflow_link/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link/payment_action" scope="payment" scope_id="1" label="Sale" xsi:type="string">Sale</field>
+            <field path="payment/settings_payflow_link_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payflow_link_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payflow_link_action_sale_rollback">
+            <field path="payment/payflow_link_required/enable_payflow_link" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_advanced">
+            <field path="payment/payments_advanced/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/payments_advanced/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payments_advanced/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payments_advanced/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payments_advanced/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/express/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/required_settings/enable_payflow_advanced" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/required_settings/enable_express_checkout_bml" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payments_advanced/title" scope="payment" scope_id="1" xsi:type="string">Credit Card (PayPal Advanced)</field>
+            <field path="payment/settings_payments_advanced/payment_action" scope="payment" scope_id="1" label="Authorization" xsi:type="string">Authorization</field>
+            <field path="payment/settings_payments_advanced_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payments_advanced_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_express_checkout/payment_action" scope="payment" scope_id="1" label="Authorization" xsi:type="string">Authorization</field>
+            <field path="payment/settings_express_checkout_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_express_checkout_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_advanced_rollback">
+            <field path="payment/required_settings/enable_payflow_advanced" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/required_settings/enable_express_checkout_bml" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_advanced_action_sale">
+            <field path="payment/payments_advanced/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/payments_advanced/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payments_advanced/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payments_advanced/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/payments_advanced/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/express/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/express/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/required_settings/enable_payflow_advanced" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/required_settings/enable_express_checkout_bml" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payments_advanced/title" scope="payment" scope_id="1" xsi:type="string">Credit Card (PayPal Advanced)</field>
+            <field path="payment/settings_payments_advanced/payment_action" scope="payment" scope_id="1" label="Sale" xsi:type="string">Sale</field>
+            <field path="payment/settings_payments_advanced_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_payments_advanced_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_express_checkout/payment_action" scope="payment" scope_id="1" label="Authorization" xsi:type="string">Authorization</field>
+            <field path="payment/settings_express_checkout_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_express_checkout_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_advanced_action_sale_rollback">
+            <field path="payment/required_settings/enable_payflow_advanced" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/required_settings/enable_express_checkout_bml" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_hosted_solution">
+            <field path="payment/account/merchant_country" scope="payment" scope_id="1" label="United Kingdom" xsi:type="string">GB</field>
+            <field path="payment/pphs_required_settings_pphs/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/pphs_required_settings_pphs/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/pphs_required_settings_pphs/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/pphs_required_settings_pphs/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/pphs_required_settings_pphs/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/pphs_required_settings/pphs_enable" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/pphs_settings/payment_action" scope="payment" scope_id="1" label="Authorization" xsi:type="string">Authorization</field>
+            <field path="payment/pphs_settings_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/pphs_settings_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_hosted_solution_rollback">
+            <field path="payment/account/merchant_country" scope="payment" scope_id="1" label="United States" xsi:type="string">US</field>
+            <field path="payment/pphs_required_settings/pphs_enable" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_hosted_solution_action_sale">
+            <field path="payment/account/merchant_country" scope="payment" scope_id="1" label="United Kingdom" xsi:type="string">GB</field>
+            <field path="payment/pphs_required_settings_pphs/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/pphs_required_settings_pphs/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/pphs_required_settings_pphs/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/pphs_required_settings_pphs/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/pphs_required_settings_pphs/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/pphs_required_settings/pphs_enable" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/pphs_settings/payment_action" scope="payment" scope_id="1" label="Sale" xsi:type="string">Sale</field>
+            <field path="payment/pphs_settings_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/pphs_settings_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_hosted_solution_action_sale_rollback">
+            <field path="payment/account/merchant_country" scope="payment" scope_id="1" label="United States" xsi:type="string">US</field>
+            <field path="payment/pphs_required_settings/pphs_enable" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payments_pro_3d_secure">
+            <field path="payment/wpp_and_express_checkout/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/api_username" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/api_password" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/api_signature" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/wpp_and_express_checkout/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_required_settings/enable_wpp" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_required_settings/enable_express_checkout_bml" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_settings/payment_action" scope="payment" scope_id="1" label="Authorization" xsi:type="string">Authorization</field>
+            <field path="payment/wpp_settings_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_settings_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/wpp_settings_advanced/useccv" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/wpp_settings_advanced/centinel" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/express_checkout_required/enable_express_checkout" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/wpp_settings_express_checkout_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="paypal_payments_pro_3d_secure_rollback">
+            <field path="payment/wpp_required_settings/enable_wpp" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/wpp_required_settings/enable_express_checkout_bml" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/wpp_settings_advanced/centinel" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/express_checkout_required/enable_express_checkout" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/wpp_settings_advanced/useccv" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+        </dataset>
+        <dataset name="paypal_payflow_pro_3d_secure">
+            <field path="payment/paypal_payflow_api_settings/business_account" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/partner" scope="payment" scope_id="1" xsi:type="string">PayPal</field>
+            <field path="payment/paypal_payflow_api_settings/user" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/vendor" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/pwd" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/paypal_payflow_api_settings/sandbox_flag" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/paypal_payflow_api_settings/use_proxy" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/paypal_payflow_required/enable_paypal_payflow" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/paypal_payflow_required/enable_express_checkout_bml_uk" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_paypal_payflow/payment_action" scope="payment" scope_id="1" label="Authorization" xsi:type="string">Authorization</field>
+            <field path="payment/settings_paypal_payflow_advanced/allowspecific" scope="payment" scope_id="1" label="All Allowed Countries" xsi:type="string">0</field>
+            <field path="payment/settings_paypal_payflow_advanced/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_paypal_payflow_advanced/verify_peer" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_paypal_payflow_advanced/centinel" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/settings_paypal_payflow_advanced/useccv" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+        </dataset>
+        <dataset name="paypal_payflow_pro_3d_secure_rollback">
+            <field path="payment/paypal_payflow_required/enable_paypal_payflow" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/paypal_payflow_required/enable_express_checkout_bml_uk" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/settings_paypal_payflow_advanced/centinel" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+    </repository>
+</config>

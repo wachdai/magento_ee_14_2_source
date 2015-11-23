@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<layout>
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tabs">
+            <block type="enterprise_customerbalance/adminhtml_customer_edit_tab_customerbalance" name="customerbalance"/>
+            <action method="addTab"><name>customerbalance</name><block>customerbalance</block></action>
+        </reference>
+        <reference name="js">
+            <block type="enterprise_customerbalance/adminhtml_customer_edit_tab_customerbalance_js" template="enterprise/customerbalance/edit/js.phtml" name="customerbalance_edit_js">
+                <action method="setPrefix"><value>_customerbalance</value></action>
+            </block>
+        </reference>
+
+        <reference name="customer_edit_tab_view">
+            <block type="enterprise_customerbalance/adminhtml_customer_edit_tab_customerbalance_balance" name="customerbalance.balance" template="enterprise/customerbalance/balance.phtml" before="-">
+                <block type="enterprise_customerbalance/adminhtml_customer_edit_tab_customerbalance_balance_grid" name="customer.balance.grid" as="grid"/>
+            </block>
+        </reference>
+    </adminhtml_customer_edit>
+
+
+    <adminhtml_customerbalance_form>
+        <block type="core/text_list" name="root">
+            <block type="enterprise_customerbalance/adminhtml_customer_edit_tab_customerbalance_balance" name="customerbalance.balance" template="enterprise/customerbalance/balance.phtml">
+                <block type="enterprise_customerbalance/adminhtml_customer_edit_tab_customerbalance_balance_grid" name="customer.balance.grid" as="grid"/>
+            </block>
+            <block type="enterprise_customerbalance/adminhtml_customer_edit_tab_customerbalance_form" name="customerbalance.form"/>
+            <block type="enterprise_customerbalance/adminhtml_customer_edit_tab_customerbalance_balance_history" name="customerbalance.history"/>
+        </block>
+    </adminhtml_customerbalance_form>
+
+    <adminhtml_sales_order_view>
+        <reference name="order_totals">
+            <block type="adminhtml/sales_order_totals_item" name="customerbalance" template="enterprise/customerbalance/sales/order/totals/customerbalance.phtml">
+                <action method="setSourceField"><value>customer_balance_amount</value></action>
+                <action method="setLabel"><value>Store Credit</value></action>
+            </block>
+            <block type="adminhtml/sales_order_totals_item" name="customerbalance_refunded" template="sales/order/totals/item.phtml">
+                <action method="setSourceField"><value>customer_balance_total_refunded</value></action>
+                <action method="setLabel"><value>Refunded to Store Credit</value></action>
+                <action method="setDisplayArea"><value>footer</value></action>
+                <action method="setStrong"><flag>true</flag></action>
+                <action method="setHtmlClass"><class>emph</class></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_invoice_new>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="customerbalance" template="enterprise/customerbalance/sales/order/totals/customerbalance.phtml" after="-">
+                <action method="setSourceField"><value>customer_balance_amount</value></action>
+                <action method="setLabel"><value>Store Credit</value></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="customerbalance" template="enterprise/customerbalance/sales/order/totals/customerbalance.phtml" after="-">
+                <action method="setSourceField"><value>customer_balance_amount</value></action>
+                <action method="setLabel"><value>Store Credit</value></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_totals">
+            <block type="adminhtml/sales_order_totals_item" name="customerbalance" template="enterprise/customerbalance/sales/order/totals/customerbalance.phtml" after="-">
+                <action method="setSourceField"><value>customer_balance_amount</value></action>
+                <action method="setLabel"><value>Store Credit</value></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+
+    <adminhtml_sales_order_create_load_block_billing_method>
+        <reference name="billing_method">
+            <block type="enterprise_customerbalance/adminhtml_sales_order_create_payment" template="enterprise/customerbalance/sales/order/create/payment.phtml" name="customerbalance" before="-" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_billing_method>
+
+    <adminhtml_sales_order_create_load_block_data>
+        <reference name="billing_method">
+            <block type="enterprise_customerbalance/adminhtml_sales_order_create_payment" template="enterprise/customerbalance/sales/order/create/payment.phtml" name="customerbalance" before="-" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_data>
+
+    <adminhtml_sales_order_create_index>
+        <reference name="billing_method">
+            <block type="enterprise_customerbalance/adminhtml_sales_order_create_payment" template="enterprise/customerbalance/sales/order/create/payment.phtml" name="customerbalance" before="-" />
+        </reference>
+    </adminhtml_sales_order_create_index>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="creditmemo_totals">
+            <block type="adminhtml/sales_order_totals_item" name="customerbalance" template="enterprise/customerbalance/sales/creditmemo/totals/customerbalance.phtml" after="-" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="creditmemo_totals">
+            <block type="adminhtml/sales_order_totals_item" name="customerbalance" template="enterprise/customerbalance/sales/creditmemo/totals/customerbalance.phtml" after="-" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_totals">
+            <block type="adminhtml/sales_order_totals_item" name="customerbalance" template="enterprise/customerbalance/sales/creditmemo/totals/view.phtml" after="-" />
+            <block type="adminhtml/sales_order_totals_item" name="customerbalance_refunded" template="sales/order/totals/item.phtml">
+                <action method="setSourceField"><value>customer_balance_total_refunded</value></action>
+                <action method="setAfterCondition"><condition>last</condition></action>
+                <action method="setLabel"><value>Refunded to Store Credit</value></action>
+                <action method="setDisplayArea"><value>footer</value></action>
+                <action method="setStrong"><flag>true</flag></action>
+            </block>
+        </reference>
+        <!--<reference name="footer">
+            <block type="adminhtml/sales_order_totals_item" name="customerbalance_refunded" template="sales/order/totals/item.phtml" after="-">
+                <action method="setSourceField"><value>customer_balance_total_refunded</value></action>
+                <action method="setLabel"><value>Refunded to Store Credit</value></action>
+            </block>
+        </reference>-->
+    </adminhtml_sales_order_creditmemo_view>
+
+    <!-- adminhtml_sales_order_creditmemo_new>
+        <reference name="submit_before">
+            <block type="enterprise_customerbalance/adminhtml_sales_order_creditmemo_controls" name="customerbalance" template="enterprise/customerbalance/sales/creditmemo/controls.phtml" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="submit_before">
+            <block type="enterprise_customerbalance/adminhtml_sales_order_creditmemo_controls" name="customerbalance" template="enterprise/customerbalance/sales/creditmemo/controls.phtml" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty -->
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="submit_before">
+            <block type="enterprise_customerbalance/adminhtml_sales_order_creditmemo_controls" name="customerbalance" template="enterprise/customerbalance/sales/creditmemo/refund.phtml" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="submit_before">
+            <block type="enterprise_customerbalance/adminhtml_sales_order_creditmemo_controls" name="customerbalance" template="enterprise/customerbalance/sales/creditmemo/refund.phtml" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+</layout>

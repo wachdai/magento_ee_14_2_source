@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+    name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+            <complexType name="giftcardAccountCreateGiftcardAccountData">
+                <all>
+                    <element name="status" type="xsd:string" />
+                    <element name="date_expires" type="xsd:string" minOccurs="0" />
+                    <element name="website_id" type="xsd:string" />
+                    <element name="balance" type="xsd:string" />
+                    <element name="state" type="xsd:string" minOccurs="0" />
+                    <element name="is_redeemable" type="xsd:string" />
+                </all>
+            </complexType>
+            <complexType name="giftcardAccountCreateNotificationData">
+                <all>
+                    <element name="recipient_name" type="xsd:string" />
+                    <element name="recipient_email" type="xsd:string" />
+                    <element name="recipient_store" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="giftcardAccountEntity">
+                <all>
+                    <element name="giftcard_id" type="xsd:int" minOccurs="0" />
+                    <element name="code" type="xsd:string" minOccurs="0" />
+                    <element name="store_id" type="xsd:int" minOccurs="0" />
+                    <element name="date_created" type="xsd:string" minOccurs="0" />
+                    <element name="expire_date" type="xsd:string" minOccurs="0" />
+                    <element name="is_active" type="xsd:int" minOccurs="0" />
+                    <element name="is_redeemable" type="xsd:int" minOccurs="0" />
+                    <element name="status" type="xsd:string" minOccurs="0" />
+                    <element name="balance" type="xsd:double" minOccurs="0" />
+                    <element name="history" type="typens:giftcardAccountEntityHistoryArray" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="giftcardAccountEntityArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:giftcardAccountEntity[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="giftcardAccountEntityHistory">
+                <all>
+                   <element name="record_id" type="xsd:int" minOccurs="0" />
+                   <element name="date" type="xsd:string" minOccurs="0" />
+                   <element name="action" type="xsd:string" minOccurs="0" />
+                   <element name="balance_delta" type="xsd:double" minOccurs="0" />
+                   <element name="balance" type="xsd:double" minOccurs="0" />
+                   <element name="info" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="giftcardAccountEntityHistoryArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:giftcardAccountEntityHistory[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="giftcardAccountEntityToUpdate">
+                <all>                    
+                    <element name="is_active" type="xsd:boolean" minOccurs="0" />
+                    <element name="is_redeemable" type="xsd:boolean" minOccurs="0" />
+                    <element name="store_id" type="xsd:int" minOccurs="0" />                    
+                    <element name="balance" type="xsd:double" minOccurs="0" />
+                    <element name="date_expires" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+        </schema>
+    </types>
+    <message name="giftcardAccountCreateRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="giftcardAccountData" type="typens:giftcardAccountCreateGiftcardAccountData" />
+        <part name="notificationData" type="typens:giftcardAccountCreateNotificationData" />
+    </message>
+    <message name="giftcardAccountCreateResponse">
+        <part name="createdGiftcardId" type="xsd:string" />
+    </message>
+    <message name="giftcardAccountUpdateRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="giftcard_id" type="xsd:int" />
+        <part name="giftcardData" type="typens:giftcardAccountEntityToUpdate" />
+    </message>
+    <message name="giftcardAccountUpdateResponse">
+        <part name="result" type="xsd:boolean" />
+    </message>
+    <message name="giftcardAccountRemoveRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="giftcardAccountId" type="xsd:string" />
+    </message>
+    <message name="giftcardAccountRemoveResponse">
+        <part name="isRemoved" type="xsd:boolean" />
+    </message>
+    <message name="giftcardAccountListRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="filters" type="typens:filters" />
+    </message>
+    <message name="giftcardAccountListResponse">
+        <part name="result" type="typens:giftcardAccountEntityArray" />
+    </message>
+    <message name="giftcardAccountInfoRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="giftcard_id" type="xsd:int" />
+    </message>
+    <message name="giftcardAccountInfoResponse">
+        <part name="giftcardInfo" type="typens:giftcardAccountEntity" />
+    </message>
+    <portType>
+        <operation name="giftcardAccountCreate">
+            <documentation>Create gift card account</documentation>
+            <input message="typens:giftcardAccountCreateRequest" />
+            <output message="typens:giftcardAccountCreateResponse" />
+        </operation>
+        <operation name="giftcardAccountUpdate">
+            <documentation>Retrieve full gift card account info</documentation>
+            <input message="typens:giftcardAccountUpdateRequest" />
+            <output message="typens:giftcardAccountUpdateResponse" />
+        </operation>
+        <operation name="giftcardAccountRemove">
+            <documentation>Remove gift card account</documentation>
+            <input message="typens:giftcardAccountRemoveRequest" />
+            <output message="typens:giftcardAccountRemoveResponse" />
+        </operation>
+        <operation name="giftcardAccountList">
+            <documentation>Retrieve gift card accounts</documentation>
+            <input message="typens:giftcardAccountListRequest" />
+            <output message="typens:giftcardAccountListResponse" />
+        </operation>
+        <operation name="giftcardAccountInfo">
+            <documentation>Retrieve full gift card account info</documentation>
+            <input message="typens:giftcardAccountInfoRequest" />
+            <output message="typens:giftcardAccountInfoResponse" />
+        </operation>
+    </portType>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="giftcardAccountCreate">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>  
+        <operation name="giftcardAccountUpdate">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="giftcardAccountRemove">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>        
+        <operation name="giftcardAccountList">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="giftcardAccountInfo">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+    </binding>
+</definitions>

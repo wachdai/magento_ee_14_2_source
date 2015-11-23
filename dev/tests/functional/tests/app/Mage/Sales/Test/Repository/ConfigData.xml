@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/Magento/Mtf/Repository/etc/repository.xsd">
+    <repository class="Mage\Core\Test\Repository\ConfigData">
+        <dataset name="enable_map_on_gesture">
+            <field path="sales/msrp/enabled" scope="sales" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="sales/msrp/apply_for_all" scope="sales" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="sales/msrp/display_price_type" scope="sales" scope_id="1" label="On Gesture" xsi:type="string">1</field>
+        </dataset>
+        <dataset name="enable_map_on_gesture_rollback">
+            <field path="sales/msrp/enabled" scope="sales" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="sales/msrp/apply_for_all" scope="sales" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="enable_map_in_cart">
+            <field path="sales/msrp/enabled" scope="sales" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="sales/msrp/apply_for_all" scope="sales" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="sales/msrp/display_price_type" scope="sales" scope_id="1" label="In Cart" xsi:type="string">2</field>
+        </dataset>
+        <dataset name="enable_map_in_cart_rollback">
+            <field path="sales/msrp/enabled" scope="sales" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="sales/msrp/apply_for_all" scope="sales" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="enable_map_before_order">
+            <field path="sales/msrp/enabled" scope="sales" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="sales/msrp/apply_for_all" scope="sales" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="sales/msrp/display_price_type" scope="sales" scope_id="1" label="Before Order Confirmation" xsi:type="string">3</field>
+        </dataset>
+        <dataset name="enable_map_before_order_rollback">
+            <field path="sales/msrp/enabled" scope="sales" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="sales/msrp/apply_for_all" scope="sales" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="enableGiftMessages">
+            <field path="sales/gift_options/allow_order" scope="sales" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="sales/gift_options/allow_items" scope="sales" scope_id="1" label="Yes" xsi:type="string">1</field>
+        </dataset>
+        <dataset name="enableGiftMessages_rollback">
+            <field path="sales/gift_options/allow_order" scope="sales" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="sales/gift_options/allow_items" scope="sales" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+    </repository>
+</config>

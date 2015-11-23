@@ -1,0 +1,80 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/**
+ * Fildset for conditions tab form
+ *
+ * @see Enterprise_TargetRule_Block_Adminhtml_Targetrule_Edit_Tab_Conditions
+ */
+?>
+<?php $_element = $this->getElement() ?>
+<div class="rule-tree">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $_element->getLegend() ?></h4>
+    </div>
+    <fieldset id="<?php echo $_element->getHtmlId() ?>" <?php echo $_element->serialize(array('class')) ?>>
+        <?php echo $_element->getChildrenHtml() ?>
+    </fieldset>
+</div>
+<script type="text/javascript">
+var TargetRuleForm = Class.create(VarienRulesForm, {
+    initParam: function ($super, container) {
+        $super(container);
+        var valueType = container.down('.value-type-chooser');
+        if (valueType) {
+            valueType.observe('change', this.valueTypeChooser.bind(this, container));
+            this.changeValueType(valueType);
+        }
+    },
+    valueTypeChooser: function(container, event) {
+        var chooser = Event.findElement(event, 'select');
+        if (chooser) {
+            this.changeValueType(chooser);
+        }
+    },
+    changeValueType: function(valueTypeСhooser)
+    {
+        var cooserContainer = valueTypeСhooser.up('.rule-param');
+        if (cooserContainer && cooserContainer.next()) {
+            var valueSelect = cooserContainer.next().down('select');
+            if (valueTypeСhooser.value == 'constant') {
+                cooserContainer.next().show();
+                if (valueSelect) {
+                    valueSelect.disabled = false;
+                }
+            } else {
+                cooserContainer.next().hide();
+                if (valueSelect) {
+                    valueSelect.disabled = true;
+                }
+            }
+        }
+    }
+});
+
+var <?php echo $_element->getHtmlId() ?> = new TargetRuleForm('<?php echo $_element->getHtmlId() ?>', '<?php echo $this->getNewChildUrl() ?>');
+
+</script>

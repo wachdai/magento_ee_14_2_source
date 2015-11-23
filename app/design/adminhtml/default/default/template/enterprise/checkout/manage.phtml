@@ -1,0 +1,87 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * @see Enterprise_Checkout_Block_Adminhtml_Manage
+ */
+?>
+<?php
+/**
+ * @var $this Enterprise_Checkout_Block_Adminhtml_Manage
+ */
+?>
+
+<?php echo $this->getChildHtml('checkout.js') ?>
+<script type="text/javascript">
+    checkoutObj = new AdminCheckout(<?php echo $this->getOrderDataJson() ?>);
+    checkoutObj.setLoadBaseUrl('<?php echo $this->getLoadBlockUrl() ?>');
+    checkoutObj.setCurrencySymbol('<?php echo $this->getCurrencySymbol($this->getCurrentCurrencyCode()) ?>');
+</script>
+
+<div class="content-header">
+    <?php echo $this->getHeaderHtml() ?>
+    <p class="form-buttons"><?php echo $this->getButtonsHtml('header'); ?></p>
+</div>
+
+<?php echo $this->getChildHtml('checkout.store.switcher'); ?>
+
+<div id="checkout_message">
+    <?php echo $this->getChildHtml('checkout.message') ?>
+</div>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="fieldset-legend"><?php echo $this->__('Shopping Cart Items') ?></h4>
+    </div>
+</div>
+<div id="checkout_items">
+<?php echo $this->getChildHtml('checkout.items') ?>
+</div>
+<div style="overflow:hidden; width:100%;">
+    <div id="coupon_container">
+        <?php echo $this->getChildHtml('checkout.form_coupon') ?>
+    </div>
+    <?php echo $this->getChildHtml('update_button') ?>
+    <?php echo $this->getChildHtml('empty_customer_cart_button'); ?>
+</div>
+
+<div id="checkout_errors">
+    <?php echo $this->getChildHtml('errors') ?>
+</div>
+
+<div id="products_search">
+    <p class="form-buttons" style="text-align:right;">
+        <?php echo $this->getChildHtml('addto_cart_button') ?>
+    </p>
+    <div id="products_search_accordion">
+        <?php echo $this->getChildHtml('checkout.accordion') ?>
+    </div>
+    <p></p>
+    <p class="form-buttons" style="text-align:right;">
+        <?php echo $this->getChildHtml('addto_cart_button') ?>
+    </p>
+</div>

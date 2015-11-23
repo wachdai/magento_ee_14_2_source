@@ -1,0 +1,87 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->getFormHeader() ?></h1>
+</div>
+
+<?php echo $this->getMessagesBlock()->toHtml(); ?>
+<form action="<?php echo $this->getActionUrl() ?>" method="get" id="wishlist_search_form">
+    <div class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Search Options') ?></h2>
+        <ul class="form-list">
+            <li class="fields">
+                <div class="field">
+                    <label for="params_firstname" class="required"><em>*</em><?php echo $this->__('First Name') ?></label>
+                     <div class="input-box">
+                        <input name="params[firstname]" id="params_firstname" type="text" value="<?php echo $this->getFormData('firstname') ?>" class="input-text required-entry" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="params_lastname" class="required"><em>*</em><?php echo $this->__('Last Name') ?></label>
+                    <div class="input-box">
+                        <input name="params[lastname]" id="params_lastname" type="text" value="<?php echo $this->getFormData('lastname') ?>" class="input-text required-entry" />
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="buttons-set form-buttons">
+        <input type="hidden" name="params[search]" value="type" />
+        <button type="submit" class="button"><span><span><?php echo $this->__('Search') ?></span></span></button>
+    </div>
+    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+</form>
+
+<div class="divider"></div>
+
+<form action="<?php echo $this->getActionUrl() ?>" method="get" id="wishlist_search_email_form">
+    <div class="fieldset">
+        <ul class="form-list">
+            <li>
+                 <label for="params_email" class="required"><em>*</em><?php echo $this->__('Owner Email') ?></label>
+                 <div class="input-box">
+                     <input name="params[email]" id="params_email" type="email" autocapitalize="off" autocorrect="off" spellcheck="false" value="<?php echo $this->getFormData('email') ?>" class="input-text required-entry validate-email" />
+                 </div>
+            </li>
+        </ul>
+    </div>
+    <div class="buttons-set form-buttons">
+        <input type="hidden" name="params[search]" value="email" />
+        <button type="submit" class="button"><span><span><?php echo $this->__('Search') ?></span></span></button>
+    </div>
+    <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+</form>
+
+<div class="divider"></div>
+
+<script type="text/javascript">
+//<![CDATA[
+var wishlistSearchForm = new VarienForm('wishlist_search_form');
+var wishlistSearchEmailForm = new VarienForm('wishlist_search_email_form');
+//]]>
+</script>

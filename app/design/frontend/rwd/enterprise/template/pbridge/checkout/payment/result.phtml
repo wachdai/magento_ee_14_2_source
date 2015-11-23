@@ -1,0 +1,99 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<body style="background:transparent">
+<script type="text/javascript">
+//<![CDATA[
+    var paymentObj = parent.payment;
+    function setPaymentMethod()
+    {
+        var jsonParams = <?php echo $this->getJsonHiddenPbridgeParams() ?>;
+        if (jsonParams.original_payment_method) {
+            var containerElement = parent.document.getElementById('payment_form_pbridge_' + jsonParams.original_payment_method);
+            if (!containerElement) {
+                containerElement = parent.document.getElementById('payment_form_' + jsonParams.original_payment_method);
+            }
+            var listElements = containerElement.getElementsByTagName('LI');
+            if (listElements.length) {
+                containerElement = listElements[0];
+            }
+            containerElement = parent.$(containerElement);
+            var methodParam;
+            parent.$H(jsonParams).each(function(param) {
+                var paramId = 'pbridge_' + jsonParams.original_payment_method + '_' + param.key;
+                var methodParam = parent.document.getElementById(paramId);
+
+                if (methodParam) {
+                    methodParam.setAttribute('value', param.value);
+                } else {
+                    methodParam = parent.document.createElement('input');
+                    methodParam = parent.$(methodParam);
+                    var attrs = {
+                        'id':    paramId,
+                        'type':  'hidden',
+                        'name':  'payment[pbridge_data][' + param.key + ']',
+                        'value': param.value
+                    };
+                    for (var name in attrs) methodParam.setAttribute(name, attrs[name]);
+                    containerElement.appendChild(methodParam);
+                }
+            });
+            try {
+                // skip Payment object save for multishipping
+                if ("save" in paymentObj) {
+                    paymentObj.save();
+                }
+
+                // skip buttons hide for multishipping
+                var buttonsContainer = parent.document.getElementById('payment-buttons-container');
+                if (buttonsContainer) {
+                    var continueButton = buttonsContainer.getElementsByTagName('BUTTON');
+                    if (continueButton.length) {
+                        continueButton = continueButton[0];
+                    }
+                    if (continueButton) {
+                        continueButton.style.display = '';
+                    }
+                }
+
+                if (containerElement.down('span.pbridge-reload') && containerElement.down('span.pbridge-reload').down('a')) {
+                    containerElement.down('span.pbridge-reload').down('a').hide();
+                }
+
+                var message = document.getElementById('payment-method-message');
+                message.innerHTML = '<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('enterprise_pbridge')->__('Your payment information has been submitted to the server. If you need to make changes, please click <a style="color: #1E75B4" href="#" onclick="parent.reloadIframe(paymentObj.currentMethod); return false;">here</a> .')) ?>';
+
+                parent.submittedPayments[paymentObj.currentMethod] = 1;
+
+            } catch (e) {}
+        }
+    }
+    window.onload = setPaymentMethod;
+//]]>
+</script>
+
+<div id="payment-method-message" style="font: normal normal normal 11px/1.35 Arial, Helvetica, sans-serif;color: #444;float: left;font-size: 12px;font-weight: bold;padding: 2px 15px 0px 0px;text-align: left;"></div>
+</body>

@@ -1,0 +1,442 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+/** @var $this Enterprise_Rma_Block_Return_Create */
+?>
+<?php $_order =  $this->getOrder(); ?>
+<?php $_data = $this->getFormData(); ?>
+
+
+<form id="rma_create_form" method="post" enctype="multipart/form-data">
+    <div class="order-page">
+        <div class="page-title title-buttons">
+            <h1><?php echo $this->__('New Return for Order %s', $_order->getIncrementId()) ?></h1>
+        </div>
+        <ul class="form-list">
+            <li>
+                <label><?php echo $this->__('Order ID') ?></label>
+                <h5><?php echo $_order->getIncrementId() ?></h5>
+            </li>
+            <li>
+                <label><?php echo $this->__('Customer Name') ?></label>
+                <h5><?php echo $this->escapeHtml($_order->getCustomerName()) ?></h5>
+            </li>
+            <li>
+                <label><?php echo $this->__('Order Shipping Address') ?></label>
+                <h5><?php echo $_order->getShippingAddress()->format('html') ?></h5>
+            </li>
+            <li>
+                <label><?php echo $this->__('Email Address') ?></label>
+                <h5 class="rma-email"><?php echo $_order->getCustomerEmail()?></h5>
+            </li>
+            <li>
+                <label><?php echo Mage::helper('enterprise_rma')->getContactEmailLabel() ?></label>
+                <div class="input-box">
+                     <input type="email" autocapitalize="off" autocorrect="off" spellcheck="false" name="customer_custom_email" id="email" title="Contact Email Address" class="input-text validate-email" value="<?php echo $this->getContactEmail()?>">
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="order-page"><dl class="order-info"></dl></div>
+
+    <?php $_items = $this->getItems(); ?>
+
+    <div id="template_container" class="template" style="display:none;">
+        <div id="template_registrant">
+            <p id="btn-remove_index_" style="text-align:right">
+                <a class="button" href="#" onclick="removeRegistrant(_index_); return false" ><?php echo $this->__('Remove'); ?></a>
+            </p>
+            <div class="field">
+                <label for="items:item_index_" class="required"><em>*</em><?php echo $this->__('Item') ?></label>
+                <div class="input-box">
+                <?php $bundleID     = 0; ?>
+                <?php $firstId = $i = $productType = $availableQty = 0; ?>
+                <?php $html         = array(); ?>
+                    <select name="items[_index_][order_item_id]" class="required-entry" id="items:item_index_" onchange="showBundle('_index_', this.value); return false;">
+                <?php foreach($_items as $_item): ?>
+                    <?php if ($i == 0): ?>
+                        <?php
+                            $firstId = $_item->getId();
+                            $productType = $_item->getProductType();
+                            $availableQty = $this->getAvailableQty($_item);
+                            $i = 1;
+                        ?>
+                    <?php endif; ?>
+                    <?php if ($_item->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE): ?>
+                        <?php $bundleID = $_item->getId(); ?>
+                    <?php endif; ?>
+                    <?php if (!$_item->getParentItemId() || $_item->getParentItemId() != $bundleID): ?>
+                        <option value="<?php echo $_item->getId()?>" id="item:order_item_id_index__<?php echo $_item->getId() ?>" rel="<?php echo $_item->getProductType()?>_<?php echo $this->getAvailableQty($_item); ?>"><?php echo $this->escapeHtml($_item->getName())?></option>
+                    <?php endif; ?>
+                    <?php if ($_item->getParentItemId()!= null && $_item->getParentItemId() == $bundleID): ?>
+                        <?php if ($_item->getIsOrdered()): ?>
+                            <?php
+                                $html[$bundleID][] = array(
+                                    $_item->getId(),
+                                    $this->escapeHtml($_item->getName()),
+                                    $this->getAvailableQty($_item),
+                                    1
+                                );
+                            ?>
+                        <?php else: ?>
+                            <?php
+                                $html[$bundleID][] = array(
+                                    $_item->getId(),
+                                    $this->escapeHtml($_item->getName()),
+                                    $this->getAvailableQty($_item),
+                                    0
+                                );
+                            ?>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <?php if(!empty($html)): ?>
+                    <?php foreach($html as $bundleID=>$node): ?>
+                        <div class="field">
+                            <label class="required"></label>
+                            <div class="input-box">
+                                <div id="radio:item_index__<?php echo $bundleID?>">
+                                    <table class="data-table" id="return-items-table-<?php echo $bundleID?>">
+                                        <colgroup>
+                                            <col width="10" />
+                                            <col width="143" />
+                                            <col width="82" />
+                                            <col width="65" />
+                                        </colgroup>
+                                        <thead>
+                                            <th colspan="2"><?php echo $this->__('Sub-items:') ?></th>
+                                            <th class="a-center"><?php echo $this->__('Remaining Qty:') ?></th>
+                                            <th class="a-center"><?php echo $this->__('Qty:') ?></th>
+                                        </thead>
+                                        <tbody>
+                                    <?php foreach($node as $item): ?>
+                                        <tr>
+                                            <td>
+                                            <?php if ($item[3]): ?>
+                                                <input type="checkbox" disabled />
+                                            <?php else: ?>
+                                                <input id="items[_index_][<?php echo $bundleID ?>][checkbox][item][<?php echo $item[0]?>]" onclick="showBundleInput(<?php echo $item[0]?>, <?php echo $bundleID?>, '_index_');" type="checkbox" value="<?php echo $item[0]?>" class="checkbox validate-one-checkbox-<?php echo $bundleID ?> change-container-classname" />
+                                            <?php endif; ?>
+                                            </td>
+                                            <td style="padding-left:0;padding-right:0;"><label for="items[_index_][<?php echo $bundleID ?>][checkbox][item][<?php echo $item[0]?>]" style="float: none !important;padding:0;margin:0;width:0;<?php echo ($item[3]) ? 'color:#999999;' : ''?>display:inline;"><?php echo $item[1]?></label></td>
+                                            <td class="a-center"><?php echo $item[2] ?></td>
+                                            <td width="65">
+                                                <?php if (!$item[3]): ?>
+                                                    <input id="items[_index_][<?php echo $bundleID ?>][checkbox][qty][<?php echo $item[0]?>]" pattern="\d*" name="items[_index_][items][<?php echo $item[0]?>]" size="7" class="validate-greater-than-zero required-entry" style="display:none;" disabled="disabled"/>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                        </tbody>
+                                    </table>
+                                    <script type="text/javascript">decorateTable('return-items-table-<?php echo $bundleID?>');</script>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+            <div class="field" id="qty_requested_block__index_">
+                <label for="items:qty_requested_index_" class="required"><em>*</em><?php echo $this->__('Quantity To Return') ?></label>
+                <div class="input-box">
+                    <input type="text" pattern="\d*" class="input-text validate-greater-than-zero required-entry" value="" name="items[_index_][qty_requested]" id="items:qty_requested_index_">
+                </div>
+            </div>
+            <div class="field" id="remaining_quantity_block__index_">
+                <label class="required"><?php echo $this->__('Remaining quantity:'); ?> </label>
+                <div class="input-box">
+                    <span id="remaining_quantity__index_"></span>
+                </div>
+            </div>
+
+            <?php foreach ($this->getAttributes() as $attribute):?>
+                <?php $attributeContent = $this->getAttributeHtml($attribute);?>
+                <?php $attributeCode = $attribute->getAttributeCode(); ?>
+                <?php if ($attributeContent): ?>
+                    <?php if ($attributeCode == 'reason_other'): ?>
+                        <div id="reason_other_index_" class="field" style="display: none;"><?php echo $attributeContent;?></div>
+                    <?php else: ?>
+                        <div class="field"><?php echo $attributeContent;?></div>
+                    <?php endif; ?>
+                <?php endif;?>
+            <?php endforeach;?>
+        </div>
+    </div>
+
+<script type="text/javascript">
+//<![CDATA[
+    function showOtherOption(value, index)
+    {
+        if (value == 'other') {
+            $('reason_other'+index).show();
+            $('items:reason_other'+index).enable();
+        } else {
+            $('reason_other'+index).hide();
+            $('items:reason_other'+index).disable();
+        }
+    }
+
+    var liIndex         = 0;
+    var regCount        = 0;
+    var maxRegistrant   = 1000;
+    var myTemplate      = new Template($('template_registrant').innerHTML, /(^|.|\r|\n)({{(\w+)}})/);
+    $('template_registrant').remove();
+
+    function showQuantity(type, index, qty) {
+        if (type == '<?php echo Mage_Catalog_Model_Product_Type::TYPE_BUNDLE ?>') {
+            if ($('qty_requested_block_'+index)) {
+                $('qty_requested_block_'+index).hide();
+            }
+            if ($('remaining_quantity_block_'+index)) {
+                $('remaining_quantity_block_'+index).hide();
+            }
+        } else {
+            if ($('qty_requested_block_'+index)) {
+                $('qty_requested_block_'+index).show();
+            }
+            if ($('remaining_quantity_block_'+index)) {
+                $('remaining_quantity_block_'+index).show();
+            }
+            if ($('remaining_quantity_'+index)) {
+                $('remaining_quantity_'+index).update(qty)
+            }
+        }
+    }
+
+    function showBundleInput(id, bid, index) {
+        if ($('items['+index+']['+bid+'][checkbox][item]['+id+']').checked == true) {
+            $('items['+index+']['+bid+'][checkbox][qty]['+id+']').show();
+            $('items['+index+']['+bid+'][checkbox][qty]['+id+']').enable();
+        } else {
+            $('items['+index+']['+bid+'][checkbox][qty]['+id+']').hide();
+            $('items['+index+']['+bid+'][checkbox][qty]['+id+']').disable();
+        }
+    }
+
+    function enableBundle(index, bid) {
+        $$('input[id^="items['+index+']['+bid+'][checkbox][item]["]').each(function(e) {
+            e.enable();
+        });
+        $$('input[id^="items['+index+']['+bid+'][checkbox][qty]["]').each(function(e) {
+            if(e.value) {
+                e.enable();
+            }
+        });
+    }
+
+    function showBundle(index, itemId)
+    {
+        $$('div[id^="radio:item'+index+'_"]').each(function(e) {
+            var curId = (e.id);
+            if ($(curId)) {
+                $(curId).up(1).hide();
+            }
+        });
+        $$('input[id^="items['+index+']"]').each(function(e) {
+           e.disable();
+        });
+        if ($('radio:item'+index+'_'+itemId)) {
+            $('radio:item'+index+'_'+itemId).up(1).show();
+            enableBundle(index, itemId);
+        };
+
+        if ($('item:order_item_id'+index+'_'+itemId)) {
+            var typeQty = $('item:order_item_id'+index+'_'+itemId);
+            typeQty = typeQty.readAttribute('rel');
+
+            var position = typeQty.lastIndexOf('_');
+            var type = typeQty.substring(0,position);
+            var qty = typeQty.substr(position+1);
+
+            showQuantity(type, index, qty)
+        }
+        return false;
+    }
+
+    function removeRegistrant(liIndex){
+        $('items:item'+liIndex).up(2).remove();
+        regCount--;
+        return false;
+    }
+    function addRegistrant() {
+        ul = $('registrant_options');
+        var li = Element.extend(document.createElement("li"));
+        // skipping first row
+        if (liIndex != 0) {
+            li.addClassName('add-row');
+        }
+
+        li.addClassName('fields');
+        date_template = myTemplate.evaluate({});
+        li.insert(date_template.gsub('_index_', liIndex));
+
+        liIndex++;
+        regCount++;
+
+        ul.appendChild(li);
+
+        showBundle((liIndex-1), <?php echo $firstId; ?>);
+        showQuantity('<?php echo $productType?>', liIndex-1, <?php echo ($availableQty) ? $availableQty : 0?>);
+
+        li.select('input, select').each(function(input) { //Thanks Andrey !
+            if (input.tagName.toLowerCase() == 'select') {
+                Event.observe(input, 'blur', dataForm.validator.onChange.bindAsEventListener(dataForm.validator));
+            }
+            if (input.type.toLowerCase() == 'radio' || input.type.toLowerCase() == 'checkbox') {
+                Event.observe(input, 'click', dataForm.validator.onChange.bindAsEventListener(dataForm.validator));
+            } else {
+                Event.observe(input, 'change', dataForm.validator.onChange.bindAsEventListener(dataForm.validator));
+            }
+        });
+
+        // skipping first row
+        if (liIndex == 1) {
+            $('btn-remove0').hide();
+        }
+    }
+//]]>
+</script>
+    <div class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Return Items Information') ?></h2>
+        <ul class="form-list" id="registrant_options">
+            <li class="no-display">&nbsp;</li>
+        </ul>
+        <div class="buttons-set form-buttons" style="text-align:right">
+            <a class="button" href="javascript:void(0)" onclick="addRegistrant();"><?php echo $this->__('Add Item To Return') ?></a>
+        </div>
+    </div>
+
+    <div class="order-page"><dl class="order-info"></dl></div>
+
+    <ul class="form-list">
+        <li class="fields last">
+            <div class="field">
+                <label for="rma_comment"><?php echo $this->__('Comments') ?></label>
+                <div class="input-box">
+                    <textarea id="rma_comment" style="height:6em;" cols="5" rows="3" name="rma_comment" class="input-text"><?php if ($_data): ?><?php echo $_data->getRmaComment(); ?><?php endif; ?></textarea>
+                </div>
+            </div>
+        </li>
+    </ul>
+
+
+    <div class="buttons-set form-buttons">
+        <p class="back-link a-left"><a href="<?php echo $this->getBackUrl() ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+        <button type="submit" class="button" id="submit.save" title="<?php echo $this->quoteEscape($this->__('Save')) ?>"><span><span><?php echo $this->__('Submit') ?></span></span></button>
+    </div>
+</form>
+
+<script type="text/javascript">
+//<![CDATA[
+function setFieldById(domId, value)
+{
+    x = $(domId);
+    if (x != null) {
+        x.setValue(value)
+    };
+}
+
+function setItemFieldById(domId)
+{
+    x = $(domId);
+    if (x != null) {
+        x.selected = "selected";
+    };
+}
+
+function setBundleFieldById(id, bundleID, index)
+{
+    showBundle(index, bundleID);
+    showBundleInput(id, bundleID, index);
+    showQuantity('bundle', index, 0);
+}
+
+var dataForm = new VarienForm('rma_create_form', true);
+document.observe("dom:loaded", function() {
+    <?php $i = 0; ?>
+    <?php if ($_data): ?>
+        <?php $formDataPost = $_data->getItems(); ?>
+        <?php if (is_array($formDataPost)): ?>
+            <?php foreach ($formDataPost as $item): ?>
+                addRegistrant();
+                <?php $parentId = 0; ?>
+                <?php foreach ($item as $field => $value): ?>
+                    <?php if ($field == 'order_item_id'): ?>
+                        setFieldById('items:item[<?php echo $i;?>]', [<?php echo $value?>]);
+                        showBundle(<?php echo $i;?>,<?php echo $value;?>);
+                        setItemFieldById('item:order_item_id<?php echo $i;?>_<?php echo $value ?>');
+                        <?php $parentId = $value; ?>
+                    <?php elseif ($field == 'items'): ?>
+                        <?php foreach($value as $id => $qty): ?>
+                            setFieldById('items[<?php echo $i;?>][<?php echo $parentId;?>][checkbox][item][<?php echo $id;?>]', 'checked');
+                            setFieldById('items[<?php echo $i;?>][<?php echo $parentId;?>][checkbox][qty][<?php echo $id;?>]', '<?php echo $qty;?>');
+                            setBundleFieldById(<?php echo $id?>,<?php echo $parentId;?>,<?php echo $i;?>);
+                            <?php unset($item['qty_requested']); ?>
+                        <?php endforeach; ?>
+                    <?php elseif ($field == 'qty_requested' && !empty($value)): ?>
+                        setFieldById('items:<?php echo $field.$i?>', '<?php echo $value;?>');
+                    <?php else: ?>
+                        setFieldById('items:<?php echo $field.$i?>', '<?php echo $value;?>');
+                        <?php if ($field == 'reason'): ?>
+                            showOtherOption('<?php echo $value;?>', <?php echo $i ?>);
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                <?php endforeach; ?>
+
+            <?php $i++; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <?php echo "liIndex = $i;\n"; ?>
+    if (liIndex == 0) {
+        addRegistrant();
+    }
+
+});
+
+<?php if(!empty($html)): ?>
+    <?php foreach($html as $key=>$value): ?>
+    Validation.add('validate-one-checkbox-<?php echo $key?>', '<?php echo $this->jsQuoteEscape($this->__('Please select one of the options.')) ?>', function(value, entity) {
+        var error = 1;
+        $$('input[id*="][<?php echo $key?>][checkbox][item]["]').each(function(input) {
+            if(input.checked == true) {
+                error = 0;
+            }
+        });
+        if(error == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+    <?php endforeach; ?>
+<?php endif; ?>
+//]]>
+</script>

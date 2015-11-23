@@ -1,0 +1,25 @@
+<!--@subject {{var store.getFrontendName()}}: New customer comment @-->
+<!--@vars
+{"htmlescape var=$rma.getCustomerName()":"Customer Name",
+"var comment":"RMA Comment",
+"var store.getFrontendName()":"Store Name",
+"var rma.getIncrementId()":"Return Id"}
+@-->
+<!--@styles
+@-->
+
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="action-content">
+            <p>
+                Customer {{htmlescape var=$order.getCustomerName()}} has left a new comment <blockquote>{{var comment}}</blockquote>
+            for the RMA request <span class="no-link">#{{var rma.getIncrementId()}}</span>
+            </p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer"}}

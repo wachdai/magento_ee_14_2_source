@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+-->
+<layout version="0.1.0">
+
+    <default>
+        <!-- Remove Mage_GoogleAnalytics -->
+        <remove name="google_analytics" />
+
+        <reference name="head">
+            <action method="addJs" ifconfig="google/analytics/active"><script>google/ga.js</script></action>
+        </reference>
+        <reference name="after_body_start">
+            <block type="enterprise_googleanalyticsuniversal/ga" name="google_analyticsuniversal" as="google_analyticsuniversal"
+                   template="googleanalyticsuniversal/ga.phtml" />
+        </reference>
+
+        <reference name="minicart_content">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="update_cart_analytics"
+                   template="googleanalyticsuniversal/cart/update.phtml">
+                <action method="setBlockName"><block>checkout.cart.tag.manager</block></action>
+            </block>
+        </reference>
+
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="banner_impression"
+                   template="googleanalyticsuniversal/promotion.phtml">
+                <action method="setVariableName"><name>staticPromotions</name></action>
+            </block>
+        </reference>
+    </default>
+
+    <catalog_category_view>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="product_list_impression"
+                   template="googleanalyticsuniversal/impression.phtml">
+                <action method="setListType"><type>catalog</type></action>
+                <action method="setBlockName"><block>product_list</block></action>
+            <action method="setShowCategory"><param>true</param></action>
+            </block>
+        </reference>
+    </catalog_category_view>
+
+    <catalog_product_view>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="related_products_impression"
+                   template="googleanalyticsuniversal/impression.phtml">
+                <action method="setListType"><type>related</type></action>
+                <action method="setBlockName"><block>catalog.product.related</block></action>
+                <action method="setShowCategory"><param>true</param></action>
+            </block>
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="upsell_products_impression"
+                   template="googleanalyticsuniversal/impression.phtml">
+                <action method="setListType"><type>upsell</type></action>
+                <action method="setBlockName"><block>product.info.upsell</block></action>
+                <action method="setShowCategory"><param>true</param></action>
+            </block>
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="product_view_detail"
+                   template="googleanalyticsuniversal/detailproduct.phtml">
+                <action method="setShowCategory"><param>true</param></action>
+            </block>
+        </reference>
+    </catalog_product_view>
+
+    <catalogsearch_result_index>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="search_result_impression"
+                   template="googleanalyticsuniversal/impression.phtml">
+                <action method="setListType"><type>search</type></action>
+                <action method="setBlockName"><block>search_result_list</block></action>
+            </block>
+        </reference>
+    </catalogsearch_result_index>
+
+    <catalogsearch_advanced_result>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="advanced_result_impression"
+                   template="googleanalyticsuniversal/impression.phtml">
+                <action method="setListType"><type>search</type></action>
+                <action method="setBlockName"><block>search_result_list</block></action>
+            </block>
+        </reference>
+    </catalogsearch_advanced_result>
+
+    <checkout_cart_index>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="crosssell_products_impression"
+                   template="googleanalyticsuniversal/impression.phtml">
+                <action method="setListType"><type>crosssell</type></action>
+                <action method="setBlockName"><block>checkout.cart.crosssell</block></action>
+                <action method="checkCartItems" />
+            </block>
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="update_cart_analytics"
+                   template="googleanalyticsuniversal/cart/update.phtml">
+                <action method="setBlockName"><block>checkout.cart.tag.manager</block></action>
+            </block>
+        </reference>
+    </checkout_cart_index>
+
+    <checkout_onepage_index>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="billing_progress_step_simple_checkout"
+                   template="googleanalyticsuniversal/checkout/mainstep.phtml">
+                <action method="detectStepName"/>
+            </block>
+        </reference>
+    </checkout_onepage_index>
+    <checkout_onepage_shippingmethod>
+        <block type="enterprise_googleanalyticsuniversal/list_json" name="shippingmethod_progress_step_simple_checkout"
+               template="googleanalyticsuniversal/checkout/step.phtml" output="toHtml">
+            <action method="setStepName"><stepName>shipping_method</stepName></action>
+        </block>
+    </checkout_onepage_shippingmethod>
+    <checkout_onepage_paymentmethod>
+        <block type="enterprise_googleanalyticsuniversal/list_json" name="payment_progress_step_simple_checkout"
+               template="googleanalyticsuniversal/checkout/step.phtml" output="toHtml">
+            <action method="setStepName"><stepName>payment</stepName></action>
+        </block>
+    </checkout_onepage_paymentmethod>
+
+    <checkout_multishipping_login>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="billing_progress_step_simple_checkout"
+                   template="googleanalyticsuniversal/checkout/step.phtml">
+                <action method="detectStepName"/>
+            </block>
+        </reference>
+    </checkout_multishipping_login>
+    <checkout_multishipping_addresses>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="multishipping_addresses_progress_step"
+                   template="googleanalyticsuniversal/checkout/step.phtml">
+                <action method="setStepName"><stepName>addresses</stepName></action>
+            </block>
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="update_cart_analytics"
+                   template="googleanalyticsuniversal/cart/update.phtml">
+                <action method="setBlockName"><block>checkout_addresses</block></action>
+            </block>
+        </reference>
+    </checkout_multishipping_addresses>
+    <checkout_multishipping_shipping>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="multishipping_shipping_progress_step"
+                    template="googleanalyticsuniversal/checkout/step.phtml">
+                <action method="setStepName"><stepName>multishipping</stepName></action>
+            </block>
+        </reference>
+    </checkout_multishipping_shipping>
+    <checkout_multishipping_billing>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="multishipping_billing_progress_step"
+                   template="googleanalyticsuniversal/checkout/step.phtml">
+                <action method="setStepName"><stepName>multibilling</stepName></action>
+            </block>
+        </reference>
+    </checkout_multishipping_billing>
+    <checkout_multishipping_overview>
+        <reference name="before_body_end">
+            <block type="enterprise_googleanalyticsuniversal/list_json" name="multishipping_overview_progress_step"
+                   template="googleanalyticsuniversal/checkout/step.phtml">
+                <action method="setStepName"><stepName>multireview</stepName></action>
+            </block>
+        </reference>
+    </checkout_multishipping_overview>
+
+</layout>

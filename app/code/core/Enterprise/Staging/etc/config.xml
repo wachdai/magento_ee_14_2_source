@@ -1,0 +1,413 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Staging
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_Staging>
+            <version>1.11.0.0.3</version>
+        </Enterprise_Staging>
+    </modules>
+    <global>
+        <models>
+            <enterprise_staging>
+                <class>Enterprise_Staging_Model</class>
+                <resourceModel>enterprise_staging_resource</resourceModel>
+            </enterprise_staging>
+            <enterprise_staging_resource>
+                <class>Enterprise_Staging_Model_Resource</class>
+                <deprecatedNode>enterprise_staging_mysql4</deprecatedNode>
+                <entities>
+                    <staging>
+                        <table>enterprise_staging</table>
+                    </staging>
+                    <staging_item>
+                        <table>enterprise_staging_item</table>
+                    </staging_item>
+                    <staging_action>
+                        <table>enterprise_staging_action</table>
+                    </staging_action>
+                    <staging_log>
+                        <table>enterprise_staging_log</table>
+                    </staging_log>
+                    <staging_product_unlinked>
+                        <table>enterprise_staging_product_unlinked</table>
+                    </staging_product_unlinked>
+                </entities>
+            </enterprise_staging_resource>
+        </models>
+        <resources>
+            <enterprise_staging_setup>
+                <setup>
+                    <module>Enterprise_Staging</module>
+                    <class>Mage_Eav_Model_Entity_Setup</class>
+                </setup>
+            </enterprise_staging_setup>
+        </resources>
+        <blocks>
+            <enterprise_staging>
+                <class>Enterprise_Staging_Block</class>
+            </enterprise_staging>
+        </blocks>
+        <helpers>
+            <enterprise_staging>
+                <class>Enterprise_Staging_Helper</class>
+            </enterprise_staging>
+        </helpers>
+        <enterprise>
+            <staging>
+                <global_staging_table_prefix>s_</global_staging_table_prefix>
+                <global_staging_backup_table_prefix>b_</global_staging_backup_table_prefix>
+                <staging_items>
+                    <config_data translate="label">
+                        <module>Mage_Core</module>
+                        <model>core</model>
+                        <label>System Configuration</label>
+                        <resource_adapter>enterprise_staging/adapter_item_config</resource_adapter>
+                        <entities>
+                            <config_data/>
+                        </entities>
+                        <ignore_nodes>
+                            <unsecure_urls>
+                                <path>web/unsecure</path>
+                            </unsecure_urls>
+                            <secure_urls>
+                                <path>web/secure</path>
+                            </secure_urls>
+                            <paypal_accounts>
+                                <path>paypal</path>
+                            </paypal_accounts>
+                            <payment_accounts>
+                                <path>payment</path>
+                            </payment_accounts>
+                            <google_api>
+                                <path>google</path>
+                            </google_api>
+                            <developer>
+                                <path>dev</path>
+                            </developer>
+                        </ignore_nodes>
+                    </config_data>
+                    <category translate="label">
+                        <module>Mage_Catalog</module>
+                        <model>catalog</model>
+                        <label>Catalog Categories</label>
+                        <resource_adapter>enterprise_staging/adapter_item_category</resource_adapter>
+                    </category>
+                    <catalog_permissions translate="label">
+                        <module>Enterprise_CatalogPermissions</module>
+                        <model>enterprise_catalogpermissions</model>
+                        <label>Category Permissions</label>
+                    </catalog_permissions>
+                    <product>
+                        <module>Mage_Catalog</module>
+                        <model>catalog</model>
+                        <label>Catalog Products</label>
+                        <extends>
+                            <bundle translate="label">
+                                <module>Mage_Bundle</module>
+                                <label>Bundles</label>
+                                <entities>
+                                    <option_value/>
+                                </entities>
+                            </bundle>
+                            <downloadable translate="label">
+                                <module>Mage_Downloadable</module>
+                                <label>Downloadable</label>
+                                <entities>
+                                    <link_title/>
+                                    <sample_title/>
+                                </entities>
+                            </downloadable>
+                            <enterprise_giftcard translate="label">
+                                <module>Enterprise_GiftCard</module>
+                                <label>Gift Cards</label>
+                                <entities>
+                                    <code/>
+                                </entities>
+                            </enterprise_giftcard>
+                            <cataloginventory translate="label">
+                                <module>Mage_CatalogInventory</module>
+                                <label>Catalog Inventory</label>
+                            </cataloginventory>
+                            <catalogsearch translate="label">
+                                <module>Mage_CatalogSearch</module>
+                                <label>Catalog Search</label>
+                            </catalogsearch>
+                            <core_url_rewrite translate="label">
+                                <module>Mage_Core</module>
+                                <model>core</model>
+                                <label>URL Rewrites</label>
+                                <entities>
+                                    <url_rewrite/>
+                                </entities>
+                            </core_url_rewrite>
+                        </extends>
+                    </product>
+                    <cms_page translate="label">
+                        <module>Mage_Cms</module>
+                        <model>cms</model>
+                        <label>CMS Pages</label>
+                        <entities>
+                            <page_store/>
+                        </entities>
+                        <resource_adapter>enterprise_staging/adapter_item_cms_page</resource_adapter>
+                    </cms_page>
+                    <cms_block translate="label">
+                        <module>Mage_Cms</module>
+                        <model>cms</model>
+                        <label>CMS Blocks</label>
+                        <entities>
+                            <block_store/>
+                        </entities>
+                    </cms_block>
+                    <salesrule translate="label">
+                        <module>Mage_SalesRule</module>
+                        <label>Shopping Cart Price Rules</label>
+                    </salesrule>
+                    <catalogrule translate="label">
+                        <module>Mage_CatalogRule</module>
+                        <label>Catalog Price Rules</label>
+                    </catalogrule>
+                    <poll translate="label">
+                        <module>Mage_Poll</module>
+                        <label>Polls</label>
+                        <entities>
+                            <poll_store/>
+                        </entities>
+                    </poll>
+                    <checkout translate="label">
+                        <module>Mage_Checkout</module>
+                        <label>Terms And Conditions</label>
+                        <entities>
+                            <agreement_store/>
+                        </entities>
+                    </checkout>
+                    <customer translate="label">
+                        <module>Mage_Customer</module>
+                        <is_backend>1</is_backend>
+                        <label>Customers</label>
+                        <ignore_tables>
+                            <customer_group/>
+                        </ignore_tables>
+                    </customer>
+                    <wishlist translate="label">
+                        <module>Mage_Wishlist</module>
+                        <is_backend>1</is_backend>
+                        <label>Wishlist</label>
+                    </wishlist>
+                    <tag translate="label">
+                        <module>Mage_Tag</module>
+                        <is_backend>1</is_backend>
+                        <label>Tags</label>
+                    </tag>
+                    <sales translate="label">
+                        <module>Mage_Sales</module>
+                        <is_backend>1</is_backend>
+                        <label>Sales</label>
+                    </sales>
+                    <log translate="label">
+                        <module>Mage_Log</module>
+                        <is_backend>1</is_backend>
+                        <label>Visitor Logs</label>
+                    </log>
+                </staging_items>
+                <status>
+                    <action>
+                        <started translate="label">
+                            <label>Started</label>
+                        </started>
+                        <completed translate="label">
+                            <label>Completed</label>
+                        </completed>
+                    </action>
+                </status>
+                <action>
+                    <create translate="label">
+                        <label>Staging Website Creation</label>
+                    </create>
+                    <reset translate="label">
+                        <label>Status Reset</label>
+                    </reset>
+                    <merge translate="label">
+                        <label>Instant Merger</label>
+                    </merge>
+                    <schedule_merge translate="label">
+                        <label>Merger Scheduling</label>
+                    </schedule_merge>
+                    <unschedule_merge translate="label">
+                        <label>Merger Unscheduling</label>
+                    </unschedule_merge>
+                    <cron_merge translate="label">
+                        <label>Scheduled Merger</label>
+                    </cron_merge>
+                    <rollback translate="label">
+                        <label>Rollback</label>
+                    </rollback>
+                    <backup translate="label">
+                        <label>Backup</label>
+                    </backup>
+                </action>
+            </staging>
+        </enterprise>
+        <events>
+            <controller_front_init_before>
+                <observers>
+                    <enterprise_staging>
+                        <class>enterprise_staging/observer</class>
+                        <method>beforeFrontendInit</method>
+                    </enterprise_staging>
+                </observers>
+            </controller_front_init_before>
+        </events>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_staging>
+                    <file>enterprise/staging.xml</file>
+                </enterprise_staging>
+            </updates>
+        </layout>
+        <events>
+            <website_delete_commit_after>
+                <observers>
+                    <enterprise_staging_delete_website>
+                        <class>enterprise_staging/observer</class>
+                        <method>deleteWebsite</method>
+                    </enterprise_staging_delete_website>
+                </observers>
+            </website_delete_commit_after>
+
+            <catalog_product_save_before>
+                <observers>
+                    <enterprise_staging_remember_product_original_website_ids>
+                        <class>enterprise_staging/observer</class>
+                        <method>rememberProductOriginalWebsiteIds</method>
+                    </enterprise_staging_remember_product_original_website_ids>
+                </observers>
+            </catalog_product_save_before>
+
+            <catalog_product_save_after>
+                <observers>
+                    <enterprise_staging_change_unlinked_product_website_association>
+                        <class>enterprise_staging/observer</class>
+                        <method>changeUnlinkedProductWebsiteAssociation</method>
+                    </enterprise_staging_change_unlinked_product_website_association>
+                </observers>
+            </catalog_product_save_after>
+
+            <catalog_product_website_update>
+                <observers>
+                    <enterprise_staging_mass_product_website_update>
+                        <class>enterprise_staging/observer</class>
+                        <method>massProductWebsiteUpdate</method>
+                    </enterprise_staging_mass_product_website_update>
+                </observers>
+            </catalog_product_website_update>
+        </events>
+        <translate>
+            <modules>
+                <Enterprise_Staging>
+                    <files>
+                        <default>Enterprise_Staging.csv</default>
+                    </files>
+                </Enterprise_Staging>
+            </modules>
+        </translate>
+    </adminhtml>
+    <frontend>
+        <routers>
+            <staging>
+                <use>standard</use>
+                <args>
+                    <module>Enterprise_Staging</module>
+                    <frontName>staging</frontName>
+                </args>
+            </staging>
+        </routers>
+        <events>
+            <resource_get_tablename>
+                <observers>
+                    <enterprise_staging_get_table_name>
+                        <class>enterprise_staging/observer</class>
+                        <method>getTableName</method>
+                    </enterprise_staging_get_table_name>
+                </observers>
+            </resource_get_tablename>
+            <websiterestriction_frontend>
+                <observers>
+                    <enterprise_staging>
+                        <class>enterprise_staging/observer</class>
+                        <method>takeFrontendDown</method>
+                    </enterprise_staging>
+                </observers>
+            </websiterestriction_frontend>
+        </events>
+        <translate>
+            <modules>
+                <Enterprise_Staging>
+                    <files>
+                        <default>Enterprise_Staging.csv</default>
+                    </files>
+                </Enterprise_Staging>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Enterprise_Staging before="Mage_Adminhtml">Enterprise_Staging_Adminhtml</Enterprise_Staging>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <crontab>
+        <jobs>
+            <enterprise_staging_automates>
+                <schedule>
+                    <cron_expr>* * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>enterprise_staging/observer::automates</model>
+                </run>
+            </enterprise_staging_automates>
+        </jobs>
+    </crontab>
+    <default>
+        <general>
+            <content_staging>
+                <create_entry_point>1</create_entry_point>
+                <entry_points_folder_name>staging</entry_points_folder_name>
+                <block_frontend>0</block_frontend>
+                <block_frontend_stub>service-unavialable</block_frontend_stub>
+            </content_staging>
+        </general>
+    </default>
+</config>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:typens="urn:{{var wsdl.name}}"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="{{var wsdl.name}}"
+             targetNamespace="urn:{{var wsdl.name}}">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:{{var wsdl.name}}">
+            <xsd:complexType name="giftcardCustomerEntity">
+                <xsd:sequence>
+                    <xsd:element name="balance" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="expire_date" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="giftcardCustomerInfoRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="code" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardCustomerInfoResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:giftcardCustomerEntity" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardCustomerRedeemRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="code" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="customerId" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="storeId" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardCustomerRedeemResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:complexType name="enterpriseGiftcardaccountListEntity">
+                <xsd:sequence>
+                    <xsd:element minOccurs="1" maxOccurs="1" name="giftcardaccount_id" type="xsd:string" />
+                    <xsd:element minOccurs="0" maxOccurs="1" name="code" type="xsd:string" />
+                    <xsd:element minOccurs="1" maxOccurs="1" name="used_amount" type="xsd:string" />
+                    <xsd:element minOccurs="1" maxOccurs="1" name="base_amount" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="enterpriseGiftcardaccountListEntityArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:enterpriseGiftcardaccountListEntity" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="shoppingCartGiftcardAddRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="giftcardAccountCode" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="quoteId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="storeId" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="shoppingCartGiftcardAddResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="shoppingCartGiftcardRemoveRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="giftcardAccountCode" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="quoteId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="storeId" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="shoppingCartGiftcardRemoveResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="shoppingCartGiftcardListRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="quoteId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="storeId" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="shoppingCartGiftcardListResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:enterpriseGiftcardaccountListEntityArray" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+
+    <wsdl:message name="giftcardCustomerInfoRequest">
+        <wsdl:part name="parameters" element="typens:giftcardCustomerInfoRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardCustomerInfoResponse">
+        <wsdl:part name="parameters" element="typens:giftcardCustomerInfoResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardCustomerRedeemRequest">
+        <wsdl:part name="parameters" element="typens:giftcardCustomerRedeemRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardCustomerRedeemResponse">
+        <wsdl:part name="parameters" element="typens:giftcardCustomerRedeemResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="shoppingCartGiftcardAddRequest">
+        <wsdl:part name="parameters" element="typens:shoppingCartGiftcardAddRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="shoppingCartGiftcardAddResponse">
+        <wsdl:part name="parameters" element="typens:shoppingCartGiftcardAddResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="shoppingCartGiftcardRemoveRequest">
+        <wsdl:part name="parameters" element="typens:shoppingCartGiftcardRemoveRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="shoppingCartGiftcardRemoveResponse">
+        <wsdl:part name="parameters" element="typens:shoppingCartGiftcardRemoveResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="shoppingCartGiftcardListRequest">
+        <wsdl:part name="parameters" element="typens:shoppingCartGiftcardListRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="shoppingCartGiftcardListResponse">
+        <wsdl:part name="parameters" element="typens:shoppingCartGiftcardListResponseParam" />
+    </wsdl:message>
+
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+        <wsdl:operation name="giftcardCustomerInfo">
+            <wsdl:documentation>Retrieve gift card data</wsdl:documentation>
+            <wsdl:input message="typens:giftcardCustomerInfoRequest" />
+            <wsdl:output message="typens:giftcardCustomerInfoResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="giftcardCustomerRedeem">
+            <wsdl:documentation>Redeem gift card amount</wsdl:documentation>
+            <wsdl:input message="typens:giftcardCustomerRedeemRequest" />
+            <wsdl:output message="typens:giftcardCustomerRedeemResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="shoppingCartGiftcardAdd">
+            <wsdl:documentation>Redeem gift card amount</wsdl:documentation>
+            <wsdl:input message="typens:shoppingCartGiftcardAddRequest" />
+            <wsdl:output message="typens:shoppingCartGiftcardAddResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="shoppingCartGiftcardRemove">
+            <wsdl:documentation>Redeem gift card amount</wsdl:documentation>
+            <wsdl:input message="typens:shoppingCartGiftcardRemoveRequest" />
+            <wsdl:output message="typens:shoppingCartGiftcardRemoveResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="shoppingCartGiftcardList">
+            <wsdl:documentation>Redeem gift card amount</wsdl:documentation>
+            <wsdl:input message="typens:shoppingCartGiftcardListRequest" />
+            <wsdl:output message="typens:shoppingCartGiftcardListResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="giftcardCustomerInfo">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="giftcardCustomerRedeem">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="shoppingCartGiftcardAdd">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="shoppingCartGiftcardRemove">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="shoppingCartGiftcardList">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

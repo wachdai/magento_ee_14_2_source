@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<layout>
+    <adminhtml_customer_edit>
+        <reference name="customer_edit">
+            <block name="checkout.buttons" type="enterprise_checkout/adminhtml_customer_edit_buttons">
+                <action method="addButtons"></action>
+            </block>
+        </reference>
+    </adminhtml_customer_edit>
+
+    <adminhtml_checkout_index>
+        <reference name="head">
+            <action method="addJs"><file>mage/adminhtml/product/composite/configure.js</file></action>
+            <action method="addJs"><file>varien/configurable.js</file></action>
+            <action method="addJs"><file>enterprise/adminhtml/checkout.js</file></action>
+        </reference>
+        <reference name="content">
+            <block type="adminhtml/catalog_product_composite_configure" name="configure.popup"/>
+            <block type="enterprise_checkout/adminhtml_manage" name="ID" template="enterprise/checkout/manage.phtml">
+                <block type="enterprise_checkout/adminhtml_manage_store_switcher" name="checkout.store.switcher"/>
+                <block type="enterprise_checkout/adminhtml_manage_messages" name="checkout.message"/>
+                <block type="enterprise_checkout/adminhtml_manage_items" name="checkout.items" template="enterprise/checkout/manage/items.phtml"/>
+                <block type="enterprise_checkout/adminhtml_manage_accordion_sku_errors" name="errors">
+                    <block type="enterprise_checkout/adminhtml_sku_errors_grid" name="sku_error_grid"/>
+                </block>
+                <block type="enterprise_checkout/adminhtml_manage_accordion" name="checkout.accordion">
+                    <block type="enterprise_checkout/adminhtml_manage_accordion_products" name="products"/>
+                    <block type="enterprise_checkout/adminhtml_manage_accordion_sku" name="sku.accordion"/>
+                    <block type="enterprise_checkout/adminhtml_manage_accordion_wishlist" name="wishlist"/>
+                    <block type="enterprise_checkout/adminhtml_manage_accordion_compared" name="compared"/>
+                    <block type="enterprise_checkout/adminhtml_manage_accordion_rcompared" name="rcompared"/>
+                    <block type="enterprise_checkout/adminhtml_manage_accordion_rviewed" name="rviewed"/>
+                    <block type="enterprise_checkout/adminhtml_manage_accordion_ordered" name="ordered"/>
+                </block>
+                <block type="enterprise_checkout/adminhtml_manage_form_coupon" template="enterprise/checkout/form/coupon.phtml" name="checkout.form_coupon"/>
+            </block>
+            <block type="adminhtml/catalog_product_composite_configure" name="configure.popup"/>
+        </reference>
+    </adminhtml_checkout_index>
+
+    <adminhtml_checkout_cart>
+        <remove name="root"/>
+        <block type="enterprise_checkout/adminhtml_manage_items" name="checkout.items" template="enterprise/checkout/manage/items.phtml" output="toHtml"/>
+    </adminhtml_checkout_cart>
+
+    <adminhtml_checkout_applycoupon>
+        <remove name="root"/>
+        <block type="enterprise_checkout/adminhtml_manage_form_coupon" template="enterprise/checkout/form/coupon.phtml" name="form_coupon" output="toHtml"/>
+    </adminhtml_checkout_applycoupon>
+
+    <adminhtml_checkout_coupon>
+        <remove name="root"/>
+        <block type="enterprise_checkout/adminhtml_manage_form_coupon" template="enterprise/checkout/form/coupon.phtml" name="form_coupon" output="toHtml"/>
+    </adminhtml_checkout_coupon>
+
+    <adminhtml_checkout_products>
+        <remove name="root"/>
+        <block type="enterprise_checkout/adminhtml_manage_accordion_products" name="checkout.accordion.products" output="toHtml"/>
+    </adminhtml_checkout_products>
+
+    <adminhtml_checkout_viewwishlist>
+        <remove name="root"/>
+        <block type="enterprise_checkout/adminhtml_manage_accordion_wishlist" name="checkout.accordion.wishlist" output="toHtml"/>
+    </adminhtml_checkout_viewwishlist>
+
+    <adminhtml_checkout_viewcompared>
+        <remove name="root"/>
+        <block type="enterprise_checkout/adminhtml_manage_accordion_compared" name="checkout.accordion.compared" output="toHtml"/>
+    </adminhtml_checkout_viewcompared>
+
+    <adminhtml_checkout_viewrecentlycompared>
+        <remove name="root"/>
+        <block type="enterprise_checkout/adminhtml_manage_accordion_rcompared" name="checkout.accordion.rcompared" output="toHtml"/>
+    </adminhtml_checkout_viewrecentlycompared>
+
+    <adminhtml_checkout_viewrecentlyviewed>
+        <remove name="root"/>
+        <block type="enterprise_checkout/adminhtml_manage_accordion_rviewed" name="checkout.accordion.rviewed" output="toHtml"/>
+    </adminhtml_checkout_viewrecentlyviewed>
+
+    <adminhtml_checkout_viewordered>
+        <remove name="root"/>
+        <block type="enterprise_checkout/adminhtml_manage_accordion_ordered" name="checkout.accordion.ordered" output="toHtml"/>
+    </adminhtml_checkout_viewordered>
+
+    <adminhtml_checkout_manage_load_block_json>
+        <reference name="root">
+            <block type="enterprise_checkout/adminhtml_manage_load" name="content" />
+        </reference>
+    </adminhtml_checkout_manage_load_block_json>
+
+    <adminhtml_checkout_manage_load_block_plain>
+        <reference name="root">
+            <block type="core/text_list" name="content" />
+        </reference>
+    </adminhtml_checkout_manage_load_block_plain>
+
+    <adminhtml_checkout_manage_load_block_message>
+        <reference name="content">
+            <block type="enterprise_checkout/adminhtml_manage_messages" name="message" />
+        </reference>
+    </adminhtml_checkout_manage_load_block_message>
+
+    <adminhtml_checkout_manage_load_block_items>
+        <reference name="content">
+            <block type="enterprise_checkout/adminhtml_manage_items" name="items" template="enterprise/checkout/manage/items.phtml"/>
+        </reference>
+    </adminhtml_checkout_manage_load_block_items>
+
+    <adminhtml_checkout_manage_load_block_errors>
+        <reference name="content">
+            <block type="enterprise_checkout/adminhtml_manage_accordion_sku_errors" name="errors">
+                <block type="enterprise_checkout/adminhtml_sku_errors_grid" name="sku_error_grid"/>
+            </block>
+        </reference>
+    </adminhtml_checkout_manage_load_block_errors>
+
+    <!-- Add by SKU create new order layout updates -->
+
+    <!-- shortcut handles -->
+
+    <sku_layout_update>
+        <reference name="head">
+            <action method="addJs"><file>mage/adminhtml/product/composite/configure.js</file></action>
+        </reference>
+        <reference name="data">
+            <block type="enterprise_checkout/adminhtml_sales_order_create_sku" name="additional_area" template="sales/order/create/abstract.phtml">
+                <block type="enterprise_checkout/adminhtml_sales_order_create_sku_add"/>
+            </block>
+            <block type="enterprise_checkout/adminhtml_sales_order_create_sku_errors" name="errors">
+                <block type="enterprise_checkout/adminhtml_sku_errors_grid" name="sku_error_grid"/>
+            </block>
+        </reference>
+    </sku_layout_update>
+
+    <!-- update real handles -->
+
+    <adminhtml_sales_order_create_index>
+        <update handle="sku_layout_update"/>
+    </adminhtml_sales_order_create_index>
+
+    <adminhtml_sales_order_create_load_block_data>
+        <update handle="sku_layout_update"/>
+    </adminhtml_sales_order_create_load_block_data>
+
+    <adminhtml_sales_order_create_load_block_additional_area>
+        <reference name="content">
+            <block type="enterprise_checkout/adminhtml_sales_order_create_sku" name="additional_area" template="sales/order/create/abstract.phtml">
+                <block type="enterprise_checkout/adminhtml_sales_order_create_sku_add"/>
+            </block>
+            <block type="enterprise_checkout/adminhtml_sales_order_create_sku_errors" name="errors">
+                <block type="enterprise_checkout/adminhtml_sku_errors_grid" name="sku_error_grid"/>
+            </block>
+        </reference>
+    </adminhtml_sales_order_create_load_block_additional_area>
+
+    <adminhtml_sales_order_create_load_block_errors>
+        <reference name="content">
+            <block type="enterprise_checkout/adminhtml_sales_order_create_sku_errors" name="errors">
+                <block type="enterprise_checkout/adminhtml_sku_errors_grid" name="sku_error_grid"/>
+            </block>
+        </reference>
+    </adminhtml_sales_order_create_load_block_errors>
+</layout>

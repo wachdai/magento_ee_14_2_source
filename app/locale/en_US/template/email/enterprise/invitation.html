@@ -1,0 +1,35 @@
+<!--@subject {{if inviter_name}}{{var inviter_name}} invites you{{else}}Invite{{/if}} to join Private Sales Site @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var logo_url":"Email Logo Image Url",
+"var logo_alt":"Email Logo Image Alt",
+"var store.getFrontendName()|escape":"Store Name",
+"var message|escape|nl2br":"Invitation Message",
+"var url|escape":"Invitation Url"}
+@-->
+<!--@styles
+@-->
+
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="action-content">
+            <h1>Please accept this invitation to join {{var store.getFrontendName()|escape}}</h1>
+            <p>{{var store.getFrontendName()|escape}} offers limited time sales of products only to members.</p>
+            {{if allow_message}}
+            <table cellspacing="0" cellpadding="0" class="message-container">
+                <tr>
+                    <td>Message: {{var message|escape|nl2br}}</td>
+                </tr>
+            </table>
+            {{/if}}
+            <p>
+                Please use the following link to create an account and view the deals<br /><a href="{{var url|escape}}">{{var url|escape}}</a>
+            </p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer"}}

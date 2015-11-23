@@ -1,0 +1,54 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * "Remember Me" popup template (when click on "What's this?")
+ *
+ */
+/** @var $this Mage_Core_Block_Template */
+?>
+<script type="text/javascript">
+//<![CDATA[
+    var showTooltip = function() {
+        this.rememberTip = new Enterprise.Widget.Dialog(
+            '<?php echo $this->jsQuoteEscape($this->__('What is this?')); ?>',
+            '<p><?php echo $this->jsQuoteEscape($this->__('Checking &quot;Remember Me&quot; will let you access your shopping cart on this computer when you are logged out')) ?></p>'+
+            '<div class="buttons-set"><button type="button" class="button btn-close"><span><span><?php echo $this->jsQuoteEscape($this->__('Close')) ?></span></span></button></div>',
+            'popup-remember-tip'
+        ),
+        $(this.rememberTip.getContent()).select('button.btn-close')[0].onclick = this.rememberTip.hide.bind(this.rememberTip);
+        this.rememberTip.show();
+        return false;
+    }
+
+    document.observe("dom:loaded", function() {
+        $$('#remember-me-box a').each(function(element) {
+            Event.observe(element, 'click', showTooltip);
+        });
+    });
+//]]>
+</script>

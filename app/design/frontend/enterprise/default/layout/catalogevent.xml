@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<layout version="0.1.0">
+    
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_js</type><name>js/enterprise/catalogevent.js</name></action>
+        </reference>
+    </default>
+    
+    <catalog_category_view>
+        <reference name="top.container">
+            <block after="-" name="catalog_category_event" type="enterprise_catalogevent/catalog_category_event" template="catalogevent/catalog/category/event.phtml"/>
+        </reference>
+    </catalog_category_view>
+    
+    <catalog_product_view>
+        <reference name="top.container">
+            <block after="-" name="product_category_event" type="enterprise_catalogevent/catalog_product_event" template="catalogevent/catalog/product/event.phtml"/>
+        </reference>
+    </catalog_product_view>
+    
+    <review_product_list>
+        <reference name="top.container">
+            <block after="-" name="product_category_event" type="enterprise_catalogevent/catalog_product_event" template="catalogevent/catalog/product/event.phtml"/>
+        </reference>
+    </review_product_list>
+    
+    <review_product_view>
+        <reference name="top.container">
+            <block after="-" name="product_category_event" type="enterprise_catalogevent/catalog_product_event" template="catalogevent/catalog/product/event.phtml"/>
+        </reference>
+    </review_product_view>
+    
+</layout>

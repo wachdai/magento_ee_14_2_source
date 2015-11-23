@@ -1,0 +1,46 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php if ($this->canRefundRewardPoints()): ?>
+    <p>
+        <label for="creditmemo_refund_reward_points_enable"><?php echo Mage::helper('enterprise_reward')->__('Refund Reward Points') ?></label>
+        <input type="checkbox" name="creditmemo[refund_reward_points_enable]" value="1" id="creditmemo_refund_reward_points_enable">
+        <input type="text" name="creditmemo[refund_reward_points]" value="<?php echo $this->getRefundRewardPointsBalance() ?>" id="creditmemo_refund_reward_points" class="input-text not-negative-amount" style="width: 60px; text-align: right;">
+        <script type="text/javascript">
+        //<![CDATA[
+            function toggleRewardPointsRefundAmount() {
+                if ($('creditmemo_refund_reward_points_enable').checked) {
+                    $('creditmemo_refund_reward_points').disabled = false;
+                } else {
+                    $('creditmemo_refund_reward_points').disabled = true;
+                }
+            }
+            Event.observe($('creditmemo_refund_reward_points_enable'), 'change', toggleRewardPointsRefundAmount);
+            toggleRewardPointsRefundAmount();
+        //]]>
+        </script>
+    </p>
+<?php endif; ?>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="../../../../../../vendor/magento/mtf/etc/fixture.xsd">
+  <fixture name="targetRule" module="Enterprise_TargetRule" type="flat" entity_type="enterprise_targetrule" repository_class="Enterprise\TargetRule\Test\Repository\TargetRule" handler_interface="Enterprise\TargetRule\Test\Handler\TargetRuleInterface" class="Enterprise\TargetRule\Test\Fixture\TargetRule">
+    <dataset name="default">
+        <field name="name" xsi:type="string">TargetRule%isolation%</field>
+        <field name="is_active" xsi:type="string">Active</field>
+        <field name="apply_to" xsi:type="string">Related Products</field>
+        <field name="use_customer_segment" xsi:type="string">All</field>
+    </dataset>
+    <field name="rule_id" is_required="1">
+      <default_value xsi:type="null"/>
+    </field>
+    <field name="name" group="rule_information">
+      <default_value xsi:type="string">TargetRule%isolation%</default_value>
+    </field>
+    <field name="from_date" group="rule_information" source="Mage\Core\Test\Fixture\Date">
+      <default_value xsi:type="null"/>
+    </field>
+    <field name="to_date" group="rule_information" source="Mage\Core\Test\Fixture\Date">
+      <default_value xsi:type="null"/>
+    </field>
+    <field name="is_active" group="rule_information">
+      <default_value xsi:type="string">Active</default_value>
+    </field>
+    <field name="conditions_serialized" group="products_to_match">
+      <default_value xsi:type="null"/>
+    </field>
+    <field name="actions_serialized" group="products_to_display">
+      <default_value xsi:type="null"/>
+    </field>
+    <field name="positions_limit" group="rule_information">
+      <default_value xsi:type="number">0</default_value>
+    </field>
+    <field name="apply_to" group="rule_information">
+      <default_value xsi:type="string">Related Products</default_value>
+    </field>
+    <field name="sort_order" group="rule_information">
+      <default_value xsi:type="null"/>
+    </field>
+    <field name="use_customer_segment" group="rule_information">
+      <default_value xsi:type="string">All</default_value>
+    </field>
+    <field name="customer_segment_ids" group="rule_information">
+      <default_value xsi:type="null"/>
+    </field>
+    <field name="action_select">
+      <default_value xsi:type="null"/>
+    </field>
+    <field name="action_select_bind">
+      <default_value xsi:type="null"/>
+    </field>
+  </fixture>
+</config>

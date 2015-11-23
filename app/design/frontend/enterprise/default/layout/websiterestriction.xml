@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<layout version="0.1.0">
+    <!-- stub-page for a closed website -->
+    <restriction_index_stub translate="label" module="enterprise_websiterestriction">
+        <label>Website Closed Stub Page</label>
+        <block type="page/html" name="root" output="toHtml" template="page/1column.phtml">
+            <block type="page/html_head" name="head" as="head">
+                <action method="addJs"><script>prototype/prototype.js</script></action>
+                <action method="addJs"><script>lib/ccard.js</script></action>
+                <action method="addJs"><script>prototype/validation.js</script></action>
+                <action method="addJs"><script>varien/js.js</script></action>
+                <action method="addJs"><script>mage/translate.js</script></action>
+                <action method="addItem"><type>skin_js</type><name>js/scripts.js</name></action>
+                <action method="addCss"><stylesheet>css/styles.css</stylesheet></action>
+                <action method="addItem"><type>skin_css</type><name>css/styles-ie.css</name><params/><if>lt IE 8</if></action>
+                <action method="addItem"><type>skin_js</type><name>js/iehover-fix.js</name><params/><if>lt IE 7</if></action>
+                <action method="addCss"><stylesheet>css/print.css</stylesheet><params>media="print"</params></action>
+            </block>
+            <block type="core/messages" name="global_messages" as="global_messages"/>
+            <block type="core/messages" name="messages" as="messages"/>
+            <block type="core/text_list" name="content" as="content" translate="label">
+                <label>Main Content Area</label>
+                <block type="page/html_wrapper" name="cms.wrapper" translate="label">
+                    <label>CMS Content Wrapper</label>
+                    <action method="setElementClass"><value>std</value></action>
+                    <block type="enterprise_websiterestriction/cms_stub" name="cms_page" />
+                </block>
+            </block>
+            <block type="page/html_footer" name="footer" as="footer" template="page/html/footer.phtml"/>
+        </block>
+        <block type="core/profiler" output="toHtml" name="core_profiler"/>
+    </restriction_index_stub>
+
+    <!-- private sales mode additional layout update -->
+    <restriction_privatesales_mode translate="label" module="enterprise_websiterestriction">
+        <label>Website Closed Private Sales Landing Page</label>
+    </restriction_privatesales_mode>
+</layout>

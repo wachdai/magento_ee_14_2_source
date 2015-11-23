@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_GiftCardAccount
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <api>
+        <resources>
+            <giftcard_account translate="title" module="enterprise_giftcardaccount">
+                <model>enterprise_giftcardaccount/api</model>
+                <title>GiftCard Account API</title>
+                <acl>giftcard_account</acl>
+                <methods>
+                    <list translate="title" module="enterprise_giftcard">
+                        <title>Retrieve gift card accounts list</title>
+                        <method>items</method>
+                        <acl>giftcard_account/list</acl>
+                    </list>
+                    <info translate="title" module="enterprise_giftcard">
+                        <title>Retrieve full gift card account info</title>
+                        <acl>giftcard_account/info</acl>
+                    </info>
+                    <create translate="title" module="enterprise_giftcardaccount">
+                        <title>Create gift card account</title>
+                        <acl>enterprise_giftcardaccount/create</acl>
+                    </create>
+                    <update translate="title" module="enterprise_giftcard">
+                        <title>Update gift card account info</title>
+                        <acl>giftcard_account/update</acl>
+                    </update>
+                    <remove translate="title" module="enterprise_giftcardaccount">
+                        <title>Remove gift card account</title>
+                        <acl>enterprise_giftcardaccount/remove</acl>
+                    </remove>
+                </methods>
+                <faults>
+                    <not_exists>
+                        <code>100</code>
+                        <message>Gift card account does not exists.</message>
+                    </not_exists>
+                    <filters_invalid>
+                        <code>101</code>
+                        <message>Invalid filters specified. Details in error message.</message>
+                    </filters_invalid>
+                    <unable_to_save>
+                        <code>102</code>
+                        <message>Unable to save data.</message>
+                    </unable_to_save>
+                    <invalid_notification_data>
+                        <code>104</code>
+                        <message>Provided email notification data is invalid</message>
+                    </invalid_notification_data>
+                    <invalid_giftcardaccount_data>
+                        <code>105</code>
+                        <message>Provided gift card account data is invalid</message>
+                    </invalid_giftcardaccount_data>
+                    <giftcard_account_not_found_by_id>
+                        <code>106</code>
+                        <message>Gift card account with requested id does not exist</message>
+                    </giftcard_account_not_found_by_id>
+                    <delete_error>
+                        <code>107</code>
+                        <message>Error occurs while deleting gift card</message>
+                    </delete_error>
+                </faults>
+            </giftcard_account>
+        </resources>
+        <v2>
+            <resources_function_prefix>
+                <giftcard_account>giftcardAccount</giftcard_account>
+            </resources_function_prefix>
+        </v2>
+        <acl>
+            <resources>
+                <giftcard_account translate="title" module="enterprise_giftcardaccount">
+                    <title>Gift Card Account</title>
+                    <sort_order>1</sort_order>
+                    <list translate="title" module="enterprise_giftcardaccount">
+                        <title>Retrieve gift card accounts list</title>
+                    </list>
+                    <info translate="title" module="enterprise_giftcardaccount">
+                        <title>Retrieve full gift card account info</title>
+                    </info>
+                    <create translate="title" module="enterprise_giftcardaccount">
+                        <title>Create</title>
+                    </create>
+                    <update translate="title" module="enterprise_giftcardaccount">
+                        <title>Update gift card info</title>
+                    </update>
+                    <remove translate="title" module="enterprise_giftcardaccount">
+                        <title>Remove</title>
+                    </remove>
+                </giftcard_account>
+            </resources>
+        </acl>
+    </api>
+</config>

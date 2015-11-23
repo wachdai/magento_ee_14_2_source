@@ -1,0 +1,76 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/**
+ * New child element for conditions widget
+ */
+?>
+
+<?php $element = $this->getElement();?>
+<?php $elementId = $element->getHtmlId();?>
+&nbsp;<span class="rule-param rule-param-new-child" <?php if ($element->getParamId()):  ?> id="<?php echo $element->getParamId();?>" <?php endif; ?> >
+<a href="javascript:void(0)" class="label">
+    <?php echo $element->getValueName();?>
+</a>
+<span class="element">
+    <?php echo Mage::helper('enterprise_targetrule')->__('Please choose a condition to add...') ?>
+    <a href="javascript:setValueToElementValueChanger('<?php echo $elementId;?>', false);void(0)"><?php echo Mage::helper('enterprise_targetrule')->__('Close') ?></a>
+
+    <?php echo $element->getElementHtml();?>
+    <?php if($values = $element->getValues()):?>
+        <?php foreach ($values as $key => $option): ?>
+            <dl>
+                <?php if(is_string($option['value'])):?>
+                        <dt>
+                            <a onclick="javascript:setValueToElementValueChanger('<?php echo $elementId;?>', '<?php echo $option['value']; ?>');void(0);"><?php echo $option['label']; ?></a>
+                        </dt>
+                <?php endif;?>
+                <?php if(is_array($option['value'])):?>
+                    <dt><?php echo $option['label']; ?></dt>
+                    <?php foreach ($option['value'] as $item): ?>
+                        <dd>
+                            <a onclick="javascript:setValueToElementValueChanger('<?php echo $elementId;?>', '<?php echo $item['value']; ?>');void(0);"><?php echo $item['label']; ?></a>
+                        </dd>
+                    <?php endforeach; ?>
+                <?php endif;?>
+            </dl>
+        <?php endforeach; ?>
+    <?php endif;?>
+</span></span>&nbsp;
+
+<script type="text/javascript">
+//<![CDATA[
+function setValueToElementValueChanger(changerId, value)
+{
+    elementValueChanger = $(changerId);
+    if (!value){
+        value = '';
+    }
+    elementValueChanger.value = value;
+    elementValueChanger.container.rulesObject.hideParamInputField(elementValueChanger.container);
+}
+//]]>
+</script>

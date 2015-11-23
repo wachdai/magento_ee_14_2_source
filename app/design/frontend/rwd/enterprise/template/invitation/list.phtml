@@ -1,0 +1,84 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * @see Enterprise_Invitation_Block_Customer_List
+ */
+?>
+<div class="page-title">
+    <h1><?php echo Mage::helper('enterprise_invitation')->__('My Invitations'); ?></h1>
+</div>
+
+<div id="messages"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+
+<?php echo $this->getChildHtml('list_before')?>
+
+<?php if (count($this->getInvitationCollection())): ?>
+
+<table class="data-table" id="invitations-list-table" cellpadding="0">
+    <col />
+    <col width="100" />
+    <thead>
+        <tr>
+            <th>
+                <?php echo Mage::helper('enterprise_invitation')->__('Email'); ?>
+            </th>
+            <th>
+                <?php echo Mage::helper('enterprise_invitation')->__('Status'); ?>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+    <?php foreach ($this->getInvitationCollection() as $invitation): ?>
+        <tr>
+            <td>
+                <?php echo $this->escapeHtml($invitation->getEmail()); ?>
+            </td>
+            <td>
+                <?php echo $this->helper('enterprise_invitation')->getInvitationStatusText($invitation);?>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<script type="text/javascript">decorateTable('invitations-list-table')</script>
+
+<?php else: ?>
+
+<div id="cookie-notice">
+    <ul class="messages"><li class="notice-msg">
+        <ul><li><?php echo Mage::helper('enterprise_invitation')->__('There are no sent invitations yet'); ?></li></ul>
+    </li></ul>
+</div>
+
+<?php endif; ?>
+
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    <a href="<?php echo $this->helper('enterprise_invitation')->getCustomerInvitationFormUrl(); ?>" class="button"><span><?php echo $this->__('Send Invitations') ?></span></a>
+</div>

@@ -1,0 +1,279 @@
+//
+// Magento Enterprise Edition
+//
+// NOTICE OF LICENSE
+//
+// This source file is subject to the Magento Enterprise Edition End User License Agreement
+// that is bundled with this package in the file LICENSE_EE.txt.
+// It is also available through the world-wide-web at this URL:
+// http://www.magento.com/license/enterprise-edition
+// If you did not receive a copy of the license and are unable to
+// obtain it through the world-wide-web, please send an email
+// to license@magento.com so we can send you a copy immediately.
+//
+// DISCLAIMER
+//
+// Do not edit or add to this file if you wish to upgrade Magento to newer
+// versions in the future. If you wish to customize Magento for your
+// needs please refer to http://www.magento.com for more information.
+//
+// @category    design
+// @package     rwd_enterprise
+// @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @license http://www.magento.com/license/enterprise-edition
+//
+
+/* ============================================ *
+ * Gift Registry
+ * ============================================ */
+.gift-note {
+    width: 99%;
+}
+.btn-gift-registry {
+    padding-top: $element-spacing;
+
+    .input-box {
+        margin: 0 0 $element-spacing;
+    }
+    select {
+        width: 100%;
+    }
+}
+.gr-manage-items {
+    margin-bottom: $trim-small;
+
+    input.qty {
+        min-width: 45px;
+    }
+}
+#event_date_trig {
+    display: inline;
+}
+
+.gift-registry-edit {
+    textarea,
+    input {
+        max-width: 100%;
+        width: 365px;
+    }
+
+    label[for=type_id] {
+        text-transform: uppercase;
+        margin-bottom: 0px;
+        font-size: 13px;
+    }
+
+    .add-row {
+        width: 100%;
+        max-width: 365px;
+
+        > p {
+            float: right;
+        }
+    }
+
+    .btn-remove {
+        float: right;
+    }
+}
+
+.block-gr-search {
+    .form-alt > li {
+        margin-top: $element-spacing / 2;
+        margin-bottom: $element-spacing / 2;
+    }
+    button {
+        margin-top: $element-spacing;
+    }
+    .input-box > select {
+        width: 100%;
+    }
+}
+
+#gr-please-wait {
+    margin-bottom: 10px;
+    margin-left: 0;
+}
+
+.gift-registry-view {
+    .subtitle {
+        margin-top: $trim;
+        font-size: $f-size-xxl;
+
+        @include bp(max-width, $bp-xsmall) {
+            margin-top:$trim-small;
+        }
+    }
+}
+
+.gift-registry-items {
+    .btn-update {
+        margin-top: $element-spacing;
+    }
+    textarea {
+        min-width: 80px;
+    }
+}
+
+.gr-type-specific-options img.v-middle {
+    display: inline;
+}
+
+#gr_search_form,
+#gr_search_email_form,
+#gr_search_id_form {
+    select {
+        margin-bottom: 5px;
+    }
+
+    .buttons-set {
+        max-width: 365px;
+    }
+
+    p.required {
+        position: relative;
+        top: -30px;
+    }
+}
+
+@include bp(max-width, $bp-large) {
+    .gr-manage-items {
+        col.note-col,
+        .head-note,
+        .left-note,
+        col.date-col,
+        .head-add-date,
+        .add-date {
+            display: none;
+        }
+    }
+
+    .head-requested,
+    .head-fulfilled {
+        display: none;
+    }
+
+    .gift-image img {
+        width: 68px
+    }
+
+    .gift-registry-actions a {
+        float: left;
+        width: 100%;
+        clear:both;
+        margin-bottom: 7px;
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+    .gift-info {
+        width: 55%;
+    }
+    .item-options {
+        float: left;
+    }
+    .item-options ~ .gift-note {
+        float: left;
+        width: 35%;
+        height: 10em;
+        margin: 10px 0 0 5%;
+    }
+    .gift-registry-items {
+        font-size: $f-size-xs;
+
+        td, th {
+            padding: $element-spacing $element-spacing/2;
+        }
+    }
+    .gr-manage-items {
+        font-size: $f-size-xs;
+    }
+    .gift-image,
+    col.img-col {
+        display: none;
+    }
+}
+
+@include bp(max-width, $bp-small) {
+    .gift-registry-actions a {
+        font-size: $f-size-xxs !important;
+        white-space: normal !important;
+    }
+    .item-options ~ .gift-note {
+        width: 99% !important;
+    }
+
+    .item-options {
+        float: none;
+    }
+    .item-options ~ .gift-note {
+        float: none;
+        height: 10em;
+        margin: 10px 0 0 5%;
+    }
+    .gr-manage-items {
+        font-size: $f-size-xxs;
+
+        input,
+        dt,
+        dl,
+        a {
+            font-size: inherit;
+        }
+    }
+    #giftregistry-search-results .location,
+    #giftregistry-search-results .event-type {
+        display: none;
+    }
+}
+
+
+@include bp(max-width, $bp-xsmall) {
+
+    .gr-manage-items,
+    .gift-registry-items {
+        .gift-secondary {
+            display: none;
+        }
+    }
+
+    #event_date_trig {
+        display: inline;
+        float: right;
+        margin-top: $element-spacing;
+    }
+
+    .giftregistry-search-results {
+        font-size: $f-size-xxs;
+
+        td,
+        th {
+            padding: $element-spacing $element-spacing/2;
+            vertical-align: top;
+        }
+    }
+    .gr-manage-items,
+    .gift-registry-items {
+        td,
+        th {
+            padding: $element-spacing $element-spacing/2;
+            vertical-align: top;
+        }
+    }
+
+    .giftregistry-table {
+        td,
+        th {
+            font-size: $f-size-xxs;
+        }
+    }
+
+    #gr_search_form,
+    #gr_search_email_form,
+    #gr_search_id_form {
+        p.required {
+            padding-bottom: 15px;
+            position: static;
+        }
+    }
+}

@@ -1,0 +1,149 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+/** @var $this Enterprise_Cms_Block_Adminhtml_Cms_Hierarchy_Manage */
+?>
+<div id="cms-hierarchy-manage-container" class="cms-popup" style="display:none;">
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"></h4>
+        </div>
+        <div class="content">
+            <div class="cms-popup-description"></div>
+            <div class="fieldset">
+                <div class="cms-hierarchy manage-form">
+                    <?php echo $this->getFormHtml() ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons-set">
+            <div class="f-right">
+                <button class="scalable cancel_button" type="button" id="cms_popup_cancel" onclick="hideHierarchyDialog()"><span><?php echo Mage::helper('enterprise_cms')->__('Cancel'); ?></span></button>
+                <button type="button" id="cms_popup_ok"><span></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popup-window-mask" style="display:none;"></div>
+
+<script type="text/javascript">
+//<![CDATA[
+    function countSelectedScopes()
+    {
+        var selectedScopes = 0;
+
+        for (var i = 0, len = $('scopes').length; i < len; i++) {
+            if ($('scopes').options[i].selected) {
+                selectedScopes++;
+            }
+        }
+
+        return selectedScopes;
+    }
+
+    function submitCopy(containerObj)
+    {
+        if (!countSelectedScopes()) {
+            alert(<?php echo json_encode(Mage::helper('enterprise_cms')->__("Please select website or store view.")); ?>);
+            return;
+        }
+
+        if (confirm(<?php echo json_encode(Mage::helper('enterprise_cms')->__("Are you sure you want to copy the current hierarchy to the selected destinations?")); ?>)) {
+            var form = $$('#cms-hierarchy-manage-container form')[0];
+            form.action = <?php echo json_encode($this->getCopyHierarchyUrl()); ?>;
+            form.submit();
+            containerObj.hide();
+        }
+    }
+
+    function submitDelete(containerObj)
+    {
+        if (!countSelectedScopes()) {
+            alert(<?php echo json_encode(Mage::helper('enterprise_cms')->__("Please select website or store view.")); ?>);
+            return;
+        }
+
+        if (confirm(<?php echo json_encode(Mage::helper('enterprise_cms')->__("Are you sure you want to delete the selected hierarchies?")); ?>)) {
+            var form = $$('#cms-hierarchy-manage-container form')[0];
+            form.action = <?php echo json_encode($this->getDeleteHierarchiesUrl()); ?>;
+            form.submit();
+            containerObj.hide();
+        }
+    }
+
+    function openHierarchyDialog(action)
+    {
+        var title = '';
+        var buttonText = '';
+        var buttonClass = '';
+        var buttonAction = null;
+        var descriptionText = '';
+        if (action == 'delete') {
+            title = <?php echo json_encode(Mage::helper('enterprise_cms')->getDeleteMultipleHierarchiesText()); ?>;
+            buttonText = <?php echo json_encode(Mage::helper('enterprise_cms')->__('Delete')); ?>;
+            buttonClass = 'scalable ok_button delete';
+            buttonAction = submitDelete;
+            descriptionText = <?php echo json_encode(Mage::helper('enterprise_cms')->__('Please select one or more hierarchies to delete')); ?>;
+        } else if (action == 'copy') {
+            <?php $copyText = json_encode(Mage::helper('enterprise_cms')->__('Copy')); ?>
+            title = <?php echo $copyText; ?>;
+            buttonText = <?php echo $copyText; ?>;
+            buttonClass = 'scalable ok_button add';
+            buttonAction = submitCopy;
+            descriptionText = <?php echo json_encode(Mage::helper('enterprise_cms')->__('Please select one or more destinations to copy the current hierarchy to')); ?>;
+        } else {
+            return;
+        }
+
+        var popupContainer = $('cms-hierarchy-manage-container');
+        popupContainer.select('.entry-edit-head h4')[0].innerHTML = title;
+        popupContainer.select('.content .cms-popup-description')[0].innerHTML = descriptionText;
+        var popupOkButton = $('cms_popup_ok');
+        popupOkButton.select('span')[0].innerHTML = buttonText;
+        popupOkButton.setAttribute('class', buttonClass);
+        popupOkButton.onclick = function () {
+            buttonAction(popupContainer);
+        };
+
+        popupContainer.show().setStyle({
+            'marginTop': -popupContainer.getDimensions().height / 2 + 'px'
+        });
+        $('popup-window-mask').setStyle({
+            height: $('html-body').getHeight() + 'px'
+        }).show();
+    }
+
+    function hideHierarchyDialog() {
+        for (var i = 0, len = $('scopes').length; i < len; i++) {
+            $('scopes').options[i].selected = false;
+        }
+        $$('.cms-popup').each(Element.hide);
+        $('popup-window-mask').hide();
+    }
+//]]>
+</script>

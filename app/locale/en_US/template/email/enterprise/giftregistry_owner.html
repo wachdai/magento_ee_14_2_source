@@ -1,0 +1,43 @@
+<!--@subject Gift Registry created at {{var store.getFrontendName()}} @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"store url=\"customer/account/\"":"Customer Account Url",
+"var logo_url":"Email Logo Image Url",
+"var logo_alt":"Email Logo Image Alt",
+"var store.getFrontendName()":"Store Name",
+"var owner.getName()|escape":"Owner Name",
+"var entity.getTitle()|escape":"Registry Title",
+"var entity.getMessage|escape":"Registry Recipients",
+"var entity.getUrlKey()|escape":"Registry Url Key",
+"var url|escape":"Registry Url"}
+@-->
+<!--@styles
+@-->
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="action-content">
+            <h1>{{var owner.getName()|escape}},</h1>
+            <p>You have successfully created the following gift registry:<br/><br/>
+                Gift registry: {{var entity.getTitle()|escape}}<br/>
+            </p>
+            {{if entity.getMessage()}}
+            <table cellspacing="0" cellpadding="0" class="message-container">
+                <tr>
+                    <td>Message: {{var entity.getMessage()|escape}}</td>
+                </tr>
+            </table>
+            {{/if}}
+            <p>Now you can add products to your gift registry. Simply browse <a href="{{store url=""}}">{{var store.getFrontendName()}}</a> and add the products you want to your shopping cart or wishlist. You can then add the products to your registry from your shopping cart or wishlist page.</p>
+            <p>You can also share it with your friends and family by logging into your account and visiting the Gift Registry tab. Or, you can email the following link and gift registry ID to them:</p>
+            <p>
+                Gift registry location: <a href="{{var url|escape}}">{{var url|escape}}</a><br/>
+                Gift registry ID: {{var entity.getUrlKey()|escape}}
+            </p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer"}}

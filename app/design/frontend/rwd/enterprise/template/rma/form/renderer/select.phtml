@@ -1,0 +1,48 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * Create account form template
+ *
+ * @see Enterprise_Customer_Block_Form_Renderer_Select
+ */
+/* @var $this Enterprise_Rma_Block_Form_Renderer_Select */
+?>
+<label for="items:<?php echo $this->getHtmlId()?>_index_"<?php if ($this->isRequired()) echo ' class="required"' ?>><?php if ($this->isRequired()) echo '<em>*</em>' ?><?php echo $this->getLabel() ?></label>
+<div class="input-box">
+    <select id="items:<?php echo $this->getHtmlId()?>_index_" name="items[_index_][<?php echo $this->getFieldName()?>]"<?php if($this->getHtmlClass()):?> class="<?php echo $this->getHtmlClass();?>"<?php endif;?><?php if ($this->getFieldName() == 'reason'): ?> onchange="showOtherOption(this.value, '_index_')"<?php endif; ?>>
+    <?php foreach ($this->getOptions() as $option):?>
+    <option value="<?php echo $option['value']?>"<?php if ($option['value'] == $this->getValue()):?> selected="selected"<?php endif;?>><?php echo $this->escapeHtml($option['label'])?></option>
+    <?php endforeach;?>
+    <?php if ($this->getFieldName() == 'reason'): ?>
+        <?php $attribute = $this->getAttribute('reason_other'); ?>
+        <?php if ($attribute): ?>
+        <option value="other"<?php if ($option['value'] == 'other'):?> selected="selected"<?php endif;?>><?php echo $this->escapeHtml($attribute->getStoreLabel())?></option>
+        <?php endif; ?>
+    <?php endif; ?>
+    </select>
+</div>

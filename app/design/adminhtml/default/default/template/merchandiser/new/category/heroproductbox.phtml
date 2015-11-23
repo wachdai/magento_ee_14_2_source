@@ -1,0 +1,113 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+    $helper = Mage::helper('merchandiser');
+    $currentPosition = $this->getCurrentPosition();
+    $_product = $this->getCurrentProduct();
+    $pId = $_product->getId();
+?>
+
+<li id="sku-<?php echo $this->htmlEscape($helper->getSkuIdDisplay($_product->getSku())) ?>" class="<?php echo $this->getWebClassesFromProduct($_product) ?> dragbox product-shop productid product<?php echo $pId ?> <?php echo $this->getProductClasses($_product) ?>">
+    <input type="hidden" value="<?php echo $_product->getId() ?>" class="hero-sku" name="heroproducts[]" />
+    <input type="hidden" value="<?php echo $this->htmlEscape($_product->getSku()) ?>" class="product-sku" />
+    <div class="product-shop">
+        <h2 class="product-name">
+            <strong>
+                <span class="dragbox-position-container">
+                    <span class="dragbox-position"></span>
+                </span><?php echo $_product->getName() ?>
+            </strong>
+            <?php if ($_product->getTypeId() == "bundle"): ?>
+                <?php echo $helper->getBundlePrice($pId); ?>
+            <?php else: ?>
+                <?php echo $this->getPriceHtml($_product, true); ?>
+            <?php endif; ?>
+            <?php echo $helper->getStockQtyHtml($_product) ?>
+        </h2>
+        <input type="hidden" class="productid input-product-position productid<?php echo $pId ?>" rel="<?php echo $this->htmlEscape($_product->getSku()) ?>" name="product[<?php echo $pId ?>]" value="<?php echo $currentPosition++ ?>" />
+        <div class="dragbox-content">
+            <div class="cols2">
+                <div class="cols2-left">
+                    <div class="product-image-container">
+                        <a href="<?php echo $this->helper('merchandiser')->getImageUrl($_product); ?>" style="display:none"></a>
+                        <img id="product-image-<?php echo $pId ?>" class="product-image" src="<?php echo $this->helper('merchandiser')->getImageUrl($_product); ?>" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                    </div>
+                    <?php if ($helper->getShowExtraImages()): ?>
+                        <div class="product-image-more">
+                            <?php $images = $this->getMediaImagesByProductId($_product->getId()); ?>
+                            <?php if ($images): ?>
+                                <?php $imagecount = 0; ?>
+                                <?php $moreImagesCount = $helper->getMoreImageCount(); ?>
+                                <?php foreach($images as $_image): ?>
+                                    <?php if (++$imagecount > $moreImagesCount) {
+                                        break;
+                                    } ?>
+                                    <div class="product-image-more-item">
+                                        <a href="<?php echo $this->helper('merchandiser')->getImageUrl($_product, $_image->getFile()); ?>">
+                                            <img src="<?php echo $this->helper('merchandiser')->getImageUrl($_product, $_image->getFile(), 35); ?>" alt="<?php echo $this->htmlEscape($_image->getLabel()) ?>" title="<?php echo $this->htmlEscape($_image->getLabel()) ?>" />
+                                        </a>
+                                    </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <div class="cols2-right">
+                    <div>
+                        <strong><?php echo $helper->__('SKU') ?></strong>:&nbsp;<?php echo $this->htmlEscape($_product->getSku()) ?>
+                    </div>
+
+                    <?php if ($helper->getShowCreationDate()): ?>
+                        <div>
+                            <strong><?php echo $helper->__('Creation date') ?></strong>:&nbsp;<?php echo date("Y-m-d H:i:s", strtotime($_product->getCreatedAt())) ?>
+                        </div>
+                    <?php endif; ?>
+
+                    <?php foreach($this->getAttributesPerProduct($_product) as $attribute): ?>
+                        <div>
+                            <strong><?php echo $attribute['label']; ?>:&nbsp;</strong><?php echo $attribute['value']; ?>
+                        </div>
+                    <?php endforeach; ?>
+
+                    <?php foreach($this->getUserPriceAttributesPerProduct($_product) as $attribute): ?>
+                        <div>
+                            <strong><?php echo $attribute['label']; ?>:&nbsp;</strong><?php echo $attribute['value']; ?>
+                        </div>
+                    <?php endforeach; ?>
+
+                    <div id="box-button" class="buttons">
+                        <a href="#" onclick="return false;" class="remove-button">
+                            <img src="<?php echo $this->getSkinUrl('merchandiser/images/cross.png') ?>" alt="<?php echo $helper->__('Detach from category') ?>" title="<?php echo $helper->__('Detach from category') ?>" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="cannot-add"><?php echo $helper->__('Already in category') ?></p>
+    </div>
+</li>

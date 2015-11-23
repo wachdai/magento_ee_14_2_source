@@ -1,0 +1,162 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<?php if ($this->canDisplayGiftWrappingForItems()): ?>
+<div id="wrapping-item-container">
+    <h4>Gift Wrapping</h4>
+    <div class="gift-wrapping-form">
+        <label><?php echo $this->__('Gift Wrapping Design') ?></label><?php echo $this->getDesignSelectHtml() ?>
+        <div class="gift-wrapping-design no-display">
+            <img id="wrapping-item-image-box" class="image-box no-display" height="75" width="75" alt="" src="" />
+            <div id="wrapping-item-price-box" class="no-display">
+                <?php if ($this->getDisplayWrappingBothPrices()): ?>
+                <div>
+                    <span class="label"><?php echo $this->__('Price Excl. Tax') ?>:</span>
+                    <span class="price" id="wrapping-item-price-excl-tax"></span>
+                </div>
+                <div>
+                    <span class="label"><?php echo $this->__('Price Incl. Tax') ?>:</span>
+                    <span class="price" id="wrapping-item-price-incl-tax"></span>
+                </div>
+                <?php else: ?>
+                <div>
+                    <span class="label"><?php echo $this->__('Price') ?>:</span>
+                    <span class="price" id="wrapping-item-price"></span>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <div class="no-display"><input type="hidden" id="giftwrapping_type" value="quote_item" /></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var giftWrappingItem = {
+    itemId : null,
+    itemsInfo : <?php echo $this->getItemsInfo()->toJson() ?>,
+    designsInfo : <?php echo $this->getDesignsInfo()->toJson() ?>,
+    isObserved : false,
+    init : function() {
+        $$('.action-link').each(function (el) {
+            Event.observe(el, 'click', this.setData.bind(this));
+        }, this);
+    },
+
+    setWrapping : function(event, value) {
+        var design = (event) ? Event.element(event).value : value;
+        if (design) {
+            this.setDesign(design);
+            this.setPrice(design);
+        } else {
+            $('wrapping-item-price-box').addClassName('no-display').up().addClassName('no-display');
+            $('wrapping-item-image-box').addClassName('no-display');
+        }
+    },
+
+    setDesign : function(value) {
+        var imageBox = $('wrapping-item-image-box');
+        var path = this.designsInfo[value].path;
+        if (path) {
+            imageBox.src = this.designsInfo[value].path;
+            imageBox.removeClassName('no-display').up().removeClassName('no-display');
+        } else {
+            imageBox.addClassName('no-display');
+        }
+    },
+
+    setPrice : function(value) {
+        var price = this.designsInfo[value].price
+        var priceInclTax = this.designsInfo[value].price_incl_tax;
+        var priceExclTax = this.designsInfo[value].price_excl_tax;
+
+        if (this.itemsInfo[this.itemId]) {
+            if (this.itemsInfo[this.itemId].price) {
+                price = this.itemsInfo[this.itemId].price;
+            }
+            if (this.itemsInfo[this.itemId].price_incl_tax) {
+                priceInclTax = this.itemsInfo[this.itemId].price_incl_tax;
+            }
+            if (this.itemsInfo[this.itemId].price_excl_tax) {
+                priceExclTax = this.itemsInfo[this.itemId].price_excl_tax;
+            }
+        }
+
+        if ($('wrapping-item-price-incl-tax')) {
+            $('wrapping-item-price-incl-tax').update(priceInclTax);
+        }
+        if ($('wrapping-item-price-excl-tax')) {
+            $('wrapping-item-price-excl-tax').update(priceExclTax);
+        }
+        if ($('wrapping-item-price')) {
+            $('wrapping-item-price').update(price);
+        }
+        $('wrapping-item-price-box').removeClassName('no-display').up().removeClassName('no-display');
+    },
+
+    setData : function(event){
+        var element = Event.element(event).id;
+        this.itemId = element.sub('gift_options_link_','');
+        $('giftwrapping_design_item').name = 'giftwrapping['+this.itemId+'][design]';
+        $('giftwrapping_type').name = 'giftwrapping['+this.itemId+'][type]';
+
+        if (this.itemsInfo[this.itemId]) {
+            if (this.itemsInfo[this.itemId].design) {
+                $('giftwrapping_design_item').value = this.itemsInfo[this.itemId].design;
+                this.setWrapping(null, this.itemsInfo[this.itemId].design);
+            }
+            $('wrapping-item-container').removeClassName('no-display');
+        } else {
+            $('wrapping-item-container').addClassName('no-display');
+        }
+        if (!this.isObserved) {
+            Event.observe($('gift_options_ok_button'), 'click', this.processOk.bind(this));
+            Event.observe($('gift_options_cancel_button'), 'click', this.processCancel.bind(this));
+            Event.observe($('giftwrapping_design_item'), 'change', this.setWrapping.bind(this));
+            this.isObserved = true;
+        }
+    },
+
+    processOk : function(event){
+        var data = order.serializeData('wrapping-item-container');
+        order.loadArea(['items','totals', 'billing_method'], true, data.toObject());
+        this.reset();
+    },
+
+    processCancel : function(event){
+        this.reset();
+    },
+
+    reset : function() {
+        $('giftwrapping_design_item').value = '';
+        this.setWrapping(null, 0);
+    }
+}
+giftWrappingItem.init();
+//]]>
+</script>
+<?php endif; ?>

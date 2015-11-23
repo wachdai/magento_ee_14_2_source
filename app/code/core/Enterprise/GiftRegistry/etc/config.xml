@@ -1,0 +1,252 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_GiftRegistry
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_GiftRegistry>
+            <version>1.11.0.0.2</version>
+        </Enterprise_GiftRegistry>
+    </modules>
+    <global>
+        <models>
+            <enterprise_giftregistry>
+                <class>Enterprise_GiftRegistry_Model</class>
+                <resourceModel>enterprise_giftregistry_resource</resourceModel>
+            </enterprise_giftregistry>
+            <enterprise_giftregistry_resource>
+                <class>Enterprise_GiftRegistry_Model_Resource</class>
+                <deprecatedNode>enterprise_giftregistry_mysql4</deprecatedNode>
+                <entities>
+                    <type><table>enterprise_giftregistry_type</table></type>
+                    <info><table>enterprise_giftregistry_type_info</table></info>
+                    <label><table>enterprise_giftregistry_label</table></label>
+                    <entity><table>enterprise_giftregistry_entity</table></entity>
+                    <item><table>enterprise_giftregistry_item</table></item>
+                    <item_option><table>enterprise_giftregistry_item_option</table></item_option>
+                    <person><table>enterprise_giftregistry_person</table></person>
+                    <data><table>enterprise_giftregistry_data</table></data>
+                </entities>
+            </enterprise_giftregistry_resource>
+        </models>
+        <helpers>
+            <enterprise_giftregistry>
+                <class>Enterprise_GiftRegistry_Helper</class>
+            </enterprise_giftregistry>
+        </helpers>
+        <blocks>
+            <enterprise_giftregistry>
+                <class>Enterprise_GiftRegistry_Block</class>
+            </enterprise_giftregistry>
+        </blocks>
+        <resources>
+            <enterprise_giftregistry_setup>
+                <setup>
+                    <module>Enterprise_GiftRegistry</module>
+                    <class>Enterprise_GiftRegistry_Model_Resource_Setup</class>
+                </setup>
+            </enterprise_giftregistry_setup>
+        </resources>
+        <template>
+            <email>
+                <enterprise_giftregistry_owner_email_template translate="label" module="enterprise_giftregistry">
+                    <label>Gift Registry Owner Notification</label>
+                    <file>enterprise/giftregistry_owner.html</file>
+                    <type>html</type>
+                </enterprise_giftregistry_owner_email_template>
+                <enterprise_giftregistry_sharing_email_template translate="label" module="enterprise_giftregistry">
+                    <label>Gift Registry Sharing</label>
+                    <file>enterprise/giftregistry_sharing.html</file>
+                    <type>html</type>
+                </enterprise_giftregistry_sharing_email_template>
+                <enterprise_giftregistry_update_email_template translate="label" module="enterprise_giftregistry">
+                    <label>Gift Registry Update</label>
+                    <file>enterprise/giftregistry_update.html</file>
+                    <type>html</type>
+                </enterprise_giftregistry_update_email_template>
+            </email>
+        </template>
+        <events>
+            <customer_address_load_before>
+                <observers>
+                    <enterprise_giftregistry>
+                        <class>enterprise_giftregistry/observer</class>
+                        <method>addressDataBeforeLoad</method>
+                    </enterprise_giftregistry>
+                </observers>
+            </customer_address_load_before>
+            <customer_address_load_after>
+                <observers>
+                    <enterprise_giftregistry>
+                        <class>enterprise_giftregistry/observer</class>
+                        <method>addressDataAfterLoad</method>
+                    </enterprise_giftregistry>
+                </observers>
+            </customer_address_load_after>
+            <sales_convert_quote_item_to_order_item>
+                <observers>
+                    <enterprise_giftregistry>
+                        <class>enterprise_giftregistry/observer</class>
+                        <method>convertItems</method>
+                    </enterprise_giftregistry>
+                </observers>
+            </sales_convert_quote_item_to_order_item>
+            <sales_order_place_after>
+                <observers>
+                    <enterprise_giftregistry>
+                        <class>enterprise_giftregistry/observer</class>
+                        <method>orderPlaced</method>
+                    </enterprise_giftregistry>
+                </observers>
+            </sales_order_place_after>
+            <catalog_product_delete_after>
+                <observers>
+                    <enterprise_giftregistry>
+                        <class>Enterprise_GiftRegistry_Model_Observer</class>
+                        <method>deleteProduct</method>
+                    </enterprise_giftregistry>
+                </observers>
+            </catalog_product_delete_after>
+        </events>
+        <fieldsets>
+            <customer_address>
+                <giftregistry_item_id>
+                    <to_quote_address>*</to_quote_address>
+                </giftregistry_item_id>
+            </customer_address>
+            <sales_convert_quote_address>
+                <giftregistry_item_id>
+                    <to_order_address>*</to_order_address>
+                </giftregistry_item_id>
+            </sales_convert_quote_address>
+        </fieldsets>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <enterprise_giftregistry before="Mage_Adminhtml">Enterprise_GiftRegistry_Adminhtml</enterprise_giftregistry>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_giftregistry>
+                    <file>enterprise/giftregistry.xml</file>
+                </enterprise_giftregistry>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_GiftRegistry>
+                    <files>
+                        <default>Enterprise_GiftRegistry.csv</default>
+                    </files>
+                </Enterprise_GiftRegistry>
+            </modules>
+        </translate>
+        <events>
+            <customer_address_format>
+                <observers>
+                    <enterprise_giftregistry>
+                        <class>enterprise_giftregistry/observer</class>
+                        <method>addressFormatAdmin</method>
+                    </enterprise_giftregistry>
+                </observers>
+            </customer_address_format>
+        </events>
+    </adminhtml>
+    <frontend>
+        <layout>
+            <updates>
+                <enterprise_giftregistry>
+                    <file>giftregistry.xml</file>
+                </enterprise_giftregistry>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_GiftRegistry>
+                    <files>
+                        <default>Enterprise_GiftRegistry.csv</default>
+                    </files>
+                </Enterprise_GiftRegistry>
+            </modules>
+        </translate>
+        <routers>
+            <enterprise_giftregistry>
+                <use>standard</use>
+                <args>
+                    <module>Enterprise_GiftRegistry</module>
+                    <frontName>giftregistry</frontName>
+                </args>
+            </enterprise_giftregistry>
+        </routers>
+        <events>
+            <checkout_cart_product_add_after>
+                <observers>
+                    <enterprise_giftregistry>
+                        <class>enterprise_giftregistry/observer</class>
+                        <method>addGiftRegistryQuoteFlag</method>
+                    </enterprise_giftregistry>
+                </observers>
+            </checkout_cart_product_add_after>
+            <customer_address_format>
+                <observers>
+                    <enterprise_giftregistry>
+                        <class>enterprise_giftregistry/observer</class>
+                        <method>addressFormatFront</method>
+                    </enterprise_giftregistry>
+                </observers>
+            </customer_address_format>
+        </events>
+    </frontend>
+    <default>
+        <enterprise_giftregistry>
+            <general>
+                <enabled>1</enabled>
+                <max_registrant>5</max_registrant>
+            </general>
+            <owner_email>
+                <identity>general</identity>
+                <template>enterprise_giftregistry_owner_email_template</template>
+            </owner_email>
+            <sharing_email>
+                <identity>general</identity>
+                <template>enterprise_giftregistry_sharing_email_template</template>
+                <send_limit>3</send_limit>
+            </sharing_email>
+            <update_email>
+                <identity>general</identity>
+                <template>enterprise_giftregistry_update_email_template</template>
+            </update_email>
+        </enterprise_giftregistry>
+    </default>
+</config>

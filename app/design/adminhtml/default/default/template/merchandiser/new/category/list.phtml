@@ -1,0 +1,208 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+    $helper = Mage::helper('merchandiser');
+    $columnCount = $helper->getColumnCount($this->getRequest()->getParam('column_count'));
+    $productCollection = $this->getCategoryProductCollection($this->getCategoryId());
+?>
+
+<input type="hidden" id="removed_product_ids" />
+
+<div id='no-product-message' style="display:none"></div>
+
+<?php $heroBoxHtml = $this->getHeroBoxHtml() ?>
+<?php if ($heroBoxHtml): ?>
+    <div class="hero-products entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__("Hero Products") ?></h4>
+        </div>
+        <div class="hero-products-block fieldset">
+            <ul class="">
+                <?php foreach($heroBoxHtml as $html): ?>
+                    <?php echo $html ?>
+                <?php endforeach; ?>
+            </ul>
+            <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+<?php endif; ?>
+
+<ul class="column columns-<?php echo $columnCount ?>" id="infinite_scroll">
+    <li class="dragbox" id="dragbox-empty">
+        <input type="hidden" class="id" name="product[<?php echo $helper->getEmptyId() ?>]" value="<?php echo $helper->getEmptyId() ?>" />
+        <div class="dragbox-content">&nbsp;</div>
+    </li>
+</ul>
+
+<?php
+    $visibleCount = 0;
+    $currentPosition = 1;
+?>
+<?php if ($productCollection->count() > 0): ?>
+    <?php foreach ($productCollection as $_product): ?>
+        <?php
+            $pId = $_product->getId();
+            $isVisible = !in_array($_product->getVisibility(), Mage::helper('merchandiser')->getNotVisibleIds());
+            $skuId = $helper->getSkuIdDisplay($_product->getSku());
+        ?>
+        <?php if ((!$isVisible && Mage::helper('merchandiser')->isHideInvisibleProducts()) || !$helper->isEnabledProduct($_product) && Mage::helper('merchandiser')->isHideDisabledProducts()): ?>
+            <input id="sku-<?php echo $this->htmlEscape($skuId) ?>" type="hidden" class="not-visible productid productid<?php echo $pId ?>" name="product[<?php echo $pId ?>]" value="99999" />
+        <?php else: ?>
+            <?php $visibleCount++; ?>
+            <input id="sku-<?php echo $this->htmlEscape($skuId) ?>" rel="<?php echo $this->htmlEscape($_product->getSku()) ?>" type="hidden" class="productid hiddenbox productid<?php echo $pId ?>" name="product[<?php echo $pId ?>]" value="<?php echo $currentPosition++ ?>" />
+        <?php endif; ?>
+    <?php endforeach; ?>
+<?php endif; ?>
+<?php
+    $totalCount = $productCollection->count();
+    if (Mage::helper('merchandiser')->isHideInvisibleProducts() || Mage::helper('merchandiser')->isHideDisabledProducts()) {
+        $totalCount = $visibleCount;
+    }
+?>
+
+<div id="spinner">
+    <img src="<?php echo $this->getSkinUrl('merchandiser/images/rule-ajax-loader.gif') ?>" alt="" /><?php echo $this->__("Loading..."); ?>
+</div>
+<div id="spinner2">
+    <img src="<?php echo $this->getSkinUrl('merchandiser/images/rule-ajax-loader.gif') ?>" alt="" /><?php echo $this->__("Processing"); ?>
+</div>
+
+<div id="loader_div">
+    <iframe src="<?php echo $this->getSkinUrl('merchandiser/images/rule-ajax-loader.gif') ?>" scrolling="no" frameborder="0"></iframe>
+    <span><?php echo $this->__("Processing"); ?><span>
+</div>
+
+<div id="footer-message"></div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    jQuery(document).ready(function() {
+        sendAjaxRequest();
+        observerScrollBar();
+    });
+
+    var isRunning = false;
+    var currentPage = 1;
+
+    function observerScrollBar() {
+        jQuery(window).unbind('scroll').bind('scroll', function() {
+            if (jQuery(window).scrollTop() + 1 >= 0.6 * (jQuery(document).height() - jQuery(window).height())) {
+                if (jQuery('.dragbox').size() - 1 >= <?php echo $totalCount ?>) {
+                    unObserverScrollbar();
+                } else if (!isRunning) {
+                    sendAjaxRequest();
+                }
+            }
+        });
+    }
+
+    function getTotalCount() {
+        return <?php echo $totalCount ?>;
+    }
+
+    function sendAjaxRequest() {
+        var totalCount = getTotalCount();
+        var extraProducts = getNumberExtraProducts();
+        if (totalCount <= (extraProducts * (currentPage - 1))) {
+            return false;
+        }
+        if (isRunning) {
+            return false;
+        }
+        jQuery.ajax({
+            type: "GET",
+            url: "<?php echo Mage::helper("adminhtml")->getUrl('*/*/loadajax/', array('_secure' => Mage::app()->getFrontController()->getRequest()->isSecure(),'asid' => $this->getRequest()->getParam('asid'))) ?>",
+            cache: false,
+            data: {
+                category_id: "<?php echo $this->getCategoryId() ?>",
+                store_id: "<?php echo $this->getStoreId() ?>",
+                asid: "<?php echo $this->getRequest()->getParam('asid') ?>",
+                extra_products: getNumberExtraProducts(),
+                current_page: currentPage
+            },
+            beforeSend: function() {
+                jQuery('#spinner').show();
+                isRunning = true;
+            },
+            success: function(databack) {
+                if (databack == 'false') {
+                    unObserverScrollbar();
+                } else {
+                    jQuery(databack).insertBefore('#dragbox-empty');
+                    currentPage++;
+                    var merJSObject = new merchandiserJS();
+                    merJSObject.removeDuplicatesAfterAjax();
+                    merJSObject.initFunction();
+                }
+                $('no-product-message').innerHTML = "<h3><?php echo $this->__("No Products"); ?></h3>";
+                jQuery('#spinner').hide();
+                isRunning = false;
+                showStoreProducts(0);
+            }
+        }).done(function(databack) {
+
+        });
+    }
+
+    function getNumberExtraProducts() {
+        var hwindow = jQuery(window).height();
+        var hheader = 56;
+        var hproductbox = <?php echo $this->getProductBoxHeight() ?>;
+        var column_count = <?php echo $columnCount ?>;
+        var max_row = 3;
+        if (hproductbox > 0) {
+            max_row = (hwindow - hheader)/hproductbox;
+            max_row = Math.floor(max_row) + 1;
+        }
+        var extra_products = max_row * column_count;
+        <?php $ajax_page_load = $helper->getAjaxPageLoad(); ?>
+        <?php if ((int)$ajax_page_load < 1 || $ajax_page_load == "" || $productCollection->count() < (int)$ajax_page_load): ?>
+            return <?php echo $productCollection->count() ?>;
+        <?php else: ?>
+            return extra_products;
+        <?php endif; ?>
+    }
+
+    function unObserverScrollbar() {
+        jQuery(window).unbind('scroll');
+    }
+
+    function observeCategoryAdd() {
+        jQuery('.category-add-button').unbind('click').click(function() {
+            var liHTML = '<li id="s' + this.id + '" class="' + $('search-s' + this.id).className + '">';
+            liHTML += $('search-s' + this.id).innerHTML;
+            liHTML += '</li>';
+            jQuery(liHTML).prependTo('#infinite_scroll');
+            var merJSObject = new merchandiserJS();
+            merJSObject.initFunction();
+            merJSObject.hideDuplicates();
+            merJSObject.updateInputPositions();
+        });
+    }
+    //]]>
+</script>

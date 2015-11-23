@@ -1,0 +1,54 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/**
+ * Order by SKU Failed Items renderer
+ */
+
+/** @var $this Mage_Checkout_Block_Cart_Item_Renderer */
+$_item = $this->getItem();
+$displayBothPrices = $this->helper('tax')->displayCartBothPrices();
+$additionalInfoBlock = $this->getProductAdditionalInformationBlock();
+?>
+<tr>
+    <td>
+        <img src="<?php echo $this->getProductThumbnail()->resize(75); ?>" width="75" height="75" alt="<?php echo $this->escapeHtml($this->getProductName()) ?>" />
+    <td>
+        <h3 class="product-name"><?php echo $this->escapeHtml($this->getProductName()) ?></h3>
+        <?php if ($additionalInfoBlock):?>
+            <?php echo $additionalInfoBlock->setItem($_item)->toHtml() ?>
+        <?php endif;?>
+    </td>
+    <td class="a-center"></td>
+    <?php if ($this->helper('wishlist')->isAllowInCart()) : ?><td class="a-center"></td><?php endif ?>
+    <td class="a-right"<?php if ($displayBothPrices): ?> colspan="2"<?php endif; ?>></td>
+    <td class="a-center">
+        <input name="cart[<?php echo $_item->getId() ?>][qty]" value="<?php echo $this->getQty() ?>" size="4"
+               title="<?php echo $this->quoteEscape($this->__('Qty')) ?>"
+               class="input-text qty disabled" maxlength="12" disabled="disabled" />
+    </td>
+    <td class="a-center last"><a href="<?php echo $this->getDeleteUrl()?>" title="<?php echo $this->quoteEscape($this->__('Remove item')) ?>" class="btn-remove btn-remove2"><?php echo $this->__('Remove item')?></a></td>
+</tr>

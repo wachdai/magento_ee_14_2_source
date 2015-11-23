@@ -1,0 +1,71 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+/** @var $this Enterprise_Rma_Block_Return_Returns */
+?>
+<?php $_returns = $this->getReturns(); ?>
+<?php if($_returns->getSize()): ?>
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+    <?php echo $this->getChildHtml('info');?>
+    <?php echo $this->getPagerHtml(); ?>
+
+    <h2 class="table-caption"><?php echo $this->__('My Returns') ?></h2>
+    <?php echo $this->getMessagesBlock()->toHtml() ?>
+    <?php echo $this->getChildHtml('info');?>
+    <table class="data-table" id="my-returns-table">
+        <col width="1" />
+        <col width="1" />
+        <col />
+        <col width="1" />
+        <col width="1" />
+        <thead>
+            <tr>
+                <th><?php echo $this->__('Return #') ?></th>
+                <th><?php echo $this->__('Date') ?></th>
+                <th><?php echo $this->__('Ship From') ?></th>
+                <th><span class="nobr"><?php echo $this->__('Return Status') ?></span></th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $_odd = ''; ?>
+            <?php foreach ($_returns as $_return): ?>
+            <tr>
+                <td><?php echo $_return->getIncrementId() ?></td>
+                <td><span class="nobr"><?php echo Mage::helper('enterprise_rma')->getFormatedDate($_return->getDateRequested()) ?></span></td>
+                <td><?php echo $this->escapeHtml($_return->getCustomerName()) ?></td>
+                <td><?php echo $this->escapeHtml($_return->getStatusLabel()) ?></td>
+                <td>
+                    <span class="nobr"><a href="<?php echo $this->getViewUrl($_return) ?>"><?php echo $this->__('View Return') ?></a></span>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <script type="text/javascript">decorateTable('my-returns-table');</script>
+    <?php echo $this->getPagerHtml(); ?>
+<?php else: ?>
+    <p><?php echo $this->__('You have placed no returns.'); ?></p>
+<?php endif ?>

@@ -1,0 +1,251 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Rma
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_Rma>
+            <version>1.11.0.8</version>
+        </Enterprise_Rma>
+    </modules>
+    <global>
+        <models>
+            <enterprise_rma>
+                <class>Enterprise_Rma_Model</class>
+                <resourceModel>enterprise_rma_resource</resourceModel>
+            </enterprise_rma>
+            <enterprise_rma_resource>
+                <class>Enterprise_Rma_Model_Resource</class>
+                <entities>
+                    <rma>
+                        <table>enterprise_rma</table>
+                    </rma>
+                    <rma_grid>
+                        <table>enterprise_rma_grid</table>
+                    </rma_grid>
+                    <rma_status_history>
+                        <table>enterprise_rma_status_history</table>
+                    </rma_status_history>
+                    <item_entity>
+                        <table>enterprise_rma_item_entity</table>
+                    </item_entity>
+                    <item_eav_attribute>
+                        <table>enterprise_rma_item_eav_attribute</table>
+                    </item_eav_attribute>
+                    <item_eav_attribute_website>
+                        <table>enterprise_rma_item_eav_attribute_website</table>
+                    </item_eav_attribute_website>
+                    <item_form_attribute>
+                        <table>enterprise_rma_item_form_attribute</table>
+                    </item_form_attribute>
+                    <rma_shipping_label>
+                        <table>enterprise_rma_shipping_label</table>
+                    </rma_shipping_label>
+                </entities>
+            </enterprise_rma_resource>
+        </models>
+        <resources>
+            <enterprise_rma_setup>
+                <setup>
+                    <module>Enterprise_Rma</module>
+                    <class>Enterprise_Rma_Model_Resource_Setup</class>
+                </setup>
+            </enterprise_rma_setup>
+        </resources>
+        <blocks>
+            <enterprise_rma>
+                <class>Enterprise_Rma_Block</class>
+            </enterprise_rma>
+        </blocks>
+        <helpers>
+            <enterprise_rma>
+                <class>Enterprise_Rma_Helper</class>
+            </enterprise_rma>
+        </helpers>
+        <template>
+            <email>
+                <sales_email_enterprise_rma_template translate="label" module="enterprise_rma">
+                    <label>New RMA</label>
+                    <file>enterprise/rma_new.html</file>
+                    <type>html</type>
+                </sales_email_enterprise_rma_template>
+                <sales_email_enterprise_rma_guest_template translate="label" module="enterprise_rma">
+                    <label>New RMA for Guest</label>
+                    <file>enterprise/rma_new_guest.html</file>
+                    <type>html</type>
+                </sales_email_enterprise_rma_guest_template>
+                <sales_email_enterprise_rma_auth_template translate="label" module="enterprise_rma">
+                    <label>RMA Authorization</label>
+                    <file>enterprise/rma_auth.html</file>
+                    <type>html</type>
+                </sales_email_enterprise_rma_auth_template>
+                <sales_email_enterprise_rma_auth_guest_template translate="label" module="enterprise_rma">
+                    <label>RMA Authorization for Guest</label>
+                    <file>enterprise/rma_auth_guest.html</file>
+                    <type>html</type>
+                </sales_email_enterprise_rma_auth_guest_template>
+                <sales_email_enterprise_rma_comment_template translate="label" module="enterprise_rma">
+                    <label>RMA Admin Comments</label>
+                    <file>enterprise/rma_comment.html</file>
+                    <type>html</type>
+                </sales_email_enterprise_rma_comment_template>
+                <sales_email_enterprise_rma_comment_guest_template translate="label" module="enterprise_rma">
+                    <label>RMA Admin Comments for Guest</label>
+                    <file>enterprise/rma_comment_guest.html</file>
+                    <type>html</type>
+                </sales_email_enterprise_rma_comment_guest_template>
+                <sales_email_enterprise_rma_customer_comment_template translate="label" module="enterprise_rma">
+                    <label>RMA Customer Comments</label>
+                    <file>enterprise/rma_customer_comment.html</file>
+                    <type>html</type>
+                </sales_email_enterprise_rma_customer_comment_template>
+            </email>
+        </template>
+        <events>
+            <adminhtml_customer_orders_add_action_renderer>
+                <observers>
+                    <enterprise_rma>
+                        <class>enterprise_rma/observer</class>
+                        <method>addRmaOption</method>
+                    </enterprise_rma>
+                </observers>
+            </adminhtml_customer_orders_add_action_renderer>
+        </events>
+    </global>
+    <default>
+        <sales>
+            <enterprise_rma>
+                <use_store_address>1</use_store_address>
+                <country_id>US</country_id>
+                <enabled_on_product>1</enabled_on_product>
+            </enterprise_rma>
+        </sales>
+        <carriers>
+            <dhl>
+                <active_rma>0</active_rma>
+            </dhl>
+            <fedex>
+                <active_rma>0</active_rma>
+            </fedex>
+            <ups>
+                <active_rma>0</active_rma>
+            </ups>
+            <usps>
+                <active_rma>0</active_rma>
+            </usps>
+        </carriers>
+        <sales_email>
+            <enterprise_rma>
+                <enabled>1</enabled>
+                <template>sales_email_enterprise_rma_template</template>
+                <guest_template>sales_email_enterprise_rma_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </enterprise_rma>
+            <enterprise_rma_auth>
+                <enabled>1</enabled>
+                <template>sales_email_enterprise_rma_auth_template</template>
+                <guest_template>sales_email_enterprise_rma_auth_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </enterprise_rma_auth>
+            <enterprise_rma_comment>
+                <enabled>1</enabled>
+                <template>sales_email_enterprise_rma_comment_template</template>
+                <guest_template>sales_email_enterprise_rma_comment_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </enterprise_rma_comment>
+            <enterprise_rma_customer_comment>
+                <enabled>1</enabled>
+                <template>sales_email_enterprise_rma_customer_comment_template</template>
+                <identity>support</identity>
+                <recipient>sales</recipient>
+                <copy_method>bcc</copy_method>
+            </enterprise_rma_customer_comment>
+        </sales_email>
+    </default>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <enterprise_rma>Enterprise_Rma_Adminhtml</enterprise_rma>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_rma>
+                    <file>enterprise/rma.xml</file>
+                </enterprise_rma>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_Rma>
+                    <files>
+                        <default>Enterprise_Rma.csv</default>
+                    </files>
+                </Enterprise_Rma>
+            </modules>
+        </translate>
+        <events>
+        </events>
+    </adminhtml>
+    <frontend>
+        <layout>
+            <updates>
+                <enterprise_rma>
+                    <file>rma.xml</file>
+                </enterprise_rma>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_Rma>
+                    <files>
+                        <default>Enterprise_Rma.csv</default>
+                    </files>
+                </Enterprise_Rma>
+            </modules>
+        </translate>
+        <routers>
+            <enterprise_rma>
+                <use>standard</use>
+                <args>
+                    <module>Enterprise_Rma</module>
+                    <frontName>rma</frontName>
+                </args>
+            </enterprise_rma>
+        </routers>
+        <events>
+        </events>
+    </frontend>
+</config>

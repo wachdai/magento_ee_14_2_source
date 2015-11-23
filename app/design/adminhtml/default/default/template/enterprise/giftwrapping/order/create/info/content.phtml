@@ -1,0 +1,96 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php /** @var $this Enterprise_GiftWrapping_Block_Adminhtml_Order_Create_Info_Content */ ?>
+
+<?php if ($this->isGiftWrappingForEntireOrder()): ?>
+<div><?php echo Mage::helper('sales')->__('Gift Wrapping for the Entire Order') ?></div>
+<?php endif; ?>
+<br />
+<fieldset>
+
+    <div id="wrapping-container">
+        <?php if ($this->isGiftWrappingForEntireOrder()): ?>
+        <p><?php echo $this->__('You can leave a box blank if you don\'t wish to add a gift wrap for whole order') ?></p>
+        <div class="gift-wrapping-form">
+            <label><?php echo $this->__('Gift Wrapping Design') ?></label><?php echo $this->getDesignSelectHtml() ?>
+            <div id="wrapping-price-box" class="gift-wrapping-design no-display">
+                <img id="wrapping-image-box" class="image-box no-display" height="75" width="75" alt="" src="" />
+                <?php if ($this->getDisplayWrappingBothPrices()): ?>
+                <div>
+                    <span class="label"><?php echo $this->__('Price Excl. Tax') ?>:</span>
+                    <span class="price" id="wrapping-price-excl-tax"></span>
+                </div>
+                <div>
+                    <span class="label"><?php echo $this->__('Price Incl. Tax') ?>:</span>
+                    <span class="price" id="wrapping-price-incl-tax"></span>
+                </div>
+                <?php else: ?>
+                <div>
+                    <span class="label"><?php echo $this->__('Price') ?>:</span>
+                    <span class="price" id="wrapping-price"></span>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <div class="no-display">
+            <input type="hidden" value="quote" name="giftwrapping[<?php echo $this->getEntityId() ?>][type]" />
+        </div>
+
+        <?php if ($this->getAllowGiftReceipt()): ?>
+        <p>
+            <input type="checkbox" id="allow-gift-receipt" class="checkbox" value="1" name="giftwrapping[<?php echo $this->getEntityId() ?>][allow_gift_receipt]" />
+            <label for="allow-gift-receipt"><?php echo $this->__('Send Gift Receipt') ?></label>
+        </p>
+        <?php endif; ?>
+
+        <?php if ($this->getAllowPrintedCard()): ?>
+        <p>
+            <input type="checkbox" id="add-printed-card" class="checkbox" value="1" name="giftwrapping[<?php echo $this->getEntityId() ?>][add_printed_card]" />
+            <label for="add-printed-card"><?php echo $this->__('Add Printed Card') ?></label>
+        </p>
+        <div id="card-price-box" class="no-display">
+        <?php if ($this->getDisplayCardBothPrices()): ?>
+            <div>
+                <span class="label"><?php echo $this->__('Price Excl. Tax') ?>:</span>
+                <span class="price" id="card-price-excl-tax"></span>
+            </div>
+            <div>
+                <span class="label"><?php echo $this->__('Price Incl. Tax') ?>:</span>
+                <span class="price" id="card-price-incl-tax"></span>
+            </div>
+        <?php else: ?>
+            <div>
+                <span class="label"><?php echo $this->__('Price') ?>:</span>
+                <span class="price" id="card-price"></span>
+            </div>
+        <?php endif; ?>
+        </div>
+        <?php endif; ?>
+    </div>
+</fieldset>

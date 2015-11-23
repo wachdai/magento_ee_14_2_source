@@ -1,0 +1,317 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Search
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_Search>
+             <version>1.11.0.0</version>
+        </Enterprise_Search>
+    </modules>
+    <global>
+        <models>
+             <enterprise_search>
+                <class>Enterprise_Search_Model</class>
+                <resourceModel>enterprise_search_resource</resourceModel>
+             </enterprise_search>
+             <enterprise_search_resource>
+                 <class>Enterprise_Search_Model_Resource</class>
+                 <entities>
+                    <recommendations>
+                        <table>catalogsearch_recommendations</table>
+                    </recommendations>
+                </entities>
+             </enterprise_search_resource>
+        </models>
+        <helpers>
+            <enterprise_search>
+                <class>Enterprise_Search_Helper</class>
+            </enterprise_search>
+        </helpers>
+        <blocks>
+             <enterprise_search>
+                <class>Enterprise_Search_Block</class>
+             </enterprise_search>
+        </blocks>
+        <!--  Example of manual addition locale code with language code to support new language -->
+        <!--
+        <enterprise_search>
+            <supported_languages>
+                <solr>
+                    <bg_BG>bg</bg_BG>
+                </solr>
+            </supported_languages>
+        </enterprise_search>
+        -->
+        <resources>
+            <enterprise_search_setup>
+                <setup>
+                    <module>Enterprise_Search</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </enterprise_search_setup>
+        </resources>
+
+        <events>
+            <catalogsearch_index_process_start>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>holdCommit</method>
+                    </enterprise_search>
+                </observers>
+            </catalogsearch_index_process_start>
+
+            <catalogsearch_index_process_complete>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>applyIndexChanges</method>
+                    </enterprise_search>
+                </observers>
+            </catalogsearch_index_process_complete>
+
+            <catalogsearch_searchable_attributes_load_after>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>storeSearchableAttributes</method>
+                    </enterprise_search>
+                </observers>
+            </catalogsearch_searchable_attributes_load_after>
+
+            <catalog_category_save_commit_after>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>processCategorySaveEvent</method>
+                    </enterprise_search>
+                </observers>
+            </catalog_category_save_commit_after>
+
+            <catalog_product_price_full_reindex>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>invalidateCatalogSearchMview</method>
+                    </enterprise_search>
+                </observers>
+            </catalog_product_price_full_reindex>
+        </events>
+    </global>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <enterprise_search before="Mage_Adminhtml">Enterprise_Search_Adminhtml</enterprise_search>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_search>
+                    <file>enterprise/search.xml</file>
+                </enterprise_search>
+            </updates>
+        </layout>
+        <events>
+            <adminhtml_catalog_product_attribute_edit_prepare_form>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>eavAttributeEditFormInit</method>
+                    </enterprise_search>
+                </observers>
+            </adminhtml_catalog_product_attribute_edit_prepare_form>
+
+            <catalogsearch_query_save_after>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>searchQueryEditFormAfterSave</method>
+                    </enterprise_search>
+                </observers>
+            </catalogsearch_query_save_after>
+
+            <customer_group_save_after>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>customerGroupSaveAfter</method>
+                    </enterprise_search>
+                </observers>
+            </customer_group_save_after>
+
+            <website_delete_before>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>saveStoreIdsBeforeScopeDelete</method>
+                    </enterprise_search>
+                </observers>
+            </website_delete_before>
+
+            <store_group_delete_before>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>saveStoreIdsBeforeScopeDelete</method>
+                    </enterprise_search>
+                </observers>
+            </store_group_delete_before>
+
+            <website_delete_after>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>clearIndexForStores</method>
+                    </enterprise_search>
+                </observers>
+            </website_delete_after>
+
+            <store_group_delete_after>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>clearIndexForStores</method>
+                    </enterprise_search>
+                </observers>
+            </store_group_delete_after>
+
+            <store_delete_after>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>clearIndexForStores</method>
+                    </enterprise_search>
+                </observers>
+            </store_delete_after>
+
+            <after_reindex_process_catalog_product_price>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>runFulltextReindexAfterPriceReindex</method>
+                    </enterprise_search>
+                </observers>
+            </after_reindex_process_catalog_product_price>
+
+        </events>
+        <translate>
+            <modules>
+                <Enterprise_Search>
+                     <files>
+                          <default>Enterprise_Search.csv</default>
+                     </files>
+                </Enterprise_Search>
+            </modules>
+        </translate>
+    </adminhtml>
+
+    <frontend>
+        <layout>
+            <updates>
+                <enterprise_search>
+                    <file>search.xml</file>
+                </enterprise_search>
+            </updates>
+        </layout>
+
+        <events>
+            <controller_action_predispatch_catalog_category_view>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>resetCurrentCatalogLayer</method>
+                    </enterprise_search>
+                </observers>
+            </controller_action_predispatch_catalog_category_view>
+
+            <controller_action_predispatch_catalogsearch_result_index>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>resetCurrentSearchLayer</method>
+                    </enterprise_search>
+                </observers>
+            </controller_action_predispatch_catalogsearch_result_index>
+
+            <controller_action_predispatch_catalogsearch_advanced_result>
+                <observers>
+                    <enterprise_search>
+                        <class>enterprise_search/observer</class>
+                        <method>resetCurrentSearchLayer</method>
+                    </enterprise_search>
+                </observers>
+            </controller_action_predispatch_catalogsearch_advanced_result>
+        </events>
+
+        <translate>
+            <modules>
+                <Enterprise_Search>
+                     <files>
+                          <default>Enterprise_Search.csv</default>
+                     </files>
+                </Enterprise_Search>
+            </modules>
+        </translate>
+    </frontend>
+
+    <default>
+        <catalog>
+            <search>
+                <solr_server_hostname>localhost</solr_server_hostname>
+                <solr_server_port>8983</solr_server_port>
+                <solr_server_username>admin</solr_server_username>
+                <solr_server_timeout>15</solr_server_timeout>
+                <solr_server_path>solr</solr_server_path>
+                <engine_commit_mode>0</engine_commit_mode>
+                <solr_server_suggestion_enabled>1</solr_server_suggestion_enabled>
+                <solr_server_suggestion_count>2</solr_server_suggestion_count>
+                <solr_server_suggestion_count_results_enabled>0</solr_server_suggestion_count_results_enabled>
+                <search_recommendations_enabled>1</search_recommendations_enabled>
+                <search_recommendations_count>5</search_recommendations_count>
+                <search_recommendations_count_results_enabled>0</search_recommendations_count_results_enabled>
+                <solr_server_use_in_catalog_navigation>1</solr_server_use_in_catalog_navigation>
+            </search>
+        </catalog>
+    </default>
+
+    <crontab>
+        <jobs>
+            <enterprise_search_index_reindex_all>
+                <schedule><cron_expr>0 3 * * *</cron_expr></schedule>
+                <run><model>enterprise_search/indexer_indexer::reindexAll</model></run>
+            </enterprise_search_index_reindex_all>
+        </jobs>
+    </crontab>
+</config>

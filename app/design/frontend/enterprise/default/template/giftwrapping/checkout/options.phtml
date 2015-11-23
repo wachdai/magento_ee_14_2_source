@@ -1,0 +1,233 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/** @var $this Enterprise_GiftWrapping_Block_Checkout_Options */
+?>
+
+<?php if ($this->canDisplayGiftWrapping()): ?>
+<div class="no-display">
+    <?php if ($this->getDesignCollectionCount() && ($this->getAllowForOrder() || $this->getAllowForItems() || $this->_giftWrappingAvailable)): ?>
+    <div id="gift-wrapping-container">
+        <div class="gift-wrapping-form">
+            <label><?php echo $this->__('Gift Wrapping Design') ?></label><?php echo $this->getDesignSelectHtml() ?>
+            <div class="gift-wrapping-design no-display">
+                <img class="image-box no-display" id="image-box-{{id}}" height="75" width="75" alt="" src="<?php echo $this->getSkinUrl('images/spacer.gif')?>" />
+                <div class="price-box no-display" id="price-box-{{id}}">
+                   <?php if ($this->getDisplayWrappingBothPrices()): ?>
+                    <span class="price-excluding-tax">
+                        <span class="label"><?php echo $this->__('Price Excl. Tax') ?>:</span>
+                        <span class="price" id="price-excluding-tax-{{id}}"></span>
+                    </span>
+                    <span class="price-including-tax">
+                        <span class="label"><?php echo $this->__('Price Incl. Tax') ?>:</span>
+                        <span class="price" id="price-including-tax-{{id}}"></span>
+                    </span>
+                    <?php else: ?>
+                    <span class="regular-price">
+                        <span class="label"><?php echo $this->__('Price') ?>:</span>
+                        <span class="price" id="regular-price-{{id}}"></span>
+                    </span>
+                    <?php endif;?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endif;?>
+
+    <div id="gift-options-container">
+        <?php if ($this->getAllowGiftReceipt()): ?>
+        <p>
+            <input type="checkbox" name="giftwrapping[{{id}}][allow_gift_receipt]" id="allow-gift-receipt-{{id}}" value="1" class="checkbox" />
+            <label for="allow-gift-receipt-{{id}}"><?php echo $this->__('Send Gift Receipt') ?></label>
+        </p>
+        <?php endif;?>
+        <?php if ($this->getAllowPrintedCard()): ?>
+        <p>
+            <input type="checkbox" name="giftwrapping[{{id}}][add_printed_card]" id="add-printed-card-{{id}}" value="1" onclick="" class="checkbox" />
+            <label for="add-printed-card-{{id}}"><?php echo $this->__('Add Printed Card') ?></label>
+        </p>
+        <p class="price-box no-display" id="price-options-box-{{id}}">
+            <?php if ($this->getDisplayCardBothPrices()): ?>
+                <span class="price-excluding-tax">
+                    <span class="label"><?php echo $this->__('Price Excl. Tax') ?>:</span>
+                    <span class="price" id="price-card-excluding-tax-{{id}}">{{price_excl_tax}}</span>
+                </span>
+                <span class="price-including-tax">
+                    <span class="label"><?php echo $this->__('Price Incl. Tax') ?>:</span>
+                    <span class="price" id="price-card-including-tax-{{id}}">{{price_incl_tax}}</span>
+                </span>
+                <?php else: ?>
+                <span class="regular-price">
+                    <span class="label"><?php echo $this->__('Price') ?>:</span>
+                    <span class="price" id="regular-card-price-{{id}}">{{price}}</span>
+                </span>
+            <?php endif;?>
+        </p>
+        <?php endif;?>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var giftWrapping = {
+    templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
+    templateWrapping : 'gift-wrapping-container',
+    templateOptions : 'gift-options-container',
+    designsInfo : <?php echo $this->getDesignsInfo()->toJson() ?>,
+    itemsInfo : <?php echo $this->getItemsInfo()->toJson() ?>,
+    cardInfo : <?php echo $this->getCardInfo()->toJson() ?>,
+    allowForOrder : <?php echo (int)$this->getAllowForOrder() ?>,
+    allowGiftReceipt : <?php echo (int)$this->getAllowGiftReceipt() ?>,
+    allowPrintedCard : <?php echo (int)$this->getAllowPrintedCard() ?>,
+
+    assign : function() {
+        var data = {};
+        if (this.allowForOrder) {
+            $$('.options-order-container').each(function(element){
+                data.id = element.id.sub('options-order-container-','');
+                data.addrId = false;
+                this.insertBlock(element, data);
+                toogleVisibility(['add-gift-options-'+data.id,'add-gift-options-for-order-'+data.id], true);
+            }, this);
+        }
+
+        $$('.options-items-container').each(function(element){
+            var parts = element.id.sub('options-items-container-','').split('-');
+            var id = parts[1];
+            if (this.itemsInfo[id]) {
+                data.id = id;
+                data.addrId = parts[0];
+                this.insertBlock(element, data);
+                toogleVisibility(['add-gift-options-'+parts[0],'add-gift-options-for-items-'+parts[0]], true);
+            }
+        }, this);
+
+        if (this.allowGiftReceipt || this.allowPrintedCard) {
+            $$('.extra-options-container').each(function(element){
+                var id = element.id.sub('extra-options-container-','');
+                data.id = id;
+                if (this.cardInfo[id]) {
+                    this.cardInfo[id].id = id;
+                } else {
+                    this.cardInfo[id] = {"id":id};
+                }
+                this.insertOptions(element, this.cardInfo[id]);
+                toogleVisibility(['add-gift-options-'+data.id], true);
+            }, this);
+        }
+    },
+
+    insertOptions : function (element, data) {
+        var tmplBlock = $(this.templateOptions);
+        if (tmplBlock) {
+            var template = new Template(tmplBlock.innerHTML, this.templateSyntax);
+            element.update(template.evaluate(data));
+            if (this.allowPrintedCard) {
+                Event.observe($('add-printed-card-'+data.id), 'click', this.showCardPrice.bind(this));
+            }
+        }
+    },
+
+    showCardPrice : function(event) {
+        var element = $(Event.findElement(event, 'input'));
+        var id = element.id.sub('add-printed-card-','');
+        if (element.checked) {
+            $('price-options-box-'+id).removeClassName('no-display');
+        } else {
+            $('price-options-box-'+id).addClassName('no-display');
+        }
+    },
+
+    insertBlock : function (element, data) {
+        var tmplBlock = $(this.templateWrapping);
+        if (tmplBlock) {
+            var template = new Template(tmplBlock.innerHTML, this.templateSyntax);
+            element.update(template.evaluate(data));
+            Event.observe($('giftwrapping_'+data.id), 'change', this.setWrapping.bindAsEventListener(this, data.addrId));
+        }
+    },
+
+    setDesign : function(value, id) {
+        var imageBox = $('image-box-'+id);
+        if (this.designsInfo[value].path) {
+            imageBox.src = this.designsInfo[value].path;
+            imageBox.removeClassName('no-display');
+        } else {
+            imageBox.src = '<?php echo $this->getSkinUrl('images/spacer.gif')?>';
+            imageBox.addClassName('no-display');
+        }
+        imageBox.up().removeClassName('no-display');
+    },
+
+    setPrice : function(value, id, addressId) {
+        var blockId = addressId ? addressId : id;
+        var price = this.designsInfo[value][blockId].price
+        var priceInclTax = this.designsInfo[value][blockId].price_incl_tax;
+        var priceExclTax = this.designsInfo[value][blockId].price_excl_tax;
+
+        if (this.itemsInfo[id]) {
+            if (this.itemsInfo[id].price) {
+                price = this.itemsInfo[id].price;
+            }
+            if (this.itemsInfo[id].price_incl_tax) {
+                priceInclTax = this.itemsInfo[id].price_incl_tax;
+            }
+            if (this.itemsInfo[id].price_excl_tax) {
+                priceExclTax = this.itemsInfo[id].price_excl_tax;
+            }
+        }
+
+        if (price || (priceInclTax && priceExclTax)) {
+            if ($('price-including-tax-'+id)) {
+                $('price-including-tax-'+id).update(priceInclTax);
+            }
+            if ($('price-excluding-tax-'+id)) {
+                $('price-excluding-tax-'+id).update(priceExclTax);
+            }
+            if ($('regular-price-'+id)) {
+                $('regular-price-'+id).update(price);
+            }
+            $('price-box-'+id).removeClassName('no-display');
+        }
+    },
+
+    setWrapping : function(event, addressId) {
+        var element = $(Event.findElement(event, 'select'));
+        var id = element.id.sub('giftwrapping_','');
+        if (element.value) {
+            this.setDesign(element.value, id);
+            this.setPrice(element.value, id, addressId);
+        } else {
+            $('price-box-'+id).addClassName('no-display');
+            $('image-box-'+id).addClassName('no-display').up().addClassName('no-display');
+        }
+    }
+}
+giftWrapping.assign();
+//]]>
+</script>
+<?php endif; ?>

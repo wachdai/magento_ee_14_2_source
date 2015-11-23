@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
+  <testCase name="Enterprise\UrlRewrite\Test\TestCase\CreateProductUrlRewriteEntityTest">
+    <variation name="CreateProductUrlRewriteEntityTestVariation1" firstConstraint="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage" method="test">
+      <data name="product/dataSet" xsi:type="string">default</data>
+      <data name="urlRewrite/data/store_id/dataSet" xsi:type="string">-</data>
+      <data name="urlRewrite/data/entity_type" xsi:type="string">Product</data>
+      <data name="urlRewrite/data/request_path" xsi:type="string">test_%isolation%.html</data>
+      <data name="urlRewrite/data/redirect_type" xsi:type="string">No</data>
+      <data name="urlRewrite/data/description" xsi:type="string">description_%isolation%</data>
+      <constraint name="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage"/>
+    </variation>
+    <variation name="CreateProductUrlRewriteEntityTestVariation2" firstConstraint="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage" method="test">
+      <data name="product/dataSet" xsi:type="string">default</data>
+      <data name="urlRewrite/data/store_id/dataSet" xsi:type="string">-</data>
+      <data name="urlRewrite/data/entity_type" xsi:type="string">Product</data>
+      <data name="urlRewrite/data/request_path" xsi:type="string">test_%isolation%.html</data>
+      <data name="urlRewrite/data/redirect_type" xsi:type="string">Temporary (302)</data>
+      <data name="urlRewrite/data/description" xsi:type="string">description_%isolation%</data>
+      <constraint name="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage" next="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteProductRedirect"/>
+      <constraint name="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteProductRedirect" prev="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage"/>
+    </variation>
+    <variation name="CreateProductUrlRewriteEntityTestVariation3" firstConstraint="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage" method="test">
+      <data name="product/dataSet" xsi:type="string">default</data>
+      <data name="urlRewrite/data/store_id/dataSet" xsi:type="string">-</data>
+      <data name="urlRewrite/data/entity_type" xsi:type="string">Product</data>
+      <data name="urlRewrite/data/request_path" xsi:type="string">test_%isolation%.html</data>
+      <data name="urlRewrite/data/redirect_type" xsi:type="string">Permanent (301)</data>
+      <data name="urlRewrite/data/description" xsi:type="string">description_%isolation%</data>
+      <constraint name="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage" next="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteProductRedirect"/>
+      <constraint name="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteProductRedirect" prev="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage"/>
+    </variation>
+    <variation name="CreateProductUrlRewriteEntityTestVariation4" firstConstraint="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage" method="test">
+      <data name="product/dataSet" xsi:type="string">with_default_website</data>
+      <data name="urlRewrite/data/store_id/dataSet" xsi:type="string">custom</data>
+      <data name="urlRewrite/data/entity_type" xsi:type="string">Product</data>
+      <data name="urlRewrite/data/request_path" xsi:type="string">test_%isolation%.html</data>
+      <data name="urlRewrite/data/redirect_type" xsi:type="string">Permanent (301)</data>
+      <data name="urlRewrite/data/description" xsi:type="string">description_%isolation%</data>
+      <constraint name="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage" next="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteProductRedirect"/>
+      <constraint name="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteProductRedirect" prev="Enterprise\UrlRewrite\Test\Constraint\AssertUrlRewriteSaveMessage"/>
+    </variation>
+  </testCase>
+</config>

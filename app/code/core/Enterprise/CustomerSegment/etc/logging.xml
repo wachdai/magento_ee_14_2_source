@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_CustomerSegment
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<logging>
+    <actions>
+        <refresh_data translate="label" module="enterprise_customersegment">
+            <label>Refresh Data</label>
+        </refresh_data>
+    </actions>
+
+    <enterprise_customersegment translate="label">
+        <label>Manage Segments</label>
+        <expected_models>
+            <enterprise_customersegment__segment/>
+        </expected_models>
+        <actions>
+            <adminhtml_customersegment_edit>
+                <action>view</action>
+            </adminhtml_customersegment_edit>
+
+            <adminhtml_customersegment_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_customersegment_edit />
+                </skip_on_back>
+            </adminhtml_customersegment_save>
+
+            <adminhtml_customersegment_match>
+                <action>refresh_data</action>
+                <post_dispatch>postDispatchCustomerSegmentMatch</post_dispatch>
+            </adminhtml_customersegment_match>
+
+            <adminhtml_customersegment_delete>
+                <action>delete</action>
+            </adminhtml_customersegment_delete>
+
+            <adminhtml_report_customer_customersegment_exportCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_customer_customersegment_exportCsv>
+
+            <adminhtml_report_customer_customersegment_exportExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_customer_customersegment_exportExcel>
+        </actions>
+    </enterprise_customersegment>
+</logging>

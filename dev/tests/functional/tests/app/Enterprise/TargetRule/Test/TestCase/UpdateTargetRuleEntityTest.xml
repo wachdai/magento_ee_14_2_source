@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
+    <testCase name="Enterprise\TargetRule\Test\TestCase\UpdateTargetRuleEntityTest">
+        <variation name="UpdateTargetRuleEntityTestVariation1">
+            <data name="initialTargetRule/dataSet" xsi:type="string">target_rule_related_products</data>
+            <data name="product/dataSet" xsi:type="string">product_with_category</data>
+            <data name="promotedProduct/dataSet" xsi:type="string">product_with_special_price_and_category</data>
+            <data name="targetRule/data/name" xsi:type="string">TargetRule%isolation%</data>
+            <data name="targetRule/data/is_active" xsi:type="string">Active</data>
+            <data name="targetRule/data/apply_to" xsi:type="string">Cross-sells</data>
+            <data name="targetRule/data/use_customer_segment" xsi:type="string">All</data>
+            <data name="targetRule/data/conditions_serialized" xsi:type="string">[Category|is|%category_1%]</data>
+            <data name="targetRule/data/actions_serialized" xsi:type="string">[Category|is|Constant Value|%category_2%]</data>
+            <data name="issue" xsi:type="string">Unskip after done MTA-1375</data>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleSuccessSaveMessage"/>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleInGrid"/>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleForm"/>
+            <constraint name="Mage\Catalog\Test\Constraint\AssertProductAbsentRelatedProducts"/>
+            <constraint name="Mage\Catalog\Test\Constraint\AssertProductCrossSells"/>
+        </variation>
+        <variation name="UpdateTargetRuleEntityTestVariation2">
+            <data name="initialTargetRule/dataSet" xsi:type="string">target_rule_up_sells</data>
+            <data name="product/dataSet" xsi:type="string">product_with_category</data>
+            <data name="promotedProduct/dataSet" xsi:type="string">product_with_special_price_and_category</data>
+            <data name="targetRule/data/name" xsi:type="string">TargetRule%isolation%</data>
+            <data name="targetRule/data/is_active" xsi:type="string">Active</data>
+            <data name="targetRule/data/apply_to" xsi:type="string">Related Products</data>
+            <data name="targetRule/data/from_date/pattern" xsi:type="string">4/14/2014</data>
+            <data name="targetRule/data/to_date/pattern" xsi:type="string">8/15/2024</data>
+            <data name="targetRule/data/use_customer_segment" xsi:type="string">All</data>
+            <data name="targetRule/data/conditions_serialized" xsi:type="string">[Attribute Set|is|Default][Category|is|%category_1%]</data>
+            <data name="targetRule/data/actions_serialized" xsi:type="string">[Attribute Set|is|Matched Product Attribute Set][Category|is|Constant Value|%category_2%]</data>
+            <data name="issue" xsi:type="string">Unskip after done MTA-1375</data>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleSuccessSaveMessage"/>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleInGrid"/>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleForm"/>
+            <constraint name="Mage\Catalog\Test\Constraint\AssertProductAbsentUpSells"/>
+            <constraint name="Mage\Catalog\Test\Constraint\AssertProductRelatedProducts"/>
+        </variation>
+        <variation name="UpdateTargetRuleEntityTestVariation3">
+            <data name="initialTargetRule/dataSet" xsi:type="string">target_rule_cross_sells</data>
+            <data name="product/dataSet" xsi:type="string">product_with_category</data>
+            <data name="promotedProduct/dataSet" xsi:type="string">product_with_special_price_and_category</data>
+            <data name="targetRule/data/name" xsi:type="string">TargetRule%isolation%</data>
+            <data name="targetRule/data/is_active" xsi:type="string">Active</data>
+            <data name="targetRule/data/apply_to" xsi:type="string">Related Products</data>
+            <data name="targetRule/data/from_date/pattern" xsi:type="string">n/j/Y -5 days</data>
+            <data name="targetRule/data/to_date/pattern" xsi:type="string">n/j/Y -1 days</data>
+            <data name="targetRule/data/use_customer_segment" xsi:type="string">All</data>
+            <data name="targetRule/data/conditions_serialized" xsi:type="string">[Category|is|%category_1%]</data>
+            <data name="targetRule/data/actions_serialized" xsi:type="string">[Category|is|Constant Value|%category_2%]</data>
+            <data name="issue" xsi:type="string">Unskip after done MTA-1375</data>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleSuccessSaveMessage"/>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleInGrid"/>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleForm"/>
+            <constraint name="Mage\Catalog\Test\Constraint\AssertProductAbsentRelatedProducts"/>
+            <constraint name="Mage\Catalog\Test\Constraint\AssertProductAbsentCrossSells"/>
+        </variation>
+        <variation name="UpdateTargetRuleEntityTestVariation4">
+            <data name="initialTargetRule/dataSet" xsi:type="string">target_rule_cross_sells</data>
+            <data name="product/dataSet" xsi:type="string">product_with_category</data>
+            <data name="promotedProduct/dataSet" xsi:type="string">product_with_special_price_and_category</data>
+            <data name="customerSegment/dataSet" xsi:type="string">active_customer_segment</data>
+            <data name="targetRule/data/name" xsi:type="string">TargetRule%isolation%</data>
+            <data name="targetRule/data/is_active" xsi:type="string">Inactive</data>
+            <data name="targetRule/data/use_customer_segment" xsi:type="string">Specified</data>
+            <data name="targetRule/data/customer_segment_ids" xsi:type="array">
+                <item name="0" xsi:type="string">%customer_segment%</item>
+            </data>
+            <data name="targetRule/data/conditions_serialized" xsi:type="string">[Category|is|%category_1%]</data>
+            <data name="targetRule/data/actions_serialized" xsi:type="string">[Category|is|Constant Value|%category_2%]</data>
+            <data name="issue" xsi:type="string">Unskip after done MTA-1375</data>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleSuccessSaveMessage"/>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleInGrid"/>
+            <constraint name="Enterprise\TargetRule\Test\Constraint\AssertTargetRuleForm"/>
+            <constraint name="Mage\Catalog\Test\Constraint\AssertProductAbsentCrossSells"/>
+        </variation>
+    </testCase>
+</config>

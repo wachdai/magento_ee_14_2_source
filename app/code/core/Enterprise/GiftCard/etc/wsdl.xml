@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+    name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+            <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
+            <complexType name="giftcardCustomerEntity">
+                <all>
+                    <element name="balance" type="xsd:double" minOccurs="0" />
+                    <element name="expire_date" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="enterpriseGiftcardaccountListEntity">
+                <all>
+                    <element name="giftcardaccount_id" type="xsd:string" />
+                    <element name="code" type="xsd:string" />
+                    <element name="used_amount" type="xsd:string" />
+                    <element name="base_amount" type="xsd:string" />
+                </all>
+            </complexType>
+            <complexType name="enterpriseGiftcardaccountListEntityArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:enterpriseGiftcardaccountListEntity[]" />
+                    </restriction>
+                </complexContent>
+            </complexType>
+        </schema>
+    </types>
+
+    <message name="giftcardCustomerInfoRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="code" type="xsd:string" />
+    </message>
+    <message name="giftcardCustomerInfoResponse">
+        <part name="giftcardInfo" type="typens:giftcardCustomerEntity" />
+    </message>
+    <message name="giftcardCustomerRedeemRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="code" type="xsd:string" />
+        <part name="customer_id" type="xsd:string" />
+        <part name="store_id" type="xsd:string" />
+    </message>
+    <message name="giftcardCustomerRedeemResponse">
+        <part name="result" type="xsd:boolean" />
+    </message>
+    <message name="shoppingCartGiftcardAddRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="giftcardAccountCode" type="xsd:string" />
+        <part name="quoteId" type="xsd:string" />
+        <part name="storeId" type="xsd:string" />
+    </message>
+    <message name="shoppingCartGiftcardAddResponse">
+        <part name="result" type="xsd:boolean" />
+    </message>
+    <message name="shoppingCartGiftcardRemoveRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="giftcardAccountCode" type="xsd:string" />
+        <part name="quoteId" type="xsd:string" />
+        <part name="storeId" type="xsd:string" />
+    </message>
+    <message name="shoppingCartGiftcardRemoveResponse">
+        <part name="result" type="xsd:boolean" />
+    </message>
+    <message name="shoppingCartGiftcardListRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="quoteId" type="xsd:string" />
+        <part name="storeId" type="xsd:string" />
+    </message>
+    <message name="shoppingCartGiftcardListResponse">
+        <part name="giftcardsList" type="typens:enterpriseGiftcardaccountListEntityArray" />
+    </message>
+
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="giftcardCustomerInfo">
+            <documentation>Retrieve gift card data</documentation>
+            <input message="typens:giftcardCustomerInfoRequest" />
+            <output message="typens:giftcardCustomerInfoResponse" />
+        </operation>
+        <operation name="giftcardCustomerRedeem">
+            <documentation>Redeem gift card balance to customer store credit</documentation>
+            <input message="typens:giftcardCustomerRedeemRequest" />
+            <output message="typens:giftcardCustomerRedeemResponse" />
+        </operation>
+        <operation name="shoppingCartGiftcardAdd">
+            <documentation>Add giftcard to shopping cart (quote)</documentation>
+            <input message="typens:shoppingCartGiftcardAddRequest" />
+            <output message="typens:shoppingCartGiftcardAddResponse" />
+        </operation>
+        <operation name="shoppingCartGiftcardRemove">
+            <documentation>Remove giftcard from shopping cart (quote)</documentation>
+            <input message="typens:shoppingCartGiftcardRemoveRequest" />
+            <output message="typens:shoppingCartGiftcardRemoveResponse" />
+        </operation>
+        <operation name="shoppingCartGiftcardList">
+            <documentation>Get list of giftcards in shopping cart (quote)</documentation>
+            <input message="typens:shoppingCartGiftcardListRequest" />
+            <output message="typens:shoppingCartGiftcardListResponse" />
+        </operation>
+    </portType>
+
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="giftcardCustomerInfo">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="giftcardCustomerRedeem">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="shoppingCartGiftcardAdd">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="shoppingCartGiftcardRemove">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="shoppingCartGiftcardList">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+    </binding>
+</definitions>

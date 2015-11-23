@@ -1,0 +1,152 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<?php if ($this->getEnabled() && $this->getTypesCollection()->getSize()) : ?>
+<div class="widget">
+<div class="block block-gr-search" id="gr-quick-search-widget">
+    <div class="block-title">
+        <strong><span><?php echo Mage::helper('enterprise_giftregistry')->__('Gift Registry Search') ?></span></strong>
+    </div>
+    <div class="block-content">
+        <?php if ($this->useSearchFormSelect()) : ?>
+        <ul class="form-alt">
+            <li>
+                <label for="search_by" class="required"><strong><?php echo Mage::helper('enterprise_giftregistry')->__('Search By'); ?></strong> <em>*</em></label>
+                <div class="input-box">
+                    <?php echo $this->getSearchFormSelect() ?>
+                </div>
+            </li>
+        </ul>
+        <?php endif;?>
+
+        <script type="text/javascript">
+        //<![CDATA[
+            var searchType = $('search_by');
+            function showForm(){
+                $$('#gr-quick-search-widget .search-form').each(function(form){
+                    form.hide();
+                });
+                formId = 'gr-quick-search-widget-' + searchType.value + '-form';
+                if ($(formId)) {
+                    $(formId).show();
+                }
+            }
+            if (searchType) {
+                Event.observe(searchType, 'change', showForm);
+            }
+        //]]>
+        </script>
+
+<?php if ($this->useNameForm()) : ?>
+    <form id="gr-quick-search-widget-name-form" action="<?php echo $this->getActionUrl() ?>" method="post" class="search-form" <?php if ($this->useSearchFormSelect()) : ?>style="display:none;"<?php endif;?>>
+        <ul class="form-alt">
+            <li>
+                <?php echo $this->getBlockHtml('formkey')?>
+                <label for="quick_search_firstname" class="required"><?php echo Mage::helper('enterprise_giftregistry')->__('First Name') ?> <em>*</em></label>
+                <div class="input-box">
+                    <input type="text" class="input-text required-entry validate-name-length" id="quick_search_firstname" name="params[firstname]" />
+                </div>
+            </li>
+            <li>
+                <label for="quick_search_lastname" class="required"><?php echo Mage::helper('enterprise_giftregistry')->__('Last Name') ?> <em>*</em></label>
+                <div class="input-box">
+                    <input type="text" class="input-text required-entry validate-name-length" id="quick_search_lastname" name="params[lastname]" />
+                </div>
+            </li>
+            <li>
+                <label class="required"><?php echo Mage::helper('enterprise_giftregistry')->__('Type') ?></label>
+                <div class="input-box"><?php echo $this->getTypeSelectHtml() ?></div>
+            </li>
+        </ul>
+        <div class="actions">
+            <input type="hidden" name="params[search]" value="type" />
+            <p class="note"><em>*</em> <?php echo Mage::helper('enterprise_giftregistry')->__('Enter at least two letters') ?></p>
+            <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('enterprise_giftregistry')->__('Go')) ?>" class="button"><span><span><?php echo Mage::helper('enterprise_giftregistry')->__('Search') ?></span></span></button>
+        </div>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var grQuickSearchWidgetForm = new VarienForm('gr-quick-search-widget-name-form');
+
+        Validation.addAllThese([
+            ['validate-name-length', '<?php echo Mage::helper('core')->jsQuoteEscape($this->__('Please enter at least 2 letters.')) ?>', function(v, elm) {
+                return (v.length >= 2);
+            }]
+        ]);
+    //]]>
+    </script>
+<?php endif; ?>
+
+<?php if ($this->useEmailForm()) : ?>
+    <form id="gr-quick-search-widget-email-form" action="<?php echo $this->getActionUrl() ?>" method="post" class="search-form" <?php if ($this->useSearchFormSelect()) : ?>style="display:none;"<?php endif;?>>
+        <ul class="form-alt">
+            <li>
+                <?php echo $this->getBlockHtml('formkey')?>
+                <label for="quick_search_email" class="required"><?php echo Mage::helper('enterprise_giftregistry')->__('Recipient Email') ?> <em>*</em></label>
+                <div class="input-box">
+                    <input type="text" class="input-text required-entry validate-email" id="quick_search_email" name="params[email]" />
+                </div>
+            </li>
+        </ul>
+        <div class="actions">
+            <input type="hidden" name="params[search]" value="email" />
+            <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('enterprise_giftregistry')->__('Go')) ?>" class="button"><span><span><?php echo Mage::helper('enterprise_giftregistry')->__('Search') ?></span></span></button>
+        </div>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var grQuickSearchWidgetEmailForm = new VarienForm('gr-quick-search-widget-email-form');
+    //]]>
+    </script>
+<?php endif; ?>
+
+<?php if ($this->useIdForm()) : ?>
+    <form id="gr-quick-search-widget-id-form" action="<?php echo $this->getActionUrl() ?>" method="post" class="search-form" <?php if ($this->useSearchFormSelect()) : ?>style="display:none;"<?php endif;?>>
+        <ul class="form-alt">
+            <li>
+                <?php echo $this->getBlockHtml('formkey')?>
+                <label for="quick_search_id" class="required"><?php echo Mage::helper('enterprise_giftregistry')->__('Gift Registry ID') ?> <em>*</em></label>
+                <div class="input-box">
+                    <input type="text" class="input-text required-entry" id="quick_search_id" name="params[id]" />
+                </div>
+            </li>
+        </ul>
+        <div class="actions">
+            <input type="hidden" name="params[search]" value="id" />
+            <button type="submit" title="<?php echo Mage::helper('core')->quoteEscape(Mage::helper('enterprise_giftregistry')->__('Go')) ?>" class="button"><span><span><?php echo Mage::helper('enterprise_giftregistry')->__('Search') ?></span></span></button>
+        </div>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var grQuickSearchWidgetIdForm = new VarienForm('gr-quick-search-widget-id-form');
+    //]]>
+    </script>
+<?php endif; ?>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

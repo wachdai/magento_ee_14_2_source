@@ -1,0 +1,148 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<div id="orderCreateGiftWrapping" class="entry-edit box-right">
+    <?php echo $this->getChildHtml('wrapping.order.create.info.content'); ?>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var giftWrappingOrder = {
+    designsInfo : <?php echo $this->getDesignsInfo()->toJson() ?>,
+    cardInfo : <?php echo $this->getCardInfo()->toJson() ?>,
+    allowPrintedCard: <?php echo (int)$this->getAllowPrintedCard() ?>,
+    setCardPrice : function(event, checked) {
+        if (!this.allowPrintedCard) {
+            return;
+        }
+        var value = (event) ? Event.element(event).checked : checked;
+        if (value) {
+            if (this.cardInfo.price_incl_tax && $('card-price-incl-tax')) {
+                $('card-price-incl-tax').update(this.cardInfo.price_incl_tax);
+            }
+            if (this.cardInfo.price_excl_tax && $('card-price-excl-tax')) {
+                $('card-price-excl-tax').update(this.cardInfo.price_excl_tax);
+            }
+            if (this.cardInfo.price && $('card-price')) {
+                $('card-price').update(this.cardInfo.price);
+            }
+            if ($('card-price-box')) {
+                $('card-price-box').removeClassName('no-display');
+            }
+        } else if ($('card-price-box')) {
+            $('card-price-box').addClassName('no-display');
+        }
+        if (event) {
+            this.saveData();
+        }
+    },
+
+    setDesign : function(value) {
+        var imageBox = $('wrapping-image-box');
+        if (this.designsInfo[value].path && imageBox) {
+            imageBox.src = this.designsInfo[value].path;
+            imageBox.removeClassName('no-display');
+        } else if (imageBox) {
+            imageBox.src = '';
+            imageBox.addClassName('no-display');
+        }
+    },
+
+    setPrice : function(value) {
+        var priceInclTax = this.designsInfo[value].price_incl_tax;
+        var priceExclTax = this.designsInfo[value].price_excl_tax;
+
+        if (this.designsInfo[value]) {
+            if ($('wrapping-price-incl-tax')) {
+                $('wrapping-price-incl-tax').update(this.designsInfo[value].price_incl_tax);
+            }
+            if ($('wrapping-price-excl-tax')) {
+                $('wrapping-price-excl-tax').update(this.designsInfo[value].price_excl_tax);
+            }
+            if ($('wrapping-price')) {
+                $('wrapping-price').update(this.designsInfo[value].price);
+            }
+            if ($('wrapping-price-box')) {
+                $('wrapping-price-box').removeClassName('no-display');
+            }
+        }
+    },
+
+    setWrapping : function(event, value) {
+        var design = (event) ? Event.element(event).value : value;
+        if (design) {
+            this.setDesign(design);
+            this.setPrice(design);
+        } else {
+            var priceBox = $('wrapping-price-box'),
+                imageBox = $('wrapping-image-box');
+            if (priceBox) {
+                priceBox.addClassName('no-display');
+            }
+            if (imageBox) {
+                imageBox.addClassName('no-display');
+            }
+        }
+        if (event) {
+            this.saveData();
+        }
+    },
+
+    saveData : function() {
+        var data = order.serializeData('wrapping-container');
+        order.loadArea(['totals', 'billing_method'], true, data.toObject());
+    },
+
+    init : function() {
+        if ($('giftwrapping_design')) {
+            Event.observe($('giftwrapping_design'), 'change', this.setWrapping.bind(this));
+            $('giftwrapping_design').value = <?php echo $this->getWrappingDesignValue() ?>;
+        }
+        if ($('add-printed-card')) {
+            Event.observe($('add-printed-card'), 'click', this.setCardPrice.bind(this));
+            $('add-printed-card').checked = <?php echo $this->getWrappingPrintedCardValue() ?>;
+        }
+        if ($('allow-gift-receipt')) {
+            Event.observe($('allow-gift-receipt'), 'change', this.saveData.bind(this));
+            $('allow-gift-receipt').checked = <?php echo $this->getWrappingGiftReceiptValue() ?>;
+        }
+    },
+
+    refresh: function(event) {
+        var url = order.loadBaseUrl + 'block/giftwrapping';
+        new Ajax.Updater('orderCreateGiftWrapping', url, {
+            onComplete: this.init.bind(this)
+        })
+    }
+}
+giftWrappingOrder.init();
+giftWrappingOrder.setWrapping(null, <?php echo $this->getWrappingDesignValue() ?>);
+giftWrappingOrder.setCardPrice(null, <?php echo $this->getWrappingPrintedCardValue() ?>);
+Event.observe(document, 'quote_items:afterIFrameLoaded',  giftWrappingOrder.refresh.bind(giftWrappingOrder));
+Event.observe(document, 'product_to_add:afterIFrameLoaded',  giftWrappingOrder.refresh.bind(giftWrappingOrder));
+//]]>
+</script>

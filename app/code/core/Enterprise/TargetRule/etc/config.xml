@@ -1,0 +1,197 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_TargetRule
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_TargetRule>
+            <version>1.11.0.0.5</version>
+        </Enterprise_TargetRule>
+    </modules>
+    <global>
+        <models>
+            <enterprise_targetrule>
+                <class>Enterprise_TargetRule_Model</class>
+                <resourceModel>enterprise_targetrule_resource</resourceModel>
+            </enterprise_targetrule>
+            <enterprise_targetrule_resource>
+                <class>Enterprise_TargetRule_Model_Resource</class>
+                <deprecatedNode>enterprise_targetrule_mysql4</deprecatedNode>
+                <entities>
+                    <rule>
+                        <table>enterprise_targetrule</table>
+                    </rule>
+                    <customersegment>
+                        <table>enterprise_targetrule_customersegment</table>
+                    </customersegment>
+                    <product>
+                        <table>enterprise_targetrule_product</table>
+                    </product>
+                    <segment>
+                        <table>enterprise_targetrule_customersegment</table>
+                    </segment>
+                    <index>
+                        <table>enterprise_targetrule_index</table>
+                    </index>
+                    <index_related>
+                        <table>enterprise_targetrule_index_related</table>
+                    </index_related>
+                    <index_crosssell>
+                        <table>enterprise_targetrule_index_crosssell</table>
+                    </index_crosssell>
+                    <index_upsell>
+                        <table>enterprise_targetrule_index_upsell</table>
+                    </index_upsell>
+                    <index_related_product>
+                        <table>enterprise_targetrule_index_related_product</table>
+                    </index_related_product>
+                    <index_upsell_product>
+                        <table>enterprise_targetrule_index_upsell_product</table>
+                    </index_upsell_product>
+                    <index_crosssell_product>
+                        <table>enterprise_targetrule_index_crosssell_product</table>
+                    </index_crosssell_product>
+                </entities>
+            </enterprise_targetrule_resource>
+        </models>
+        <resources>
+            <enterprise_targetrule_setup>
+                <setup>
+                    <module>Enterprise_TargetRule</module>
+                    <class>Enterprise_TargetRule_Model_Resource_Setup</class>
+                </setup>
+            </enterprise_targetrule_setup>
+        </resources>
+        <blocks>
+            <enterprise_targetrule>
+                <class>Enterprise_TargetRule_Block</class>
+            </enterprise_targetrule>
+        </blocks>
+        <helpers>
+            <enterprise_targetrule>
+                <class>Enterprise_TargetRule_Helper</class>
+            </enterprise_targetrule>
+        </helpers>
+        <catalog_product>
+            <old_fields_map>
+                <related_targetrule_position_limit>related_tgtr_position_limit</related_targetrule_position_limit>
+                <related_targetrule_position_behavior>related_tgtr_position_behavior</related_targetrule_position_behavior>
+                <upsell_targetrule_position_limit>upsell_tgtr_position_limit</upsell_targetrule_position_limit>
+                <upsell_targetrule_position_behavior>upsell_tgtr_position_behavior</upsell_targetrule_position_behavior>
+            </old_fields_map>
+        </catalog_product>
+        <index>
+            <indexer>
+                <targetrule>
+                    <model>enterprise_targetrule/index</model>
+                </targetrule>
+            </indexer>
+        </index>
+    </global>
+    <adminhtml>
+        <events>
+            <catalog_product_save_commit_after>
+                <observers>
+                    <enterprise_targetrule>
+                        <class>enterprise_targetrule/observer</class>
+                        <method>catalogProductSaveCommitAfter</method>
+                    </enterprise_targetrule>
+                </observers>
+            </catalog_product_save_commit_after>
+            <core_config_data_save_commit_after>
+                <observers>
+                    <enterprise_targetrule>
+                        <class>enterprise_targetrule/observer</class>
+                        <method>coreConfigSaveCommitAfter</method>
+                    </enterprise_targetrule>
+                </observers>
+            </core_config_data_save_commit_after>
+        </events>
+        <translate>
+            <modules>
+                <Enterprise_TargetRule>
+                    <files>
+                        <default>Enterprise_TargetRule.csv</default>
+                    </files>
+                </Enterprise_TargetRule>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <enterprise_targetrule>
+                    <file>enterprise/targetrule.xml</file>
+                </enterprise_targetrule>
+            </updates>
+        </layout>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Enterprise_TargetRule before="Mage_Adminhtml">Enterprise_TargetRule_Adminhtml</Enterprise_TargetRule>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <frontend>
+        <layout>
+            <updates>
+                <enterprise_targetrule module="Enterprise_TargetRule">
+                    <file>targetrule.xml</file>
+                </enterprise_targetrule>
+            </updates>
+        </layout>
+    </frontend>
+    <default>
+        <catalog>
+            <enterprise_targetrule>
+                <related_position_limit>6</related_position_limit>
+                <related_position_behavior>0</related_position_behavior>
+                <related_rotation_mode>0</related_rotation_mode>
+                <crosssell_position_limit>5</crosssell_position_limit>
+                <crosssell_position_behavior>0</crosssell_position_behavior>
+                <crosssell_rotation_mode>0</crosssell_rotation_mode>
+                <upsell_position_limit>8</upsell_position_limit>
+                <upsell_position_behavior>0</upsell_position_behavior>
+                <upsell_rotation_mode>0</upsell_rotation_mode>
+            </enterprise_targetrule>
+        </catalog>
+    </default>
+    <crontab>
+        <jobs>
+            <enterprise_targetrule_index_reindex>
+                <schedule>
+                    <cron_expr>0 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>enterprise_targetrule/index::cron</model>
+                </run>
+            </enterprise_targetrule_index_reindex>
+        </jobs>
+    </crontab>
+</config>

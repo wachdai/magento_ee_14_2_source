@@ -1,0 +1,134 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+/** @var $this Enterprise_Logging_Block_Adminhtml_Details */
+?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td style="<?php echo $this->getHeaderWidth() ?>"><?php echo $this->getHeaderHtml() ?></td>
+            <td class="form-buttons"><?php echo $this->getButtonsHtml() ?></td>
+        </tr>
+    </table>
+</div>
+
+<?php
+$event = $this->getCurrentEvent();
+?>
+<div class="entry-edit">
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Admin User Data'); ?></h4>
+        </div>
+        <div id="log_details_fieldset" class="log-details">
+            <table cellspacing="0" class="log-info table">
+                <col width="25%" />
+                <col />
+                <tbody>
+                    <tr>
+                        <th><?php echo $this->__('Aggregated Information'); ?></th>
+                        <td>
+                        <?php
+                            $eventInfo = $this->getEventInfo();
+                            if (is_bool($eventInfo)) {
+                                echo ($dataArray ? 'true' : 'false');
+                            } elseif (is_array($eventInfo)) {
+                                if (isset($eventInfo['general'])) {
+                                    if (!is_array($eventInfo['general'])) {
+                                        $eventInfo['general'] = array($eventInfo['general']);
+                                    }
+                                    echo $this->escapeHtml(implode(', ', $eventInfo['general']));
+                                }
+                         ?>
+                         <?php if (isset($eventInfo['additional'])): ?><br /><?php endif; ?>
+                         <?php
+                                if (isset($eventInfo['additional'])) {
+                                    foreach ($eventInfo['additional'] as $modelName => $modelsData) {
+                                        foreach ($modelsData as $mdoelId => $data) {
+                                            echo $this->escapeHtml(implode(', ', $data));
+                                        }
+                                    }
+                                }
+                            } else {
+                                echo $this->escapeHtml($eventInfo);
+                            }
+                        ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo $this->__('Admin User ID'); ?></th>
+                        <td>
+                        <?php if ($this->getEventUser()){ ?>
+                        #<?php echo $event->getUserId(); ?>
+                        <?php } else { ?>
+                        N/A
+                        <?php } ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo $this->__('Admin User Name'); ?></th>
+                        <td>
+                        <?php if ($this->getEventUser()){ ?>
+                        <a href="<?php echo $this->getUrl('adminhtml/permissions_user/edit', array('user_id' => $event->getUserId())); ?>"><?php echo $this->escapeHtml($event->getUser()); ?></a>
+                        <?php } else { ?>
+                        <?php echo $this->escapeHtml($event->getUser()); ?>
+                        <?php } ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><?php echo $this->__('IP-Address'); ?></th>
+                        <td><?php echo $this->getEventIp(); ?></td>
+                    </tr>
+                    <?php if ($this->getEventXForwardedIp()) { ?>
+                    <tr>
+                        <th><?php echo $this->__('X-Forwarded For'); ?></th>
+                        <td><?php echo $this->getEventXForwardedIp(); ?></td>
+                    </tr>
+                    <?php } ?>
+                    <?php if ($this->getEventError()) { ?>
+                    <tr>
+                        <th><?php echo $this->__('Error Message'); ?></th>
+                        <td><?php echo $this->getEventError(); ?></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<?php if ($event->hasChanges()){ ?>
+<div class="entry-edit">
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Related Changes'); ?></h4>
+        </div>
+        <div class="log-details-grid">
+            <?php echo $this->getChildHtml('details_grid') ?>
+        </div>
+    </div>
+</div>
+<?php } ?>
+

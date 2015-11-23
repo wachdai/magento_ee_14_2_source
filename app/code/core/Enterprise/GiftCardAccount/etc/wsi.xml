@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:typens="urn:{{var wsdl.name}}"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="{{var wsdl.name}}"
+             targetNamespace="urn:{{var wsdl.name}}">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:{{var wsdl.name}}">
+            <xsd:complexType name="giftcardAccountCreateGiftcardAccountData">
+                <xsd:sequence>
+                    <xsd:element name="status" type="xsd:string" />
+                    <xsd:element name="date_expires" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="website_id" type="xsd:string" />
+                    <xsd:element name="balance" type="xsd:string" />
+                    <xsd:element name="state" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="is_redeemable" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="giftcardAccountCreateNotificationData">
+                <xsd:sequence>
+                    <xsd:element name="recipient_name" type="xsd:string" />
+                    <xsd:element name="recipient_email" type="xsd:string" />
+                    <xsd:element name="recipient_store" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="giftcardAccountEntity">
+                <xsd:sequence>
+                    <xsd:element name="giftcard_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="code" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="store_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="date_created" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="expire_date" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="is_active" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="is_redeemable" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="status" type="xsd:string" minOccurs="0" />
+                    <xsd:element name="balance" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="history" type="typens:giftcardAccountEntityHistoryArray" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="giftcardAccountEntityArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:giftcardAccountEntity" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="giftcardAccountEntityHistory">
+                <xsd:sequence>
+                   <xsd:element name="record_id" type="xsd:int" minOccurs="0" />
+                   <xsd:element name="date" type="xsd:string" minOccurs="0" />
+                   <xsd:element name="action" type="xsd:string" minOccurs="0" />
+                   <xsd:element name="balance_delta" type="xsd:double" minOccurs="0" />
+                   <xsd:element name="balance" type="xsd:double" minOccurs="0" />
+                   <xsd:element name="info" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="giftcardAccountEntityHistoryArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:giftcardAccountEntityHistory" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="giftcardAccountEntityToUpdate">
+                <xsd:sequence>
+                    <xsd:element name="is_active" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="is_redeemable" type="xsd:boolean" minOccurs="0" />
+                    <xsd:element name="store_id" type="xsd:int" minOccurs="0" />
+                    <xsd:element name="balance" type="xsd:double" minOccurs="0" />
+                    <xsd:element name="date_expires" type="xsd:string" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:element name="giftcardAccountCreateRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="xsd:string" />
+                        <xsd:element name="giftcardAccountData" type="typens:giftcardAccountCreateGiftcardAccountData" />
+                        <xsd:element name="notificationData" type="typens:giftcardAccountCreateNotificationData" minOccurs="0" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardAccountCreateResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardAccountUpdateRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="xsd:string" />
+                        <xsd:element name="giftcardAccountId" type="xsd:string" />
+                        <xsd:element name="giftcardData" type="typens:giftcardAccountEntityToUpdate" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardAccountUpdateResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardAccountRemoveRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="xsd:string" />
+                        <xsd:element name="giftcardAccountId" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardAccountRemoveResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardAccountListRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="xsd:string" />
+                        <xsd:element name="filters" type="typens:filters" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardAccountListResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" type="typens:giftcardAccountEntityArray" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardAccountInfoRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="sessionId" type="xsd:string" />
+                        <xsd:element name="giftcardAccountId" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="giftcardAccountInfoResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="result" type="typens:giftcardAccountEntity" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="giftcardAccountCreateRequest">
+        <wsdl:part name="parameters" element="typens:giftcardAccountCreateRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardAccountCreateResponse">
+        <wsdl:part name="parameters" element="typens:giftcardAccountCreateResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardAccountUpdateRequest">
+        <wsdl:part name="parameters" element="typens:giftcardAccountUpdateRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardAccountUpdateResponse">
+        <wsdl:part name="parameters" element="typens:giftcardAccountUpdateResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardAccountRemoveRequest">
+        <wsdl:part name="parameters" element="typens:giftcardAccountRemoveRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardAccountRemoveResponse">
+        <wsdl:part name="parameters" element="typens:giftcardAccountRemoveResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardAccountListRequest">
+        <wsdl:part name="parameters" element="typens:giftcardAccountListRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardAccountListResponse">
+        <wsdl:part name="parameters" element="typens:giftcardAccountListResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardAccountInfoRequest">
+        <wsdl:part name="parameters" element="typens:giftcardAccountInfoRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="giftcardAccountInfoResponse">
+        <wsdl:part name="parameters" element="typens:giftcardAccountInfoResponseParam" />
+    </wsdl:message>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+        <wsdl:operation name="giftcardAccountCreate">
+            <wsdl:documentation>Create gift card account</wsdl:documentation>
+            <wsdl:input message="typens:giftcardAccountCreateRequest" />
+            <wsdl:output message="typens:giftcardAccountCreateResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="giftcardAccountUpdate">
+            <wsdl:documentation>Remove gift card account</wsdl:documentation>
+            <wsdl:input message="typens:giftcardAccountUpdateRequest" />
+            <wsdl:output message="typens:giftcardAccountUpdateResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="giftcardAccountRemove">
+            <wsdl:documentation>Remove gift card account</wsdl:documentation>
+            <wsdl:input message="typens:giftcardAccountRemoveRequest" />
+            <wsdl:output message="typens:giftcardAccountRemoveResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="giftcardAccountList">
+            <wsdl:documentation>Remove gift card account</wsdl:documentation>
+            <wsdl:input message="typens:giftcardAccountListRequest" />
+            <wsdl:output message="typens:giftcardAccountListResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="giftcardAccountInfo">
+            <wsdl:documentation>Remove gift card account</wsdl:documentation>
+            <wsdl:input message="typens:giftcardAccountInfoRequest" />
+            <wsdl:output message="typens:giftcardAccountInfoResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="giftcardAccountCreate">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="giftcardAccountUpdate">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="giftcardAccountRemove">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="giftcardAccountList">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="giftcardAccountInfo">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,258 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Cms
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_Cms>
+            <version>1.11.0.3</version>
+        </Enterprise_Cms>
+    </modules>
+    <global>
+        <models>
+            <enterprise_cms>
+                <class>Enterprise_Cms_Model</class>
+                <resourceModel>enterprise_cms_resource</resourceModel>
+            </enterprise_cms>
+            <enterprise_cms_resource>
+                <class>Enterprise_Cms_Model_Resource</class>
+                <deprecatedNode>enterprise_cms_mysql4</deprecatedNode>
+                <entities>
+                    <page_version>
+                        <table>enterprise_cms_page_version</table>
+                    </page_version>
+                    <page_revision>
+                        <table>enterprise_cms_page_revision</table>
+                    </page_revision>
+                    <increment>
+                        <table>enterprise_cms_increment</table>
+                    </increment>
+                    <hierarchy_metadata>
+                        <table>enterprise_cms_hierarchy_metadata</table>
+                    </hierarchy_metadata>
+                    <hierarchy_node>
+                        <table>enterprise_cms_hierarchy_node</table>
+                    </hierarchy_node>
+                    <hierarchy_lock>
+                        <table>enterprise_cms_hierarchy_lock</table>
+                    </hierarchy_lock>
+                </entities>
+            </enterprise_cms_resource>
+        </models>
+        <blocks>
+            <enterprise_cms>
+                <class>Enterprise_Cms_Block</class>
+            </enterprise_cms>
+        </blocks>
+        <helpers>
+            <enterprise_cms>
+                <class>Enterprise_Cms_Helper</class>
+            </enterprise_cms>
+        </helpers>
+        <resources>
+            <enterprise_cms_setup>
+                <setup>
+                    <module>Enterprise_Cms</module>
+                    <class>Enterprise_Cms_Model_Resource_Setup</class>
+                </setup>
+            </enterprise_cms_setup>
+        </resources>
+        <events>
+            <cms_controller_router_match_before>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>cmsControllerRouterMatchBefore</method>
+                    </enterprise_cms>
+                </observers>
+            </cms_controller_router_match_before>
+            <page_block_html_topmenu_gethtml_before>
+                <observers>
+                    <enterprise_cms_add_topmenu_items>
+                        <class>enterprise_cms/observer</class>
+                        <method>addCmsToTopmenuItems</method>
+                    </enterprise_cms_add_topmenu_items>
+                </observers>
+            </page_block_html_topmenu_gethtml_before>
+        </events>
+        <enterprise_cms>
+            <hierarchy>
+                <menu>
+                    <layouts>
+                        <content module="enterprise_cms" translate="label">
+                            <label>Content</label>
+                            <layout_handle>enterprise_cms_hierarchy_menu_content</layout_handle>
+                            <is_default>1</is_default>
+                        </content>
+                        <left_column module="enterprise_cms" translate="label">
+                            <label>Left Column</label>
+                            <layout_handle>enterprise_cms_hierarchy_menu_left_column</layout_handle>
+                            <page_layout_handles>
+                                <page_two_columns_left/>
+                                <page_three_columns/>
+                            </page_layout_handles>
+                        </left_column>
+                        <right_column module="enterprise_cms" translate="label">
+                            <label>Right Column</label>
+                            <layout_handle>enterprise_cms_hierarchy_menu_right_column</layout_handle>
+                            <page_layout_handles>
+                                <page_two_columns_right/>
+                                <page_three_columns/>
+                            </page_layout_handles>
+                        </right_column>
+                    </layouts>
+                </menu>
+            </hierarchy>
+        </enterprise_cms>
+    </global>
+    <frontend>
+        <events>
+            <cms_page_render>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>affectCmsPageRender</method>
+                    </enterprise_cms>
+                </observers>
+            </cms_page_render>
+        </events>
+    </frontend>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_cms>
+                    <file>enterprise/cms.xml</file>
+                </enterprise_cms>
+            </updates>
+        </layout>
+        <events>
+            <adminhtml_cms_page_grid_renderer_action_before_render>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>prepareAdmihtmlCmsPageRowPreviewUrl</method>
+                    </enterprise_cms>
+                </observers>
+            </adminhtml_cms_page_grid_renderer_action_before_render>
+            <adminhtml_cms_page_edit_tab_main_prepare_form>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>onMainTabPrepareForm</method>
+                    </enterprise_cms>
+                </observers>
+            </adminhtml_cms_page_edit_tab_main_prepare_form>
+            <cms_page_save_before>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>cmsPageSaveBefore</method>
+                    </enterprise_cms>
+                </observers>
+            </cms_page_save_before>
+            <cms_page_save_after>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>cmsPageSaveAfter</method>
+                    </enterprise_cms>
+                </observers>
+            </cms_page_save_after>
+            <admin_user_delete_after>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>adminUserDeleteAfter</method>
+                    </enterprise_cms>
+                </observers>
+            </admin_user_delete_after>
+            <website_delete_after>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>deleteWebsite</method>
+                    </enterprise_cms>
+                </observers>
+            </website_delete_after>
+            <store_delete_after>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>deleteStore</method>
+                    </enterprise_cms>
+                </observers>
+            </store_delete_after>
+            <cms_page_get_available_statuses>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>modifyPageStatuses</method>
+                    </enterprise_cms>
+                </observers>
+            </cms_page_get_available_statuses>
+            <cms_page_delete_after>
+                <observers>
+                    <enterprise_cms>
+                        <class>enterprise_cms/observer</class>
+                        <method>cmsPageDeleteAfter</method>
+                    </enterprise_cms>
+                </observers>
+            </cms_page_delete_after>
+        </events>
+        <translate>
+            <modules>
+                <Enterprise_Cms>
+                    <files>
+                        <default>Enterprise_Cms.csv</default>
+                    </files>
+                </Enterprise_Cms>
+            </modules>
+        </translate>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <enterprise_cms before="Mage_Adminhtml">Enterprise_Cms_Adminhtml</enterprise_cms>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <default>
+        <cms>
+            <hierarchy>
+                <enabled>1</enabled>
+                <metadata_enabled>1</metadata_enabled>
+                <menu_layout>content</menu_layout>
+            </hierarchy>
+            <content>
+                <versioning>1</versioning>
+            </content>
+        </cms>
+    </default>
+</config>

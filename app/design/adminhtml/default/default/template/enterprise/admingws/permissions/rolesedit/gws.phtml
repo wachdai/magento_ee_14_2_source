@@ -1,0 +1,176 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * @see Enterprise_AdminGws_Block_Adminhtml_Permissions_Tab_Rolesedit_Gws
+ */
+?>
+<?php /* @var $this Enterprise_AdminGws_Block_Adminhtml_Permissions_Tab_Rolesedit_Gws */ ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Role Scopes') ?></h4>
+    </div>
+    <fieldset>
+
+        <span class="field-row">
+            <label for="gws_is_all"><?php echo $this->__('Role Scopes') ?></label>
+            <select id="gws_is_all" name="gws_is_all" onchange="$('gws_container').toggle()" class="select">
+                <option value="0"><?php echo $this->__('Custom') ?></option>
+                <?php if ($this->canAssignGwsAll()): ?>
+                    <option value="1" <?php echo ($this->getGwsIsAll() ? 'selected="selected"' : '') ?>><?php echo $this->__('All') ?></option>
+                <?php endif; ?>
+            </select>
+        </span>
+
+        <div id="gws_container">
+            <ul>
+            <?php foreach (Mage::app()->getWebsites() as $websiteId => $website): ?>
+                <li>
+                <input class="gws_website" type="checkbox" name="gws_websites[]" value="<?php echo $websiteId ?>" id="gws_website_<?php echo $websiteId ?>" <?php echo (in_array($websiteId, $this->getRole()->getGwsWebsites()) ? 'checked="checked" ' : '') ?>/><label for="gws_website_<?php echo $websiteId ?>">
+                    <?php echo $this->escapeHtml($website->getName()) ?>
+                </label>
+                <?php if (count($website->getGroups())): ?>
+                    <ul id="gws_website_<?php echo $websiteId ?>_groups" style="margin-left:1.5em">
+                    <?php foreach ($website->getGroups() as $group): ?>
+                        <li>
+                        <input class="gws_store_group validate-one-gws-store" type="checkbox" name="gws_store_groups[]" value="<?php echo $group->getId() ?>" id="gws_store_group_<?php echo $group->getId() ?>" <?php echo (in_array($group->getId(), $this->getRole()->getGwsStoreGroups()) ? 'checked="checked" ' : '') ?>/><label for="gws_store_group_<?php echo $group->getId() ?>">
+                            <?php echo $this->escapeHtml($group->getName()) ?>
+                        </label>
+                        </li>
+                    <?php endforeach;?>
+                    </ul>
+                <?php endif; ?>
+                </li>
+            <?php endforeach;?>
+            </ul>
+            <span id="gws_validation_container"></span>
+        </div>
+        <script type="text/javascript">
+        //<![CDATA[
+        // checkboxes validation
+<?php foreach (Mage::app()->getWebsites() as $websiteId => $website): ?>
+        $('gws_website_<?php echo $websiteId ?>').advaiceContainer = 'gws_validation_container';
+<?php if (count($website->getGroups())): ?>
+<?php foreach ($website->getGroups() as $group): ?>
+        $('gws_store_group_<?php echo $group->getId() ?>').advaiceContainer = 'gws_validation_container';
+<?php endforeach;?>
+<?php endif; ?>
+<?php endforeach;?>
+        GwsValidationResult = null;
+        Validation.add('validate-one-gws-store', 'Please select one of the options.', function(v, elm) {
+            if ($('gws_is_all').value == 1) {
+                return true; // not touching GwsValidationResult intentionally
+            }
+            // prevent cycling validation for all checkboxes
+            if (null !== GwsValidationResult) {
+                return GwsValidationResult;
+            }
+            GwsValidationResult = false;
+            var inputs = $('gws_container').select('input.gws_store_group');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].checked) {
+                    GwsValidationResult = true;
+                    return GwsValidationResult;
+                }
+            }
+            return GwsValidationResult;
+        });
+
+        // checkboxes relation logic
+        <?php if ($this->getGwsIsAll()):?>
+            $('gws_container').toggle();
+        <?php endif;?>
+        var gwsController = Class.create();
+        gwsController.prototype = {
+            isClick : true,
+            disallowedStores : <?php echo $this->getDisallowedStoreGroupsJson() ?>,
+
+            initialize : function() {
+                this.websites = [];
+                $('gws_container').select('input.gws_website').each(function(website) {
+                    this.websites.push(website);
+                    Event.observe(website, 'click', this.isWebsiteChecked.bind(this));
+                    if ($(website.id + '_groups')) {
+                        $(website.id + '_groups').select('input').each(function(storeInput) {
+                            storeInput.__website = this;
+                        }.bind(website));
+                    }
+                }.bind(this));
+
+                this.stores = [];
+                $('gws_container').select('input.gws_store_group').each(function(store) {
+                    this.stores.push(store);
+                    Event.observe(store, 'click', this.forceRevalidate);
+                }.bind(this));
+            },
+
+            isWebsiteChecked : function() {
+                this.forceRevalidate();
+                // disable checkboxes of all stores if any of a website is checked
+                for (var k = 0; k < this.websites.length; k++) {
+                    if (this.websites[k].checked) {
+                        this.disableStores(true);
+                        return true;
+                    }
+                }
+                // enable checkboxes of all stores if all of websites are not checked
+                this.disableStores(false);
+                return false;
+            },
+
+            disableStores : function(isDisabled) {
+                for (var k = 0; k < this.stores.length; k++) {
+                    var storeCheckbox = this.stores[k];
+                    if (this.disallowedStores[storeCheckbox.value]) {
+                        storeCheckbox.disabled = true;
+                        storeCheckbox.checked  = false;
+                    }
+                    else {
+                        storeCheckbox.disabled = isDisabled;
+                        if (isDisabled) {
+                            storeCheckbox.checked = storeCheckbox.__website.checked;
+                        }
+                        else if (this.isClick) {
+                            storeCheckbox.checked = false;
+                        }
+                    }
+                }
+            },
+
+            forceRevalidate : function() {
+                GwsValidationResult = null;
+            }
+        }
+
+        rwc = new gwsController();
+        rwc.isClick = false;
+        rwc.isWebsiteChecked();
+        rwc.isClick = true;
+        //]]>
+        </script>
+    </fieldset>
+</div>

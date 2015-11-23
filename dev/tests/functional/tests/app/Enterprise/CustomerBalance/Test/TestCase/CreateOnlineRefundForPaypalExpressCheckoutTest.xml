@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
+    <testCase name="Mage\Paypal\Test\TestCase\CreateOnlineRefundForPaypalExpressCheckoutTest">
+        <variation name="CreateOnlineRefundForPaypalExpressCheckoutTestVariation8" method="test">
+            <data name="description" xsi:type="string">Create full refund to store credit for paypal express checkout with line items mark require billing address</data>
+            <data name="products" xsi:type="string">catalogProductSimple::default</data>
+            <data name="configData" xsi:type="string">paypal_express_order_line_items_mark_require_billing_address</data>
+            <data name="shippingMethod" xsi:type="string">Flat Rate/Fixed</data>
+            <data name="data/refund/0/form_data/comment_text" xsi:type="string">comments for credit memo</data>
+            <data name="data/refund/0/form_data/refund_customerbalance_return_enable" xsi:type="string">Yes</data>
+            <data name="data/refund/0/form_data/refund_customerbalance_return" xsi:type="string">200</data>
+            <data name="verifyData/grandTotal/refunds/0/from" xsi:type="string">315.00</data>
+            <data name="verifyData/grandTotal/refunds/0/to" xsi:type="string">315.00</data>
+            <data name="verifyData/items_data/0/item_price" xsi:type="string">100.00</data>
+            <data name="verifyData/items_data/0/item_subtotal" xsi:type="string">300.00</data>
+            <data name="verifyData/items_data/0/item_row_total" xsi:type="string">300.00</data>
+            <data name="verifyData/item_action" xsi:type="string">Created</data>
+            <data name="verifyData/item_balance_change" xsi:type="string">200.00</data>
+            <data name="verifyData/item_balance" xsi:type="string">200.00</data>
+            <data name="status" xsi:type="string">Closed</data>
+            <constraint name="Mage\Sales\Test\Constraint\AssertCreditMemoSuccessCreateMessage" />
+            <constraint name="Mage\Sales\Test\Constraint\AssertCreditMemoInCreditMemosGrid" />
+            <constraint name="Mage\Sales\Test\Constraint\AssertCreditMemoInCreditMemosTab" />
+            <constraint name="Mage\Sales\Test\Constraint\AssertNoCreditMemoButton" />
+            <constraint name="Mage\Sales\Test\Constraint\AssertCreditMemoItems" />
+            <constraint name="Mage\Sales\Test\Constraint\AssertCreditMemoItemsOnFrontend" />
+            <constraint name="Mage\Sales\Test\Constraint\AssertOrderStatusIsCorrect" />
+            <constraint name="Enterprise\CustomerBalance\Test\Constraint\AssertStoreCreditOnFrontend" />
+        </variation>
+    </testCase>
+</config>

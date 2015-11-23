@@ -1,0 +1,219 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+/* @var $this Enterprise_Cms_Block_Adminhtml_Cms_Page_Edit_Tab_Hierarchy */
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('This Page Belongs To') ?></h4>
+    </div>
+    <div class="fieldset fieldset-wide">
+        <input type="hidden" name="node_ids" id="node_ids" value="<?php echo $this->getSelectedNodeIds() ?>" />
+        <input type="hidden" name="website_root" id="website_root" value="<?php echo $this->getPage()->getWebsiteRoot() ?>" />
+        <input type="hidden" name="nodes_data" id="nodes_data" value="" />
+        <div id="tree-container" class="cms-tree tree x-tree"></div>
+    </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+/**
+ * Fix ext compatibility with prototype 1.6
+ */
+Ext.lib.Event.getTarget = function(e) {
+    var ee = e.browserEvent || e;
+    return ee.target ? Event.element(ee) : null;
+};
+hierarchyNodes = {
+    nodes: <?php echo $this->getNodesJson()?>,
+    page: <?php echo $this->getCurrentPageJson() ?>,
+    initialize: function(){
+        this.increment = 0;
+        this.pageAssignedToWebsiteRoot = <?php echo $this->getPage()->getWebsiteRoot()?'true':'false' ?>;
+        this.nodeIds = $('node_ids');
+        this.tree = new Ext.tree.TreePanel('tree-container', {
+            animate: false,
+            loader: false,
+            enableDD: true,
+            containerScroll: true,
+            rootVisible: true,
+            lines: true
+        });
+
+        this.treeRoot = new Ext.tree.TreeNode({
+            id: '_root',
+            expanded: true,
+            text: '<?php echo Mage::helper('core')->jsQuoteEscape($this->__("Website Root"))?>',
+            cls: 'cms_node_root',
+            uiProvider: Ext.tree.CheckboxNodeUI,
+            checked: this.pageAssignedToWebsiteRoot
+        });
+        this.tree.setRootNode(this.treeRoot);
+
+        this.createNodes();
+
+        this.tree.render();
+        this.fixNodes(this.treeRoot);
+        this.tree.addListener('click', this.nodeClicked.bind(this));
+        this.tree.addListener('check', this.nodeChecked.bind(this));
+        this.tree.addListener('nodedragover', this.onDragOver.bind(this));
+        this.tree.addListener('move', this.saveTreeData.bind(this));
+        this.treeRoot.select();
+        this.treeRoot.getUI().removeClass('x-tree-selected');
+        this.saveTreeData();
+    },
+    createNodes: function(){
+        for (var i = 0, l = this.nodes.length; i < l; i++) {
+            var dd = (this.nodes[i].parent_node_id && this.nodes[i].current_page) ? true : false;
+            var cls = this.nodes[i].current_page ? 'cms-current' : '';
+            cls += this.nodes[i].page_id ? ' cms_page' : ' cms_node';
+            var node = new Ext.tree.TreeNode({
+                id: this.nodes[i].node_id,
+                text: this.nodes[i].label,
+                cls: cls,
+                expanded: this.nodes[i].page_exists,
+                allowDrop: true,
+                allowDrag: dd,
+                page_id: this.nodes[i].page_id,
+                uiProvider: (this.nodes[i].current_page || this.nodes[i].append_denied) ? null : Ext.tree.CheckboxNodeUI,
+                checked: this.nodes[i].page_exists,
+                current_page: this.nodes[i].current_page
+            });
+
+            if (parentNode = this.tree.getNodeById(this.nodes[i].parent_node_id)) {
+                parentNode.appendChild(node);
+            } else if (!this.nodes[i].parent_node_id) {
+                this.treeRoot.appendChild(node);
+            }
+        }
+    },
+    fixNodes: function(node) {
+        var child = this.findCurrentPageChildNode(node);
+        if (node.attributes.checked && !child) {
+            this.addPageToNode(this.page, node);
+        } else if (!node.attributes.checked && child) {
+            node.removeChild(child);
+        }
+
+        if (node.attributes.checked) {
+            node.ensureVisible();
+        }
+
+        var children = node.childNodes;
+        if (children) {
+            for (var i = 0; i < children.length; i++){
+                this.fixNodes(children[i]);
+            }
+        }
+    },
+    nodeClicked: function(node) {
+        node.getUI().removeClass('x-tree-selected');
+        if (node.attributes.uiProvider) {
+            node.getUI().check(!node.getUI().checked());
+        }
+    },
+    nodeChecked: function(node) {
+        var child = this.findCurrentPageChildNode(node);
+        if(node.attributes.checked) {
+            if (child) {
+                return; //prevent issues with double event fire on checking checkbox without childs
+            }
+            this.addPageToNode(this.page, node);
+        } else {
+            if (child) {
+                node.removeChild(child);
+            }
+        }
+        this.saveTreeData();
+    },
+    addPageToNode: function(page, node) {
+        var newNode = new Ext.tree.TreeNode({
+            id: '_' + this.increment,
+            text: page.label,
+            identifier: null,
+            page_id: page.id,
+            expanded: false,
+            current_page: true,
+            allowDrop: false,
+            allowDrag: true,
+            cls: 'cms_page cms-current'
+        });
+        this.increment++;
+        node.appendChild(newNode);
+        node.getUI().addClass('x-tree-node-expanded'); // fix issues with styling for expanded nodes
+    },
+    findCurrentPageChildNode: function(node) {
+        var children = node.childNodes;
+        for (var i = 0; i < children.length; i++){
+            if (children[i].attributes.current_page) {
+                return children[i];
+            }
+        }
+    },
+    onDragOver: function(dragOverEvent) {
+        if (dragOverEvent.point == 'append') {
+            if (dragOverEvent.target != dragOverEvent.dropNode.parentNode) {
+                return false;
+            }
+        } else {
+            if (dragOverEvent.target.parentNode != dragOverEvent.dropNode.parentNode) {
+                return false;
+            }
+        }
+        return true;
+    },
+    saveTreeData: function(){
+        this.collectChilds(this.treeRoot);
+        $('nodes_data').value = Object.toJSON(this.treeData);
+    },
+    collectChilds: function(node){
+        if (node.id == '_root') {
+            this.treeData = new Hash();
+            if (node.attributes.checked) {
+                $('website_root').value = 1;
+            } else {
+                $('website_root').value = 0;
+            }
+        } else {
+            this.treeData.set(node.id, {
+                node_id: node.id,
+                page_id: node.attributes.page_id,
+                parent_node_id: node.parentNode.id == '_root' ? null : node.parentNode.id,
+                label: node.attributes.text,
+                sort_order: node.parentNode.indexOf(node),
+                current_page: node.attributes.current_page,
+                page_exists: node.attributes.checked
+            });
+        }
+        if (node.hasChildNodes()) {
+            node.eachChild(this.collectChilds.bind(this));
+        }
+    }
+};
+// Used prototype observe to fix issue in IE when browser chrashes at rendering page.
+// Some issue with page laoout and js operations on layout.
+Event.observe(window, 'load', hierarchyNodes.initialize.bind(hierarchyNodes));
+// Ext.onReady(hierarchyNodes.initialize.bind(hierarchyNodes));
+//]]>
+</script>

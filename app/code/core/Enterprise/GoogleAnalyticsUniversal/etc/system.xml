@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_GoogleAnalyticsUniversal
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<config>
+    <sections>
+        <google translate="label" module="google_ga">
+            <groups>
+                <analytics translate="label">
+                    <label>Google Analytics</label>
+                    <fields>
+                        <type translate="label">
+                            <label>Account type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>enterprise_googleanalyticsuniversal/config_source_accounttype</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </type>
+
+                        <account translate="label">
+                            <sort_order>30</sort_order>
+                            <depends>
+                                <type separator=",">analytics,universal</type>
+                            </depends>
+                        </account>
+                        <anonymization translate="label">
+                            <sort_order>40</sort_order>
+                            <depends>
+                                <type separator=",">analytics,universal</type>
+                            </depends>
+                        </anonymization>
+
+
+                        <container_id translate="label">
+                            <label>Container Id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <type>tag_manager</type>
+                            </depends>
+                        </container_id>
+                        <catalog_page_list_value translate="label">
+                            <label>List property for the catalog page</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip>Used in the JSON content to specify the source of data</tooltip>
+                            <depends>
+                                <type>tag_manager</type>
+                            </depends>
+                        </catalog_page_list_value>
+                        <crosssell_block_list_value translate="label">
+                            <label>List property for the cross-sell block</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip>Used in the JSON content to specify the source of data</tooltip>
+                            <depends>
+                                <type>tag_manager</type>
+                            </depends>
+                        </crosssell_block_list_value>
+                        <upsell_block_list_value translate="label">
+                            <label>List property for the up-sell block</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip>Used in the JSON content to specify the source of data</tooltip>
+                            <depends>
+                                <type>tag_manager</type>
+                            </depends>
+                        </upsell_block_list_value>
+                        <related_block_list_value translate="label">
+                            <label>List property for the related products block</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip>Used in the JSON content to specify the source of data</tooltip>
+                            <depends>
+                                <type>tag_manager</type>
+                            </depends>
+                        </related_block_list_value>
+                        <search_page_list_value translate="label">
+                            <label>List property for the search results page</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip>Used in the JSON content to specify the source of data</tooltip>
+                            <depends>
+                                <type>tag_manager</type>
+                            </depends>
+                        </search_page_list_value>
+                        <promotions_list_value translate="label">
+                            <label>’Internal Promotions’ for promotions field “Label”.</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>110</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <tooltip>Used in the JSON content to specify the source of data</tooltip>
+                            <depends>
+                                <type>tag_manager</type>
+                            </depends>
+                        </promotions_list_value>
+                    </fields>
+                </analytics>
+            </groups>
+        </google>
+    </sections>
+</config>

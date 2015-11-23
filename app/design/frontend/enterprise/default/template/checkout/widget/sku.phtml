@@ -1,0 +1,220 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * Order by SKU widget template
+ *
+ * @var $this Enterprise_Checkout_Block_Widget_Sku
+ */
+$uniqueSuffix = '_' . $this->helper('core')->getRandomString(20);
+$skuFormId = 'skuForm' . $uniqueSuffix;
+$qtyValidationClasses = 'required-entry validate-number validate-greater-than-zero'
+    . ' validate-number-range number-range-0.0001-99999999.9999';
+?>
+<div class="widget widget-addbysku">
+    <div class="block block-addbysku">
+        <?php if (!$this->getIsTitleHidden()): ?>
+        <div class="block-title">
+            <strong><span><?php echo $this->__('Order by SKU') ?></span></strong>
+        </div>
+        <?php endif ?>
+        <form id="<?php echo $skuFormId; ?>" action="<?php echo $this->getFormAction(); ?>" method="post" <?php if ($this->getIsMultipart()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <?php echo $this->getBlockHtml('formkey'); ?>
+            <div class="block-content">
+                <table id="items-table<?php echo $uniqueSuffix; ?>" class="sku-table data-table" cellspacing="0" cellpadding="0">
+                    <colgroup>
+                        <col class="col-sku" />
+                        <col class="col-qty" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th><?php echo $this->__('SKU') ?></th>
+                            <th class="last"><?php echo $this->__('Qty') ?></th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr class="last">
+                            <td colspan="2" class="last">
+                                <span href="#" id="add_new_item_button<?php echo $uniqueSuffix; ?>" title="<?php echo $this->quoteEscape($this->__('Add Row')) ?>" class="add-row"><?php echo $this->__('Add Row') ?></span>
+                            </td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr class="order-row">
+                            <td><div class="input-box"><input type="text" name="items[0<?php echo $uniqueSuffix; ?>][sku]" class="input-text" /></div></td>
+                            <td class="last"><div class="input-box"><input type="text" name="items[0<?php echo $uniqueSuffix; ?>][qty]" class="input-text qty" maxlength="13" /></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <?php echo $this->getChildHtml(); ?>
+                <div class="actions">
+                    <button id="sku-submit-button<?php echo $uniqueSuffix; ?>" type="submit" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                </div>
+                <?php if ($this->getLink()): ?>
+                    <p class="link-widget-sku"><?php echo $this->getLink(); ?></p>
+                <?php endif; ?>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var itemOptions = itemOptions || {};
+
+itemOptions["<?php echo $uniqueSuffix; ?>"] = {
+    table: $('items-table<?php echo $uniqueSuffix; ?>').select('tbody')[0],
+    templateSyntax: /(^|.|\r|\n)({{(\w+)}})/,
+    templateText:
+        '<tr class="order-row">'
+            + '<td><div class="input-box"><input type="text" name="items[{{id}}][sku]" class="input-text" /></div></td>'
+            + '<td class="last"><div class="input-box"><input type="text" name="items[{{id}}][qty]" class="input-text qty" maxlength="13" /></div><span class="btn-remove" title="<?php echo $this->jsQuoteEscape($this->__('Remove Row')) ?>"></span></td>'
+        + '</tr>',
+    itemCount: 1,
+
+    add: function(data) {
+        this.template = new Template(this.templateText, this.templateSyntax);
+        if (!data.id) {
+            data = {};
+            data.id  = this.itemCount + '<?php echo $uniqueSuffix; ?>';
+        }
+        Element.insert(this.table, {bottom: this.template.evaluate(data)});
+        this.bindRemoveButtons();
+        this.bindValidationOnBlur(data.id);
+        this.itemCount++;
+    },
+    remove: function(event) {
+        var element = $(Event.findElement(event, 'tr'));
+        if (element) {
+            element.remove();
+        }
+    },
+    bindRemoveButtons: function() {
+        var buttons = $$('#<?php echo $skuFormId; ?> .btn-remove');
+        for (var i = 0; i < buttons.length; i++) {
+            if (!$(buttons[i]).binded) {
+                $(buttons[i]).binded = true;
+                Event.observe(buttons[i], 'click', this.remove.bind(this));
+            }
+        }
+    },
+    bindValidationOnBlur: function(id) {
+        Event.observe(
+            $('<?php echo $skuFormId; ?>').select('[name="items[' + id + '][sku]"]')[0],
+            'blur',
+            this.validateRowDeferred
+        );
+        Event.observe(
+            $('<?php echo $skuFormId; ?>').select('[name="items[' + id + '][qty]"]')[0],
+            'blur',
+            this.validateRowDeferred
+        );
+    },
+    validateRowDeferred: function() {
+        setTimeout(function() {
+            itemOptions["<?php echo $uniqueSuffix; ?>"].validateRow.apply(this, [true]);
+        }.bind(this), 200);
+    },
+    validateRow: function(checkActiveElement) {
+        var form = $('<?php echo $skuFormId; ?>'),
+            skuInput = form.select('[name="' + this.name.replace('[qty]', '[sku]') + '"]')[0],
+            qtyInput = form.select('[name="' + this.name.replace('[sku]', '[qty]') + '"]')[0];
+
+
+        var isSkuInputEmpty = Validation.get('IsEmpty').test(skuInput.value);
+        if ((!checkActiveElement || document.activeElement != qtyInput) && !isSkuInputEmpty) {
+            qtyInput.addClassName('<?php echo $qtyValidationClasses; ?>');
+        } else {
+            if (typeof qtyInput.keepValidation == 'undefined' || !qtyInput.keepValidation || isSkuInputEmpty) {
+                qtyInput.removeClassName('<?php echo $qtyValidationClasses; ?>');
+                var validationElements = $(qtyInput.parentNode).select('.validation-advice');
+                if (validationElements.length > 0) {
+                    validationElements[0].remove();
+                }
+                qtyInput.keepValidation = true;
+            }
+            if (isSkuInputEmpty) {
+                qtyInput.keepValidation = false;
+            }
+        }
+
+        return Validation.validate(qtyInput);
+    }
+}
+
+document.observe('dom:loaded', function() {
+    Event.observe(
+        'add_new_item_button<?php echo $uniqueSuffix; ?>',
+        'click',
+        itemOptions["<?php echo $uniqueSuffix; ?>"].add.bind(itemOptions["<?php echo $uniqueSuffix; ?>"])
+    );
+    Event.observe(
+        $('<?php echo $skuFormId; ?>').select('[name="items[0<?php echo $uniqueSuffix; ?>][sku]"]')[0],
+        'blur',
+        itemOptions["<?php echo $uniqueSuffix; ?>"].validateRowDeferred
+    );
+    Event.observe(
+        $('<?php echo $skuFormId; ?>').select('[name="items[0<?php echo $uniqueSuffix; ?>][qty]"]')[0],
+        'blur',
+        itemOptions["<?php echo $uniqueSuffix; ?>"].validateRowDeferred
+    );
+
+    Event.observe(
+        $('<?php echo $skuFormId; ?>'),
+        'submit',
+        function (e) {
+            Event.stop(e);
+            var skuForm = $('<?php echo $skuFormId; ?>');
+            var skuFileImportedParamName = '<?php echo $this->getRequestParameterSkuFileImportedFlag(); ?>';
+            if (typeof skuForm[skuFileImportedParamName] == 'undefined') {
+                skuForm.insert(new Element('input', {
+                    'type': 'hidden',
+                    'name': skuFileImportedParamName,
+                    'value': '0'
+                }));
+            }
+            if (typeof skuForm.sku_file != 'undefined' && $(skuForm.sku_file).present()) {
+                skuForm[skuFileImportedParamName].value = '1';
+            }
+            var validator = itemOptions["<?php echo $uniqueSuffix; ?>"].validator;
+            if (validator && validator.validate()) {
+                this.submit();
+            }
+
+            var valid = true;
+            $$('#items-table<?php echo $uniqueSuffix; ?> tbody input.input-text').each(function(element) {
+                valid = itemOptions["<?php echo $uniqueSuffix; ?>"].validateRow.apply(element, [false]) && valid;
+            });
+            if (valid) {
+                this.submit();
+            }
+            return false;
+        }
+    );
+});
+//]]>
+</script>

@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_GiftCard
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_GiftCard>
+             <version>1.11.0.0</version>
+        </Enterprise_GiftCard>
+    </modules>
+    <global>
+        <resources>
+            <enterprise_giftcard_setup>
+                <setup>
+                    <module>Enterprise_GiftCard</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+            </enterprise_giftcard_setup>
+        </resources>
+        <models>
+            <enterprise_giftcard>
+                <class>Enterprise_GiftCard_Model</class>
+                <resourceModel>enterprise_giftcard_resource</resourceModel>
+            </enterprise_giftcard>
+            <enterprise_giftcard_resource>
+                <class>Enterprise_GiftCard_Model_Resource</class>
+                <deprecatedNode>enterprise_giftcard_mysql4</deprecatedNode>
+                <entities>
+                    <amount>
+                        <table>enterprise_giftcard_amount</table>
+                    </amount>
+                </entities>
+            </enterprise_giftcard_resource>
+        </models>
+        <blocks>
+            <enterprise_giftcard>
+                <class>Enterprise_GiftCard_Block</class>
+            </enterprise_giftcard>
+        </blocks>
+        <helpers>
+            <enterprise_giftcard>
+                <class>Enterprise_GiftCard_Helper</class>
+            </enterprise_giftcard>
+        </helpers>
+        <catalog>
+            <product>
+                <type>
+                    <giftcard translate="label" module="enterprise_giftcard">
+                        <label>Gift Card</label>
+                        <model>enterprise_giftcard/catalog_product_type_giftcard</model>
+                        <price_model>enterprise_giftcard/catalog_product_price_giftcard</price_model>
+                        <index_priority>45</index_priority>
+                        <composite>0</composite>
+                        <is_qty>1</is_qty>
+                        <price_indexer>enterprise_giftcard/indexer_price</price_indexer>
+                    </giftcard>
+                </type>
+            </product>
+        </catalog>
+        <template>
+            <email>
+                <giftcard_email_template translate="label" module="enterprise_giftcard">
+                    <label>Gift Card Accounts Generated From Gift Card</label>
+                    <file>enterprise/giftcard_generated.html</file>
+                    <type>html</type>
+                </giftcard_email_template>
+            </email>
+        </template>
+        <sales>
+            <quote>
+                <item>
+                    <product_attributes>
+                        <giftcard_type/>
+                        <giftcard_amounts/>
+                        <allow_open_amount/>
+                        <open_amount_min/>
+                        <open_amount_max/>
+                        <use_config_lifetime/>
+                        <lifetime/>
+                        <use_config_is_redeemable/>
+                        <is_redeemable/>
+                        <use_config_email_template/>
+                        <email_template/>
+                    </product_attributes>
+                </item>
+            </quote>
+        </sales>
+        <events>
+            <sales_convert_quote_item_to_order_item>
+                <observers>
+                    <enterprise_giftcard_append_additional_data>
+                        <class>enterprise_giftcard/observer</class>
+                        <method>appendGiftcardAdditionalData</method>
+                    </enterprise_giftcard_append_additional_data>
+                </observers>
+            </sales_convert_quote_item_to_order_item>
+            <sales_order_save_commit_after>
+                <observers>
+                    <enterprise_giftcard_generate_giftcardaccounts>
+                        <class>enterprise_giftcard/observer</class>
+                        <method>generateGiftCardAccounts</method>
+                    </enterprise_giftcard_generate_giftcardaccounts>
+                </observers>
+            </sales_order_save_commit_after>
+            <catalog_product_collection_load_after>
+                <observers>
+                    <enterprise_giftcard>
+                        <class>enterprise_giftcard/observer</class>
+                        <method>loadAttributesAfterCollectionLoad</method>
+                    </enterprise_giftcard>
+                </observers>
+            </catalog_product_collection_load_after>
+        </events>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <enterprise_giftcard module="Enterprise_GiftCard">
+                    <file>giftcard.xml</file>
+                </enterprise_giftcard>
+            </updates>
+        </layout>
+        <product>
+            <collection>
+                <attributes>
+                    <giftcard_type/>
+                    <giftcard_amounts/>
+                    <allow_open_amount/>
+                    <open_amount_min/>
+                    <open_amount_max/>
+                    <use_config_lifetime/>
+                    <lifetime/>
+                    <use_config_is_redeemable/>
+                    <is_redeemable/>
+                </attributes>
+            </collection>
+        </product>
+        <translate>
+            <modules>
+                <Enterprise_GiftCard>
+                    <files>
+                        <default>Enterprise_GiftCard.csv</default>
+                    </files>
+                </Enterprise_GiftCard>
+            </modules>
+        </translate>
+        <secure_url>
+            <giftcard_customer>/giftcard/customer/</giftcard_customer>
+        </secure_url>
+        <events>
+            <product_option_renderer_init>
+                <observers>
+                    <giftcard_observer>
+                        <class>enterprise_giftcard/observer</class>
+                        <method>initOptionRenderer</method>
+                    </giftcard_observer>
+                </observers>
+            </product_option_renderer_init>
+        </events>
+    </frontend>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_giftcard>
+                    <file>enterprise/giftcard.xml</file>
+                </enterprise_giftcard>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_GiftCard>
+                    <files>
+                        <default>Enterprise_GiftCard.csv</default>
+                    </files>
+                </Enterprise_GiftCard>
+            </modules>
+        </translate>
+        <sales>
+            <order>
+                <create>
+                    <available_product_types>
+                        <giftcard/>
+                    </available_product_types>
+                </create>
+            </order>
+        </sales>
+        <events>
+            <adminhtml_catalog_product_edit_prepare_form>
+                <observers>
+                    <enterprise_giftcard_product_edit_prepare_form>
+                        <class>enterprise_giftcard/observer</class>
+                        <method>setAmountsRendererInForm</method>
+                    </enterprise_giftcard_product_edit_prepare_form>
+                </observers>
+            </adminhtml_catalog_product_edit_prepare_form>
+            <adminhtml_catalog_product_form_prepare_excluded_field_list>
+                <observers>
+                    <enterprise_giftcard_product_excluded_field_list>
+                        <class>enterprise_giftcard/observer</class>
+                        <method>updateExcludedFieldList</method>
+                    </enterprise_giftcard_product_excluded_field_list>
+                </observers>
+            </adminhtml_catalog_product_form_prepare_excluded_field_list>
+        </events>
+    </adminhtml>
+    <default>
+        <giftcard>
+            <email>
+                <identity>general</identity>
+                <template>giftcard_email_template</template>
+            </email>
+            <general>
+                <is_redeemable>1</is_redeemable>
+                <lifetime>0</lifetime>
+                <order_item_status>9</order_item_status>
+                <allow_message>1</allow_message>
+                <message_max_length>255</message_max_length>
+            </general>
+        </giftcard>
+    </default>
+</config>

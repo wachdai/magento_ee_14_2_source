@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<layout version="0.1.0">
+
+    <customer_logged_out>
+        <reference name="top.links">
+            <action method="removeLinkByUrl" ifconfig="enterprise_invitation/general/registration_required_invitation"><url helper="customer/getRegisterUrl" /></action>
+        </reference>
+    </customer_logged_out>
+
+    <customer_account_create translate="label">
+        <reference name="customer_form_register">
+            <reference name="customer.form.register.fields.before">
+                <!--action method="setMayBeInvisible"><value>1</value></action-->
+                <action method="setElementClass"><value>rewards</value></action>
+            </reference>
+            <block type="enterprise_customer/form" template="customer/form/userattributes.phtml" name="customer_form_user_attributes">
+                <action method="setFormCode"><code>customer_account_create</code></action>
+                <action method="setEntityModelClass"><code>customer/customer</code></action>
+            </block>
+            <block type="enterprise_customer/form" template="customer/form/userattributes.phtml" name="customer_form_address_user_attributes">
+                <action method="setFormCode"><code>customer_register_address</code></action>
+                <action method="setEntityModelClass"><code>customer/address</code></action>
+            </block>
+        </reference>
+        <update handle="customer_form_template_handle"/>
+    </customer_account_create>
+
+    <customer_account_edit translate="label">
+        <reference name="customer_edit">
+            <block type="enterprise_customer/form" template="customer/form/userattributes.phtml" name="customer_form_user_attributes">
+                <action method="setFormCode"><code>customer_account_edit</code></action>
+            </block>
+        </reference>
+
+        <update handle="customer_form_template_handle"/>
+    </customer_account_edit>
+
+    <customer_address_form translate="label">
+        <reference name="customer_address_edit">
+            <block type="enterprise_customer/form" template="customer/form/userattributes.phtml" name="customer_form_user_attributes">
+                <action method="setFormCode"><code>customer_address_edit</code></action>
+            </block>
+        </reference>
+        <update handle="customer_form_template_handle"/>
+    </customer_address_form>
+
+    <customer_form_template_handle>
+        <reference name="content">
+            <block name="customer_form_template" type="enterprise_customer/form_template">
+                <action method="addRenderer">
+                    <type>text</type>
+                    <renderer_block>enterprise_customer/form_renderer_text</renderer_block>
+                    <template>customer/form/renderer/text.phtml</template>
+                </action>
+                <action method="addRenderer">
+                    <type>textarea</type>
+                    <renderer_block>enterprise_customer/form_renderer_textarea</renderer_block>
+                    <template>customer/form/renderer/textarea.phtml</template>
+                </action>
+                <action method="addRenderer">
+                    <type>multiline</type>
+                    <renderer_block>enterprise_customer/form_renderer_multiline</renderer_block>
+                    <template>customer/form/renderer/multiline.phtml</template>
+                </action>
+                <action method="addRenderer">
+                    <type>date</type>
+                    <renderer_block>enterprise_customer/form_renderer_date</renderer_block>
+                    <template>customer/form/renderer/date.phtml</template>
+                </action>
+                <action method="addRenderer">
+                    <type>select</type>
+                    <renderer_block>enterprise_customer/form_renderer_select</renderer_block>
+                    <template>customer/form/renderer/select.phtml</template>
+                </action>
+                <action method="addRenderer">
+                    <type>multiselect</type>
+                    <renderer_block>enterprise_customer/form_renderer_multiselect</renderer_block>
+                    <template>customer/form/renderer/multiselect.phtml</template>
+                </action>
+                <action method="addRenderer">
+                    <type>boolean</type>
+                    <renderer_block>enterprise_customer/form_renderer_boolean</renderer_block>
+                    <template>customer/form/renderer/boolean.phtml</template>
+                </action>
+                <action method="addRenderer">
+                    <type>file</type>
+                    <renderer_block>enterprise_customer/form_renderer_file</renderer_block>
+                    <template>customer/form/renderer/file.phtml</template>
+                </action>
+                <action method="addRenderer">
+                    <type>image</type>
+                    <renderer_block>enterprise_customer/form_renderer_image</renderer_block>
+                    <template>customer/form/renderer/image.phtml</template>
+                </action>
+            </block>
+        </reference>
+    </customer_form_template_handle>
+
+</layout>

@@ -1,0 +1,199 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    OnTap
+ * @package     OnTap_Merchandiser
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <OnTap_Merchandiser>
+            <version>2.2.8</version>
+            <depends>
+                <Mage_Adminhtml/>
+            </depends>
+        </OnTap_Merchandiser>
+    </modules>
+    <default>
+        <catalog>
+            <merchandiser>
+                <actions>
+                    <move_bestsellers_top translate="name">
+                        <name>Move best sellers to top</name>
+                        <sorting_function>OnTap_Merchandiser_Model_Merchandiser::moveBestsellersTop</sorting_function>
+                    </move_bestsellers_top>
+                    <move_lowstock_top translate="name">
+                        <name>Move low stock to top</name>
+                        <sorting_function>OnTap_Merchandiser_Model_Merchandiser::moveLowstockTop</sorting_function>
+                    </move_lowstock_top>
+                    <instock_at_top translate="name">
+                        <name>Move out of stock to bottom</name>
+                        <sorting_function>OnTap_Merchandiser_Model_Merchandiser::moveInStockToTheTop</sorting_function>
+                    </instock_at_top>
+                    <special_at_top translate="name">
+                        <name>Special price to top</name>
+                        <sorting_function>OnTap_Merchandiser_Model_Merchandiser::moveSaleAtTop</sorting_function>
+                    </special_at_top>
+                    <special_at_bottom translate="name">
+                        <name>Special price to bottom</name>
+                        <sorting_function>OnTap_Merchandiser_Model_Merchandiser::moveSaleAtBottom</sorting_function>
+                    </special_at_bottom>
+                    <newest translate="name">
+                        <name>Newest products first</name>
+                        <sorting_function>OnTap_Merchandiser_Model_Merchandiser::newestFirst</sorting_function>
+                    </newest>
+                    <highest_margin translate="name">
+                        <name>Highest margin first</name>
+                        <sorting_function>OnTap_Merchandiser_Model_Merchandiser::highestMarginFirst</sorting_function>
+                    </highest_margin>
+                    <sort_by_color translate="name">
+                        <name>Sort by color</name>
+                        <sorting_function>OnTap_Merchandiser_Model_Merchandiser::sortByColor</sorting_function>
+                    </sort_by_color>
+                </actions>
+                <color_attribute>color</color_attribute>
+                <attribute_codes>color,name,price</attribute_codes>
+                <column_count>4</column_count>
+                <show_creation_date>0</show_creation_date>
+                <show_extra_images>0</show_extra_images>
+                <max_images_thumbnail>4</max_images_thumbnail>
+                <ajax_page_load>50</ajax_page_load>
+                <hide_product_position_field>1</hide_product_position_field>
+                <rebuild_on_productsave>1</rebuild_on_productsave>
+                <rebuild_on_categorysave>1</rebuild_on_categorysave>
+                <rebuild_on_cron>1</rebuild_on_cron>
+                <new_products_handler>1</new_products_handler>
+                <cron_setup>0,30 * * * *</cron_setup>
+                <min_stock_threshold>1</min_stock_threshold>
+                <bestseller_sort_period>6</bestseller_sort_period>
+            </merchandiser>
+        </catalog>
+    </default>
+    <global>
+        <models>
+            <merchandiser>
+                <class>OnTap_Merchandiser_Model</class>
+                <resourceModel>merchandiser_resource</resourceModel>
+            </merchandiser>
+            <merchandiser_resource>
+                <class>OnTap_Merchandiser_Model_Resource</class>
+            </merchandiser_resource>
+        </models>
+        <helpers>
+            <merchandiser>
+                <class>OnTap_Merchandiser_Helper</class>
+            </merchandiser>
+        </helpers>
+        <blocks>
+            <merchandiser>
+                <class>OnTap_Merchandiser_Block</class>
+            </merchandiser>
+        </blocks>
+        <resources>
+            <ontap_merchandiser_setup>
+                <setup>
+                    <module>OnTap_Merchandiser</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </ontap_merchandiser_setup>
+        </resources>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <merchandiser>
+                    <file>merchandiser.xml</file>
+                </merchandiser>
+            </updates>
+        </layout>
+        <events>
+            <catalog_category_save_after>
+                <observers>
+                    <merchandiser_catalog_category_prepare_save>
+                        <class>merchandiser/adminhtml_observer</class>
+                        <method>categorySaveAfter</method>
+                    </merchandiser_catalog_category_prepare_save>
+                </observers>
+            </catalog_category_save_after>
+            <catalog_category_delete_after>
+                <observers>
+                    <merchandiser_catalog_category_delete_after>
+                        <class>merchandiser/adminhtml_observer</class>
+                        <method>categoryDeleteAfter</method>
+                    </merchandiser_catalog_category_delete_after>
+                </observers>
+            </catalog_category_delete_after>
+            <adminhtml_catalog_category_tabs>
+                <observers>
+                    <merchandiser_adminhtml_catalog_category_tabs>
+                        <class>merchandiser/adminhtml_observer</class>
+                        <method>adminhtmlCatalogCategoryTabs</method>
+                    </merchandiser_adminhtml_catalog_category_tabs>
+                </observers>
+            </adminhtml_catalog_category_tabs>
+            <catalog_product_prepare_save>
+                <observers>
+                    <merchandiser_product_prepare_save>
+                        <class>merchandiser/adminhtml_observer</class>
+                        <method>productPrepareSave</method>
+                    </merchandiser_product_prepare_save>
+                </observers>
+            </catalog_product_prepare_save>
+        </events>
+        <translate>
+            <modules>
+                <OnTap_Merchandiser>
+                    <files>
+                        <default>OnTap_Merchandiser.csv</default>
+                    </files>
+                </OnTap_Merchandiser>
+            </modules>
+        </translate>
+    </adminhtml>
+    <admin>
+        <routers>
+            <merchandiser>
+                <use>admin</use>
+                <args>
+                    <module>OnTap_Merchandiser</module>
+                    <frontName>merchandiser</frontName>
+                </args>
+            </merchandiser>
+        </routers>
+    </admin>
+    <crontab>
+        <jobs>
+            <smart_merchandiser_reindex>
+                <schedule>
+                    <config_path>catalog/merchandiser/cron_setup</config_path>
+                </schedule>
+                <run>
+                    <model>merchandiser/adminhtml_observer::reindexCron</model>
+                </run>
+            </smart_merchandiser_reindex>
+        </jobs>
+    </crontab>
+</config>

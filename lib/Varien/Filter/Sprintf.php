@@ -1,0 +1,51 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Varien
+ * @package     Varien_Filter
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+
+class Varien_Filter_Sprintf implements Zend_Filter_Interface
+{
+    protected $_format = null;
+    protected $_decimals = null;
+    protected $_decPoint = null;
+    protected $_thousandsSep = null;
+    
+    public function __construct($format, $decimals=null, $decPoint='.', $thousandsSep=',')
+    {
+        $this->_format = $format;
+        $this->_decimals = $decimals;
+        $this->_decPoint = $decPoint;
+        $this->_thousandsSep = $thousandsSep;
+    }
+    
+    public function filter($value)
+    {
+        if (!is_null($this->_decimals)) {
+            $value = number_format($value, $this->_decimals, $this->_decPoint, $this->_thousandsSep);
+        }
+        $value = sprintf($this->_format, $value);
+        return $value;
+    }
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<layout>
+    <!-- reminder grid page -->
+    <adminhtml_reminder_index>
+        <reference name="content">
+            <block type="enterprise_reminder/adminhtml_reminder" name="enterprise_reminder"/>
+        </reference>
+    </adminhtml_reminder_index>
+    <adminhtml_reminder_edit>
+        <reference name="head">
+            <action method="addJs"><script>mage/adminhtml/wysiwyg/widget.js</script></action>
+            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+            <action method="addCss"><name>lib/prototype/windows/themes/magento.css</name></action>
+         </reference>
+    </adminhtml_reminder_edit>
+    <adminhtml_promo_quote_edit>
+        <reference name="content">
+            <block type="enterprise_reminder/adminhtml_promo_notice" name="promo_edit_notice"/>
+        </reference>
+    </adminhtml_promo_quote_edit>
+</layout>

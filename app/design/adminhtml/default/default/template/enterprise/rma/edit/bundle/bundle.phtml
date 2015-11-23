@@ -1,0 +1,94 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php /** @var $this Enterprise_Rma_Block_Adminhtml_Product_Bundle_Items */ ?>
+<?php $_items = $this->getItems(); ?>
+<?php foreach ($_items as $_item): ?>
+    <?php if ($_item->getId() == $this->getParentId()): ?>
+        <?php $_bundle = $_item->getName() ?>
+        <?php break; ?>
+    <?php endif; ?>
+<?php endforeach; ?>
+<div id="bundle_div_<?php echo $this->getParentId() ?>">
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->escapeHtml($_bundle) ?></h4>
+            <div class="form-buttons"></div>
+        </div>
+        <div class="content">
+            <div class="fieldset">
+                <table cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td><input type="radio" name="items_selector" id="all_items_<?php echo $this->getParentId() ?>"></td>
+                            <td><label for="all_items_<?php echo $this->getParentId() ?>" style="margin-left:2px"><?php echo $this->__('All Items') ?></label></td>
+                        </tr>
+                        <tr>
+                            <td><input type="radio" name="items_selector" id="individual_items_<?php echo $this->getParentId() ?>"></td>
+                            <td><label for="individual_items_<?php echo $this->getParentId() ?>" style="margin-left:2px"><?php echo $this->__('Individual Items') ?></label></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table cellspacing="0">
+                    <tbody>
+                        <?php foreach ($_items as $_item): ?>
+                            <?php if ($_item->getId() == $this->getParentId()): ?>
+                                <?php continue; ?>
+                            <?php endif; ?>
+
+                            <tr>
+                                <td style="padding: 0 3px 0 10px;">
+                                    <?php if (!$_item->getIsOrdered()): ?>
+                                        <?php
+                                            if ($_item->getIsQtyDecimal()) {
+                                                $availableQty = sprintf("%01.4f", $_item->getAvailableQty());
+                                            } else {
+                                                $availableQty = intval($_item->getAvailableQty());
+                                            }
+                                        ?>
+                                        <input id="checkbox_rma_bundle_item_id_<?php echo $this->getParentId() ?>_<?php echo $_item->getId() ?>" type="checkbox" value="<?php echo $_item->getId() ?>" class="checkbox_rma_bundle_item_<?php echo $this->getParentId() ?>" />
+                                        <input id="checkbox_rma_bundle_item_name_<?php echo $this->getParentId() ?>_<?php echo $_item->getId() ?>" type="hidden" value="<?php echo $this->escapeHtml($_item->getName()) ?>"/>
+                                        <input id="checkbox_rma_bundle_item_sku_<?php echo $this->getParentId() ?>_<?php echo $_item->getId() ?>" type="hidden" value="<?php echo $this->escapeHtml($_item->getSku()) ?>"/>
+                                        <input id="checkbox_rma_bundle_item_qty_<?php echo $this->getParentId() ?>_<?php echo $_item->getId() ?>" type="hidden" value="<?php echo $availableQty ?>"/>
+                                    <?php else: ?>
+                                        <input type="checkbox" disabled="disabled" />
+                                    <?php endif; ?>
+                                </td>
+                                <td><label for="checkbox_rma_bundle_item_id_<?php echo $this->getParentId() ?>_<?php echo $_item->getId() ?>" <?php echo ($_item->getIsOrdered()) ? 'style="color:#999999"' : ''?>><?php echo $_item->getName() ?></label></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="buttons-set">
+            <div class="f-right">
+                <button id="rma_bundle_ok_button_<?php echo $this->getParentId() ?>" onclick="rma.hidePopups()" class="scalable " type="button"><span><span><span><?php echo $this->__('OK') ?></span></span></span></button>
+                <button id="rma_bundle_cancel_button_<?php echo $this->getParentId() ?>" onclick="rma.hidePopups()" class="scalable " type="button"><span><span><span><?php echo $this->__('Cancel') ?></span></span></span></button>
+            </div>
+        </div>
+    </div>
+</div>

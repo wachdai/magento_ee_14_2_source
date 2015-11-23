@@ -1,0 +1,71 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/**
+ * @see Enterprise_CustomerSegment_Block_Adminhtml_Report_Customer_Segment_Details
+ */
+?>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td style="<?php echo $this->getHeaderWidth() ?>"><?php echo $this->getHeaderHtml() ?></td>
+            <td class="form-buttons"><?php echo $this->getButtonsHtml() ?></td>
+        </tr>
+    </table>
+</div>
+<div>
+    <?php echo $this->getGridHtml() ?>
+
+    <script type="text/javascript">
+        function setFilterValue(obj) {
+            <?php echo $this->getChild('grid')->getJsObjectName() ?>.addVarToUrl("website_ids", obj);
+        }
+
+        function refreshValues(obj) {
+            var elements = $('websites').select('input');
+            var serialized = Form.serializeElements(elements, true);
+            if (!serialized.website_ids) {
+                serialized.website_ids = [];
+            }
+            setFilterValue(serialized.website_ids);
+        }
+    </script>
+</div>
+<div>
+    <?php if ($websites = $this->getWebsites()): ?>
+        <div class="switcher">
+            <h3><?php echo $this->__('Website Filter values') ?></h3>
+            <ul id="websites">
+                <?php foreach ($websites as $website): ?>
+                    <li>
+                        <input type="checkbox" id="website_<?php echo $website->getId() ?>" name="website_ids" value="<?php echo $website->getId() ?>" onchange="return refreshValues(this)" />
+                        <label for="website_<?php echo $website->getId() ?>"><?php echo $website->getName() ?></label>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+</div>

@@ -1,0 +1,99 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/**
+ * Catalog Event category page
+ *
+ * @see Enterprise_CatalogEvent_Block_Event_Lister
+ */
+?>
+<div class="widget widget-events">
+    <ul class="events-panel">
+        <?php foreach ($this->getEvents() as $_event): ?>
+            <?php $_category = $_event->getCategory(); ?>
+            <li class="event-item">
+                <div class="event <?php echo $_event->getStatus()?>">
+                    <strong class="status">
+                        <?php echo $this->getStatusText($_event); ?>
+                    </strong>
+                    <?php switch ($_event->getStatus()):
+                        case 'upcoming': ?>
+                            <div class="event-dates">
+                                <p class="start">
+                                    <strong class="date-part"><?php echo $this->getEventDate('start', $_event); ?></strong>
+                                    <span class="time-part"><?php echo $this->getEventTime('start', $_event, 'hh a zzz'); ?></span>
+                                </p>
+                                <p class="end">
+                                    <span class="delimiter-part">-</span>
+                                    <strong class="date-part"><?php echo $this->getEventDate('end', $_event); ?></strong>
+                                    <span class="time-part"><?php echo $this->getEventTime('end', $_event, 'hh a zzz'); ?></span>
+                                </p>
+                            </div>
+                            <a class="event-button button" href="<?php echo $this->getCategoryUrl($_category); ?>"><span><?php echo $this->helper('enterprise_catalogevent')->__('Preview Sale') ?></span></a>
+
+                            <?php break;
+                        case 'open': ?>
+                            <div class="event-ticker" id="<?php echo $this->getHtmlId(); ?>-event-ticker-<?php echo $_event->getId()?>">
+                                <div class="container">
+                                    <span class="days">00</span><span class="delimiter">:</span><span class="hour">00</span><span class="delimiter">:</span><span class="minute">00</span><span class="delimiter">:</span><span class="second">00</span>
+                                </div>
+                            </div>
+                            <script type="text/javascript">
+                                new Enterprise.CatalogEvent.Ticker('<?php echo $this->getHtmlId(); ?>-event-ticker-<?php echo $_event->getId()?>', <?php echo $this->getSecondsToClose($_event); ?>);
+                            </script>
+                            <a class="event-button button" href="<?php echo $this->getCategoryUrl($_category); ?>"><span><?php echo $this->helper('enterprise_catalogevent')->__('Go To Sale') ?></span></a>
+
+                            <?php break;
+                        case 'closed': ?>
+                            <div class="event-dates">
+                                <p class="start">
+                                    <strong class="date-part"><?php echo $this->getEventDate('start', $_event); ?></strong>
+                                    <span class="time-part"><?php echo $this->getEventTime('start', $_event, 'hh a zzz'); ?></span>
+                                </p>
+                                <p class="end">
+                                    <span class="delimiter-part">-</span>
+                                    <strong class="date-part"><?php echo $this->getEventDate('end', $_event); ?></strong>
+                                    <span class="time-part"><?php echo $this->getEventTime('end', $_event, 'hh a zzz'); ?></span>
+                                </p>
+                            </div>
+                            <a class="event-button" href="<?php echo $this->getCategoryUrl($_category); ?>"><span><?php echo $this->helper('enterprise_catalogevent')->__('View Sale') ?></span></a>
+
+                            <?php break; ?>
+                        <?php endswitch; ?>
+                </div>
+                <div class="category-info">
+                    <a class="category-show" href="<?php echo $this->getCategoryUrl($_category); ?>" title="<?php echo $this->escapeHtml($_category->getName()) ?>">
+                        <?php if ($this->getEventImageUrl($_event)): ?>
+                            <img src="<?php echo $this->getEventImageUrl($_event); ?>" title="<?php echo $this->escapeHtml($_category->getName()) ?>" alt="<?php echo $this->escapeHtml($_category->getName()) ?>" />
+                        <?php else: ?>
+                            <span class="category-name"><?php echo $this->escapeHtml($_category->getName()) ?></span>
+                        <?php endif; ?>
+                    </a>
+                </div>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+</div>

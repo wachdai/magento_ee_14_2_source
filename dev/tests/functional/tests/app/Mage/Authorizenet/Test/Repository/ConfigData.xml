@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/Magento/Mtf/Repository/etc/repository.xsd">
+    <repository class="Mage\Core\Test\Repository\ConfigData">
+        <dataset name="authorizenet_without_3d_secure">
+            <field path="payment/authorizenet/active" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/authorizenet/using_pbridge" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/authorizenet/payment_action" scope="payment" scope_id="1" label="Authorize Only" xsi:type="string">authorize</field>
+            <field path="payment/authorizenet/login" scope="payment" scope_id="1" label="authorize" xsi:type="string" />
+            <field path="payment/authorizenet/trans_key" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet/cgi_url" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet/test" scope="payment" scope_id="1" xsi:type="string" label="No">0</field>
+            <field path="payment/authorizenet/debug" scope="payment" scope_id="1" xsi:type="string" label="Yes">1</field>
+        </dataset>
+        <dataset name="authorizenet_without_3d_secure_rollback">
+            <field path="payment/authorizenet/active" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="authorizenet_without_3d_secure_action_capture">
+            <field path="payment/authorizenet/active" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/authorizenet/using_pbridge" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/authorizenet/payment_action" scope="payment" scope_id="1" label="Authorize and Capture" xsi:type="string">authorize_capture</field>
+            <field path="payment/authorizenet/login" scope="payment" scope_id="1" label="authorize" xsi:type="string" />
+            <field path="payment/authorizenet/trans_key" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet/cgi_url" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet/test" scope="payment" scope_id="1" xsi:type="string" label="No">0</field>
+            <field path="payment/authorizenet/debug" scope="payment" scope_id="1" xsi:type="string" label="Yes">1</field>
+        </dataset>
+        <dataset name="authorizenet_without_3d_secure_action_capture_rollback">
+            <field path="payment/authorizenet/active" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="authorizenet_directpost">
+            <field path="payment/authorizenet_directpost/active" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/authorizenet_directpost/payment_action" scope="payment" scope_id="1" label="Authorize Only" xsi:type="string">authorize</field>
+            <field path="payment/authorizenet_directpost/login" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet_directpost/trans_key" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet_directpost/trans_md5" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet_directpost/cgi_url" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet_directpost/test" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/authorizenet_directpost/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/authorizenet_directpost/useccv" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+        </dataset>
+        <dataset name="authorizenet_directpost_rollback">
+            <field path="payment/authorizenet_directpost/active" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="authorizenet_directpost_capture">
+            <field path="payment/authorizenet_directpost/active" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/authorizenet_directpost/payment_action" scope="payment" scope_id="1" label="Authorize and Capture" xsi:type="string">authorize_capture</field>
+            <field path="payment/authorizenet_directpost/login" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet_directpost/trans_key" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet_directpost/trans_md5" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet_directpost/cgi_url" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet_directpost/test" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/authorizenet_directpost/debug" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/authorizenet_directpost/useccv" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+        </dataset>
+        <dataset name="authorizenet_directpost_capture_rollback">
+            <field path="payment/authorizenet_directpost/active" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="authorizenet_with_3d_secure_action_authorized">
+            <field path="payment/authorizenet/active" scope="payment" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="payment/authorizenet/using_pbridge" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="payment/authorizenet/payment_action" scope="payment" scope_id="1" label="Authorize Only" xsi:type="string">authorize</field>
+            <field path="payment/authorizenet/login" scope="payment" scope_id="1" label="authorize" xsi:type="string" />
+            <field path="payment/authorizenet/trans_key" scope="payment" scope_id="1" xsi:type="string" />
+            <field path="payment/authorizenet/cgi_url" scope="payment" scope_id="1" xsi:type="string">https://test.authorize.net/gateway/transact.dll</field>
+            <field path="payment/authorizenet/test" scope="payment" scope_id="1" xsi:type="string" label="No">0</field>
+            <field path="payment/authorizenet/debug" scope="payment" scope_id="1" xsi:type="string" label="Yes">1</field>
+            <field path="payment/authorizenet/centinel" scope="payment" scope_id="1" xsi:type="string" label="Yes">1</field>
+        </dataset>
+        <dataset name="authorizenet_with_3d_secure_action_authorized_rollback">
+            <field path="payment/authorizenet/active" scope="payment" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+    </repository>
+</config>

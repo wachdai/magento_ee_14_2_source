@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<layout>
+    <adminhtml_rma_index>
+        <reference name="content">
+            <block type="enterprise_rma/adminhtml_rma" name="enterprise_rma" />
+        </reference>
+    </adminhtml_rma_index>
+
+    <adminhtml_rma_chooseorder>
+        <reference name="left">
+            <action method="setIsCollapsed"><value>true</value></action>
+        </reference>
+        <reference name="root">
+            <block type="enterprise_rma/adminhtml_rma_create" name="content">
+                <block type="enterprise_rma/adminhtml_rma_create_form" template="enterprise/rma/create/form.phtml" name="form">
+                    <block type="enterprise_rma/adminhtml_rma_create_order" template="enterprise/rma/create/order.phtml" name="rma_create_order">
+                        <block type="enterprise_rma/adminhtml_rma_create_order_grid" name="grid" />
+                    </block>
+                </block>
+            </block>
+        </reference>
+    </adminhtml_rma_chooseorder>
+
+    <adminhtml_rma_addcomment>
+        <block type="enterprise_rma/adminhtml_rma_edit_tab_general_history" template="enterprise/rma/edit/general/history.phtml" name="comments_history" output="toHtml"/>
+    </adminhtml_rma_addcomment>
+
+    <adminhtml_rma_addproductgrid>
+        <block type="enterprise_rma/adminhtml_rma_new_tab_items_order_grid" name="add_product_grid" output="toHtml"/>
+    </adminhtml_rma_addproductgrid>
+
+    <adminhtml_rma_edit>
+        <reference name="head">
+            <action method="addJs"><file>mage/adminhtml/sales/packaging.js</file></action>
+            <action method="addJs"><file>enterprise/adminhtml/rma.js</file></action>
+        </reference>
+        <reference name="content">
+            <block type="enterprise_rma/adminhtml_rma_edit" name="enterprise_rma_edit" />
+            <block type="adminhtml/template" template="enterprise/rma/edit/details.phtml" />
+            <block type="adminhtml/template" template="enterprise/rma/edit/reason.phtml" />
+        </reference>
+        <reference name="left">
+            <block type="enterprise_rma/adminhtml_rma_edit_tabs" name="enterprise_rma_edit_tabs">
+                <block type="enterprise_rma/adminhtml_rma_edit_tab_general" template="enterprise/rma/edit/general.phtml" name="enterprise_rma_edit_tab_general">
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_general_details" template="enterprise/rma/edit/general/details.phtml" name="request_details" />
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_general_shippingmethod" template="enterprise/rma/edit/shippingmethod.phtml" name="shipping_method">
+                        <block type="enterprise_rma/adminhtml_rma_edit_tab_general_shipping_tracking" name="enterprise_rma_shipment_tracking" template="enterprise/rma/edit/shipping/tracking.phtml" />
+                    </block>
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_general_shippingaddress" template="enterprise/rma/edit/general/shippingaddress.phtml" name="shipping_address" />
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_general_returnaddress" template="enterprise/rma/edit/general/returnadress.phtml" name="return_address" />
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_general_history" template="enterprise/rma/edit/general/history.phtml" name="comments_history" />
+                </block>
+                <block type="enterprise_rma/adminhtml_rma_edit_tab_items" template="enterprise/rma/edit/items.phtml" name="enterprise_rma_edit_tab_items">
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_items_grid" name="items_grid" />
+                </block>
+                <action method="addTab"><name>general_section</name><block>enterprise_rma_edit_tab_general</block></action>
+                <action method="addTab"><name>items_section</name><block>enterprise_rma_edit_tab_items</block></action>
+            </block>
+        </reference>
+        <reference name="before_body_end">
+            <block type="adminhtml/template" template="enterprise/rma/edit/mask.phtml" />
+            <block type="enterprise_rma/adminhtml_rma_edit_js" template="enterprise/rma/edit/js.phtml" name="enterprise_rma_js_create" />
+        </reference>
+    </adminhtml_rma_edit>
+
+    <adminhtml_rma_loadattributes>
+        <block type="enterprise_rma/adminhtml_rma_edit_item" name="enterprise_rma_edit_item" output="toHtml" />
+    </adminhtml_rma_loadattributes>
+
+    <adminhtml_rma_loadnewattributes>
+        <block type="enterprise_rma/adminhtml_rma_edit_item" name="enterprise_rma_edit_item" output="toHtml" />
+    </adminhtml_rma_loadnewattributes>
+
+    <adminhtml_rma_loadsplitline>
+        <block type="enterprise_rma/adminhtml_rma_edit_tab_items_grid" name="enterprise_rma_edit_items_grid" output="toHtml" />
+    </adminhtml_rma_loadsplitline>
+
+    <adminhtml_rma_showshippingmethods>
+        <block type="enterprise_rma/adminhtml_rma_edit_tab_general_shipping_methods" name="enterprise_rma_shipping_available" output="toHtml" template="enterprise/rma/edit/shipping/methods.phtml"/>
+    </adminhtml_rma_showshippingmethods>
+
+    <adminhtml_rma_getshippingitemsgrid>
+        <block type="enterprise_rma/adminhtml_rma_edit_tab_general_shipping_grid" name="enterprise_rma_getshippingitemsgrid" template="enterprise/rma/edit/shipping/grid.phtml" output="toHtml" />
+    </adminhtml_rma_getshippingitemsgrid>
+
+    <adminhtml_rma_psl>
+        <block type="enterprise_rma/adminhtml_rma_edit_tab_general_shipping_packaging" name="enterprise_rma_shipment_packaging" template="enterprise/rma/edit/shipping/popup.phtml" />
+    </adminhtml_rma_psl>
+
+    <adminhtml_rma_addtrack>
+        <block type="enterprise_rma/adminhtml_rma_edit_tab_general_shipping_tracking" name="shipment_tracking" template="enterprise/rma/edit/shipping/tracking.phtml" output="toHtml" />
+    </adminhtml_rma_addtrack>
+
+    <adminhtml_rma_removetrack>
+        <block type="enterprise_rma/adminhtml_rma_edit_tab_general_shipping_tracking" name="shipment_tracking" template="enterprise/rma/edit/shipping/tracking.phtml" output="toHtml" />
+    </adminhtml_rma_removetrack>
+
+    <adminhtml_rma_new>
+        <reference name="head">
+            <action method="addJs"><script>enterprise/adminhtml/rma.js</script></action>
+        </reference>
+        <reference name="content">
+            <block type="enterprise_rma/adminhtml_rma_new" name="enterprise_rma_new" />
+        </reference>
+        <reference name="left">
+            <block type="enterprise_rma/adminhtml_rma_edit_tabs" name="enterprise_rma_edit_tabs">
+                <block type="enterprise_rma/adminhtml_rma_new_tab_general" template="enterprise/rma/new/general.phtml" name="enterprise_rma_new_tab_general">
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_general_details" template="enterprise/rma/new/general/details.phtml" name="request_details" />
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_general_shippingaddress" template="enterprise/rma/edit/general/shippingaddress.phtml" name="shipping_address" />
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_general_returnaddress" template="enterprise/rma/edit/general/returnadress.phtml" name="return_address" />
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_general_history" template="enterprise/rma/new/general/history.phtml" name="comments_history" />
+                    <block type="enterprise_rma/adminhtml_rma_edit_tab_general_history" template="enterprise/rma/new/general/confirmation.phtml" name="return_confirmation" />
+                </block>
+                <block type="enterprise_rma/adminhtml_rma_new_tab_items" name="enterprise_rma_new_tab_items" template="enterprise/rma/new/items.phtml">
+                    <block type="enterprise_rma/adminhtml_rma_new_tab_items_grid" name="rma_items_grid" />
+                    <block type="enterprise_rma/adminhtml_rma_new_tab_items_order_grid" name="order_items_grid" />
+                </block>
+                <action method="addTab"><name>general_section</name><block>enterprise_rma_new_tab_general</block></action>
+                <action method="addTab"><name>items_section</name><block>enterprise_rma_new_tab_items</block></action>
+            </block>
+        </reference>
+        <reference name="before_body_end">
+            <block type="adminhtml/template" template="enterprise/rma/edit/mask.phtml" />
+            <block type="enterprise_rma/adminhtml_product_bundle_js" template="enterprise/rma/edit/bundle/js.phtml" name="enterprise_rma_js_create" />
+        </reference>
+    </adminhtml_rma_new>
+
+    <adminhtml_rma_showbundleitems>
+        <block type="enterprise_rma/adminhtml_product_bundle_items" template="enterprise/rma/edit/bundle/bundle.phtml" name="enterprise_rma_bundle" output="toHtml" />
+    </adminhtml_rma_showbundleitems>
+
+    <!-- RMA item attributes -->
+    <adminhtml_rma_item_attribute_index>
+        <reference name="content">
+            <block type="enterprise_rma/adminhtml_rma_item_attribute" name="enterprise_rma_item_attribute" />
+        </reference>
+    </adminhtml_rma_item_attribute_index>
+
+    <adminhtml_rma_item_attribute_edit>
+        <update handle="scope_switcher"/>
+        <reference name="content">
+            <block type="enterprise_rma/adminhtml_rma_item_attribute_edit" name="enterprise_rma_item_attribute_edit" />
+        </reference>
+        <reference name="left">
+            <block type="enterprise_rma/adminhtml_rma_item_attribute_edit_tabs" name="enterprise_rma_item_attribute_edit_tabs">
+                <block type="enterprise_rma/adminhtml_rma_item_attribute_edit_tab_main" name="enterprise_rma_item_attribute_edit_tab_general" />
+                <action method="addTab"><name>general</name><block>enterprise_rma_item_attribute_edit_tab_general</block></action>
+                <block type="enterprise_rma/adminhtml_rma_item_attribute_edit_tab_options" name="enterprise_rma_item_attribute_edit_tab_options" />
+                <action method="addTab"><name>options</name><block>enterprise_rma_item_attribute_edit_tab_options</block></action>
+            </block>
+        </reference>
+        <reference name="js">
+            <block type="enterprise_rma/adminhtml_rma_item_attribute_edit_js" template="enterprise/rma/attribute/js.phtml" />
+        </reference>
+    </adminhtml_rma_item_attribute_edit>
+
+    <adminhtml_rma_item_attribute_new>
+        <remove name="website_switcher" />
+    </adminhtml_rma_item_attribute_new>
+
+    <adminhtml_sales_order_view>
+        <reference name="sales_order_tabs">
+            <block type="enterprise_rma/adminhtml_order_view_tab_rma" name="enterprise_rma_order_view_tab_rma" after="order_shipments">
+                <block type="enterprise_rma/adminhtml_rma" name="enterprise_rma" />
+            </block>
+            <action method="addTabAfter"><name>order_rma</name><block>enterprise_rma_order_view_tab_rma</block><after>order_shipments</after></action>
+        </reference>
+        <reference name="sales_order_edit">
+            <block name="rma_buttons" type="enterprise_rma/adminhtml_order_view_buttons">
+                <action method="addButtons"></action>
+            </block>
+        </reference>
+    </adminhtml_sales_order_view>
+    <adminhtml_customer_edit>
+        <reference name="customer_edit_tabs">
+            <block type="enterprise_rma/adminhtml_customer_edit_tab_rma" name="customer_edit_tab_rma" after="orders">
+                <block type="enterprise_rma/adminhtml_rma" name="enterprise_rma" />
+            </block>
+            <action method="addTabAfter"><name>customer_edit_tab_rma</name><block>customer_edit_tab_rma</block><after>orders</after></action>
+        </reference>
+    </adminhtml_customer_edit>
+</layout>

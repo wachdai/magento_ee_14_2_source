@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<layout>
+    <adminhtml_staging_manage_index>
+        <reference name="content">
+            <block type="enterprise_staging/adminhtml_staging"  name="enterprise_staging" />
+        </reference>
+    </adminhtml_staging_manage_index>
+
+    <adminhtml_staging_manage_grid>
+        <remove name="root" />
+        <block type="enterprise_staging/adminhtml_staging_grid" output="toHtml" name="enterprise_staging_grid" />
+    </adminhtml_staging_manage_grid>
+
+    <adminhtml_staging_manage_new>
+        <update handle="adminhtml_staging_manage_edit" />
+    </adminhtml_staging_manage_new>
+
+    <adminhtml_staging_manage_edit>
+        <reference name="content">
+            <block type="enterprise_staging/adminhtml_staging_edit"  name="enterprise_staging_edit" />
+        </reference>
+        <reference name="left">
+            <block type="enterprise_staging/adminhtml_staging_edit_tabs" name="enterprise_staging_edit_tabs"></block>
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>enterprise/adminhtml/staging.js</script></action>
+        </reference>
+    </adminhtml_staging_manage_edit>
+
+    <adminhtml_staging_manage_merge>
+        <reference name="content">
+            <block type="enterprise_staging/adminhtml_staging_merge"  name="enterprise_staging_merge">
+                <action method="addMergeSettingsBlockType"><type>website</type><block>enterprise_staging/adminhtml_staging_merge_settings_website</block><template>enterprise/staging/staging/merge/settings/website.phtml</template></action>
+            </block>
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>enterprise/adminhtml/staging.js</script></action>
+        </reference>
+    </adminhtml_staging_manage_merge>
+
+    <adminhtml_staging_backup_index>
+        <reference name="content">
+            <block type="enterprise_staging/adminhtml_backup"  name="enterprise_staging_backup" />
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>enterprise/adminhtml/staging.js</script></action>
+        </reference>
+    </adminhtml_staging_backup_index>
+
+    <adminhtml_staging_backup_grid>
+        <remove name="root" />
+        <block type="enterprise_staging/adminhtml_backup_grid" output="toHtml" name="enterprise_staging_backup" />
+    </adminhtml_staging_backup_grid>
+
+    <adminhtml_staging_backup_edit>
+        <reference name="content">
+            <block type="enterprise_staging/adminhtml_backup_edit"  name="enterprise_staging_backup_edit" />
+        </reference>
+        <reference name="left">
+            <block type="enterprise_staging/adminhtml_backup_edit_tabs" name="enterprise_staging_backup_edit_tabs"></block>
+        </reference>
+        <reference name="head">
+            <action method="addJs"><script>enterprise/adminhtml/staging.js</script></action>
+        </reference>
+    </adminhtml_staging_backup_edit>
+
+    <adminhtml_staging_log_index>
+        <reference name="content">
+            <block type="enterprise_staging/adminhtml_log"  name="enterprise_staging_log" />
+        </reference>
+    </adminhtml_staging_log_index>
+
+    <adminhtml_staging_log_view>
+        <reference name="content">
+            <block type="enterprise_staging/adminhtml_log_view"  name="enterprise_staging_log_view">
+                <action method="addInformationRenderer"><type>default</type><block>enterprise_staging/adminhtml_log_view_information_default</block><template>enterprise/staging/log/information/default.phtml</template></action>
+                <action method="addInformationRenderer"><type>reset</type><block>enterprise_staging/adminhtml_log_view_information_default</block><template>enterprise/staging/log/information/default.phtml</template></action>
+                <action method="addInformationRenderer"><type>create</type><block>enterprise_staging/adminhtml_log_view_information_staging</block><template>enterprise/staging/log/information/create.phtml</template></action>
+                <action method="addInformationRenderer"><type>merge</type><block>enterprise_staging/adminhtml_log_view_information_staging</block><template>enterprise/staging/log/information/merge.phtml</template></action>
+                <action method="addInformationRenderer"><type>schedule_merge</type><block>enterprise_staging/adminhtml_log_view_information_staging</block><template>enterprise/staging/log/information/merge.phtml</template></action>
+                <action method="addInformationRenderer"><type>unschedule_merge</type><block>enterprise_staging/adminhtml_log_view_information_staging</block><template>enterprise/staging/log/information/default.phtml</template></action>
+                <action method="addInformationRenderer"><type>cron_merge</type><block>enterprise_staging/adminhtml_log_view_information_staging</block><template>enterprise/staging/log/information/merge.phtml</template></action>
+                <action method="addInformationRenderer"><type>rollback</type><block>enterprise_staging/adminhtml_log_view_information_rollback</block><template>enterprise/staging/log/information/rollback.phtml</template></action>
+            </block>
+        </reference>
+    </adminhtml_staging_log_view>
+</layout>

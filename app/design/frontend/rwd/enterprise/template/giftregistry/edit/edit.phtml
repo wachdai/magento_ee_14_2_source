@@ -1,0 +1,109 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<div class="page-title">
+    <h1><?php echo $this->getFormHeader() ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+<form action="<?php echo $this->getEditPostActionUrl(); /*$this->getAddPostActionUrl();*/ ?>" method="post" id="form-validate">
+    <div class="fieldset gift-registry-edit">
+        <p class="required"><?php echo $this->__('* Required Fields') ?></p>
+        <?php echo $this->getBlockHtml('formkey')?>
+
+        <script type="text/javascript">
+        //<![CDATA[
+            dataForm = new VarienForm('form-validate');
+            regionJSON = <?php echo $this->helper('directory')->getRegionJson(); ?>;
+        //]]>
+        </script>
+
+        <?php echo $this->getChildHtml(); ?>
+        <div class="buttons-set form-buttons">
+            <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+            <button type="submit" class="button" id="submit.save" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Save')) ?>"><span><span><?php echo $this->__('Save') ?></span></span></button>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+//<![CDATA[
+
+function $Name(element)
+{
+  if (typeof element == 'string')
+    element = document.getElementsByName(element);
+  return Element.extend(element);
+}
+
+function setFieldByName(name, value)
+{
+    var x = $Name(name);
+    if (x != null) {
+        for(i = 0; i < x.length;  i++) {
+            x[i].setValue(value);
+        }
+    }
+}
+
+function setFieldById(domId, value)
+{
+    x = $(domId); if (x != null) {x.setValue(value)};
+}
+
+document.observe("dom:loaded", function() {
+
+<?php $formDataPost = $this->getFormDataPost(); ?>
+
+<?php if (is_array($formDataPost)) : ?>
+    <?php foreach ($formDataPost as $name => $value) : ?>
+        <?php if (!is_array($value)) : ?>
+            setFieldByName(<?php echo '"'.$name.'", "'.addslashes($value).'"' ?>);
+        <?php else : ?>
+            <?php foreach ($value as $name2 => $value2) : ?>
+                <?php if (!is_array($value2)) : ?>
+                    setFieldByName(<?php echo '"'.$name.'['.$name2.']", "'.addslashes($value2).'"' ?>);
+                <?php else : ?>
+                    <?php foreach ($value2 as $name3 => $value3) : ?>
+                        <?php if (!is_array($value3)) : ?>
+                            setFieldByName(<?php echo '"'.$name.'['.$name2.']['.$name3.']", "'.addslashes($value3).'"' ?>);
+                        <?php else : ?>
+                            <?php foreach ($value3 as $name4 => $value4) : ?>
+                                <?php if (!is_array($value4)) : ?>
+                                    setFieldByName(<?php echo '"'.$name.'['.$name2.']['.$name3.']['.$name4.']", "'.addslashes($value4).'"' ?>);
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                         <?php endif; ?>
+                     <?php endforeach; ?>
+                 <?php endif; ?>
+             <?php endforeach; ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
+<?php endif; ?>
+
+});
+
+//]]>
+</script>

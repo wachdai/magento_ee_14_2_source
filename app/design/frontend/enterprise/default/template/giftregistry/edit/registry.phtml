@@ -1,0 +1,93 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<input type="hidden" name="entity_id" id="entity_id" value="<?php echo $this->getEntity()->getEntityId(); ?>" />
+<input type="hidden" name="type_id" id="type_id" value="<?php echo $this->getTypeId(); ?>" />
+<div class="fieldset">
+    <h2 class="legend"><?php echo $this->__('General Information') ?></h2>
+    <ul class="form-list">
+        <li>
+            <label for="type_id"><?php echo $this->__('Gift Registry Type') ?></label>
+            <p class="value"><?php echo $this->getTypeLabel(); ?></p>
+        </li>
+        <li>
+            <label for="title" class="required"><em>*</em><?php echo $this->__('Event') ?></label>
+            <div class="input-box">
+                <input type="text" name="title" id="title" value="<?php echo $this->escapeHtml($this->getEntity()->getTitle());?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Event')) ?>" class="input-text required-entry" />
+            </div>
+        </li>
+        <li>
+            <label for="message" class="required"><em>*</em><?php echo $this->__('Message') ?></label>
+            <div class="input-box">
+                <textarea name="message" id="message" cols="5" rows="3" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Message')) ?>" class="required-entry" ><?php echo $this->escapeHtml($this->getEntity()->getMessage());?></textarea>
+            </div>
+        </li>
+        <li>
+            <label for="is_public" class="required"><em>*</em><?php echo $this->__('Privacy Settings') ?></label>
+            <div class="input-box">
+                <?php echo $this->getIsPublicHtml()?>
+            </div>
+        </li>
+        <li>
+            <label for="is_active" class="required"><em>*</em><?php echo $this->__('Status') ?></label>
+            <div class="input-box">
+                <?php echo $this->getStatusHtml()?>
+            </div>
+        </li>
+    </ul>
+</div>
+<?php
+$fieldsets = $this->getGroupedRegistryAttributes();
+foreach ($fieldsets as $fieldset => $fields) : ?>
+<div class="fieldset">
+    <h2> <?php echo $this->getGroupLabel($fieldset);?></h2>
+    <ul class="form-list">
+
+    <?php foreach ($fields as $field => $data) : ?>
+        <?php $isRequired = $this->isAttributeRequired($data); ?>
+        <li>
+             <label for="<?php echo $field ?>" <?php echo ($isRequired ? 'class="required"' : '')?>>
+                 <?php echo ($isRequired ? '<em>*</em>' : '') . $this->__($data['label']) ?>
+             </label>
+             <div class="input-box">
+                 <?php echo $this->renderField($data, $field) ?>
+             </div>
+        </li>
+    <?php endforeach; ?>
+    </ul>
+
+    <?php foreach ($fields as $field => $data) : ?>
+        <?php if ($this->useRegionUpdater($data)) : ?>
+            <script type="text/javascript">
+                //<![CDATA[
+                    new RegionUpdater('<?php echo $field ?>', '<?php echo $field ?>_region_text', '<?php echo $field ?>_region', regionJSON);
+                 //]]>
+            </script>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+<?php endforeach; ?>

@@ -1,0 +1,81 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+namespace Mage\Admin\Test\Constraint;
+
+use Mage\Admin\Test\Fixture\User;
+use Magento\Mtf\Constraint\AbstractConstraint;
+use Mage\Adminhtml\Test\Page\Adminhtml\Dashboard;
+use Mage\Adminhtml\Test\Page\AdminAuthLogin;
+
+/**
+ * Verify whether customer has logged in to the Backend.
+ */
+class AssertUserSuccessLogin extends AbstractConstraint
+{
+    /**
+     * Constraint severeness.
+     *
+     * @var string
+     */
+    protected $severeness = 'low';
+
+    /**
+     * Verify whether customer has logged in to the Backend.
+     *
+     * @param User $user
+     * @param AdminAuthLogin $adminAuth
+     * @param Dashboard $dashboard
+     * @param User $customAdmin
+     * @return void
+     */
+    public function processAssert(
+        User $user,
+        AdminAuthLogin $adminAuth,
+        Dashboard $dashboard,
+        User $customAdmin = null
+    ) {
+        $adminUser = $customAdmin === null ? $user : $customAdmin;
+        $adminPanelHeader = $dashboard->getAdminPanelHeader();
+        if ($adminPanelHeader->isVisible()) {
+            $adminPanelHeader->logOut();
+        }
+
+        $adminAuth->getLoginBlock()->loginToAdminPanel($adminUser->getData());
+
+        \PHPUnit_Framework_Assert::assertTrue($adminPanelHeader->isVisible(), 'Admin user was not logged in.');
+    }
+
+    /**
+     * Return string representation of object.
+     *
+     * @return string
+     */
+    public function toString()
+    {
+        return 'Admin user is logged in.';
+    }
+}

@@ -1,0 +1,192 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<layout>
+    <adminhtml_giftwrapping_index>
+        <reference name="content">
+            <block type="enterprise_giftwrapping/adminhtml_giftwrapping" name="enterprise_giftwrapping" />
+        </reference>
+    </adminhtml_giftwrapping_index>
+    
+    <adminhtml_giftwrapping_new>
+        <reference name="content">
+            <block type="enterprise_giftwrapping/adminhtml_giftwrapping_edit" name="giftwrapping_edit" />
+        </reference>
+    </adminhtml_giftwrapping_new>
+
+    <adminhtml_giftwrapping_edit>
+        <reference name="content">
+            <block type="enterprise_giftwrapping/adminhtml_giftwrapping_edit" name="giftwrapping_edit" />
+            <block type="adminhtml/store_switcher" name="store_switcher" before="-" />
+        </reference>
+    </adminhtml_giftwrapping_edit>
+
+    <adminhtml_sales_order_view>
+        <reference name="gift_options">
+            <block type="enterprise_giftwrapping/adminhtml_order_view_info" name="wrapping_order_view_info" template="enterprise/giftwrapping/order/view/info.phtml" />
+        </reference>
+        <reference name="popup_window">
+            <block type="enterprise_giftwrapping/adminhtml_order_view_items" name="wrapping_order_view_items" template="enterprise/giftwrapping/order/view/items.phtml" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_view_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/order/view/renderer.phtml" before="-" />
+        </reference>
+        <reference name="gift_options_link">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_view_link" name="giftwrapping_item_info" template="enterprise/giftwrapping/sales/order/link.phtml" />
+        </reference>
+        <reference name="order_totals">
+            <block type="enterprise_giftwrapping/adminhtml_sales_totals" name="giftwrapping_totals" />
+        </reference>
+    </adminhtml_sales_order_view>
+
+    <adminhtml_sales_order_create_index>
+        <block type="enterprise_giftwrapping/adminhtml_order_create_totals" name="giftwrapping_total_renderer" template="enterprise/giftwrapping/order/create/totals.phtml" />
+        <reference name="gift_options">
+            <block type="enterprise_giftwrapping/adminhtml_order_create_info" name="wrapping_order_create_info" template="enterprise/giftwrapping/order/create/info.phtml">
+                <block type="enterprise_giftwrapping/adminhtml_order_create_info_content" name="wrapping.order.create.info.content" template="enterprise/giftwrapping/order/create/info/content.phtml" />
+            </block>
+        </reference>
+        <reference name="popup_window">
+            <block type="enterprise_giftwrapping/adminhtml_order_create_items" name="wrapping_order_create_items" template="enterprise/giftwrapping/order/create/items.phtml" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_create_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/order/create/renderer.phtml" before="-" />
+        </reference>
+        <reference name="gift_options_link">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_create_link" name="giftwrapping_item_info" template="enterprise/giftwrapping/sales/order/link.phtml" />
+        </reference>
+    </adminhtml_sales_order_create_index>
+
+    <adminhtml_sales_order_shipment_new>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_view_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/shipment/create/renderer.phtml" before="-" />
+        </reference>
+    </adminhtml_sales_order_shipment_new>
+
+    <adminhtml_sales_order_shipment_view>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_view_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/shipment/view/renderer.phtml" before="-" />
+        </reference>
+    </adminhtml_sales_order_shipment_view>
+
+    <adminhtml_sales_order_create_load_block_totals>
+        <block type="enterprise_giftwrapping/adminhtml_order_create_totals" name="giftwrapping_total_renderer" template="enterprise/giftwrapping/order/create/totals.phtml" />
+    </adminhtml_sales_order_create_load_block_totals>
+
+    <adminhtml_sales_order_create_load_block_data>
+        <reference name="gift_options">
+            <block type="enterprise_giftwrapping/adminhtml_order_create_info" name="wrapping_order_create_info" template="enterprise/giftwrapping/order/create/info.phtml" />
+        </reference>
+        <reference name="popup_window">
+            <block type="enterprise_giftwrapping/adminhtml_order_create_items" name="wrapping_order_create_items" template="enterprise/giftwrapping/order/create/items.phtml" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_create_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/order/create/renderer.phtml" before="-" />
+        </reference>
+        <reference name="gift_options_link">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_create_link" name="giftwrapping_item_info" template="enterprise/giftwrapping/sales/order/link.phtml" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_data>
+
+    <adminhtml_sales_order_create_load_block_items>
+        <reference name="popup_window">
+            <block type="enterprise_giftwrapping/adminhtml_order_create_items" name="wrapping_order_create_items" template="enterprise/giftwrapping/order/create/items.phtml" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_create_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/order/create/renderer.phtml" before="-" />
+        </reference>
+        <reference name="gift_options_link">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_create_link" name="giftwrapping_item_info" template="enterprise/giftwrapping/sales/order/link.phtml" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_items>
+
+    <adminhtml_sales_order_create_load_block_giftwrapping>
+        <reference name="content">
+            <block type="enterprise_giftwrapping/adminhtml_order_create_info_content" name="giftwrapping" template="enterprise/giftwrapping/order/create/info/content.phtml" />
+        </reference>
+    </adminhtml_sales_order_create_load_block_giftwrapping>
+
+    <adminhtml_sales_order_invoice_new>
+        <reference name="invoice_totals">
+            <block type="enterprise_giftwrapping/adminhtml_sales_totals" name="giftwrapping" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_view_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/invoice/create/renderer.phtml" before="-" />
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+
+    <adminhtml_sales_order_invoice_updateqty>
+        <reference name="invoice_totals">
+            <block type="enterprise_giftwrapping/adminhtml_sales_totals" name="giftwrapping" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_view_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/invoice/create/renderer.phtml" before="-" />
+        </reference>
+    </adminhtml_sales_order_invoice_updateqty>
+
+    <adminhtml_sales_order_invoice_view>
+        <reference name="invoice_totals">
+            <block type="enterprise_giftwrapping/adminhtml_sales_totals" name="giftwrapping" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_view_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/invoice/view/renderer.phtml" before="-" />
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="creditmemo_totals">
+            <block type="enterprise_giftwrapping/adminhtml_sales_totals" name="giftwrapping" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_view_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/creditmemo/create/renderer.phtml" before="-" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+
+    <adminhtml_sales_order_creditmemo_updateqty>
+        <reference name="creditmemo_totals">
+            <block type="enterprise_giftwrapping/adminhtml_sales_totals" name="giftwrapping" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_view_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/creditmemo/create/renderer.phtml" before="-" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_updateqty>
+
+    <adminhtml_sales_order_creditmemo_view>
+        <reference name="creditmemo_totals">
+            <block type="enterprise_giftwrapping/adminhtml_sales_totals" name="giftwrapping" />
+        </reference>
+        <reference name="order_item_extra_info">
+            <block type="enterprise_giftwrapping/adminhtml_sales_order_view_items" name="giftwrapping_extra_info" template="enterprise/giftwrapping/sales/creditmemo/view/renderer.phtml" before="-" />
+        </reference>
+    </adminhtml_sales_order_creditmemo_view>
+    <default>
+        <reference name="tax_notifications">
+            <block type="enterprise_giftwrapping/adminhtml_notifications" name="tax_notifications" template="tax/notifications.phtml"></block>
+        </reference>
+    </default>
+</layout>

@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_CustomerBalance
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <api>
+        <resources>
+            <enterprise_customerbalance translate="title" module="enterprise_customerbalance">
+                <title>Customer Balance API</title>
+                <model>enterprise_customerbalance/api</model>
+                <acl>enterprise_customerbalance</acl>
+                <methods>
+                    <balance translate="title" module="enterprise_customerbalance">
+                        <title>Retrieve customer store credit balance information</title>
+                        <acl>enterprise_customerbalance/balance</acl>
+                    </balance>
+                    <history translate="title" module="enterprise_customerbalance">
+                        <title>Retrieve customer store credit history information</title>
+                        <acl>enterprise_customerbalance/history</acl>
+                    </history>
+                </methods>
+                <faults module="enterprise_customerbalance">
+                    <data_invalid>
+                        <code>100</code>
+                        <message>Provided data is invalid.</message>
+                    </data_invalid>
+                    <balance_not_found>
+                        <code>101</code>
+                        <message>No balance found with requested parameters.</message>
+                    </balance_not_found>
+                    <history_not_found>
+                        <code>102</code>
+                        <message>No history found with requested parameters.</message>
+                    </history_not_found>
+                </faults>
+            </enterprise_customerbalance>
+            <enterprise_customerbalance_quote translate="title" module="enterprise_customerbalance">
+                <title>Customer Balance for Quote API</title>
+                <model>enterprise_customerbalance/quote_api</model>
+                <acl>cart/storecredit</acl>
+                <methods>
+                    <setAmount>
+                        <title>Set amount from customer store credit into shopping cart (quote)</title>
+                        <acl>cart/storecredit/set</acl>
+                    </setAmount>
+                    <removeAmount>
+                        <title>Remove amount from shopping cart (quote) and increase customer store credit</title>
+                        <acl>cart/storecredit/remove</acl>
+                    </removeAmount>
+                </methods>
+                <faults>
+                    <data_invalid>
+                        <code>100</code>
+                        <message>Provided data is invalid.</message>
+                    </data_invalid>
+                    <quote_not_exists>
+                        <code>103</code>
+                        <message>No quote found with requested id.</message>
+                    </quote_not_exists>
+                    <guest_quote>
+                        <code>104</code>
+                        <message>Store credit can not be used for quote created by guest.</message>
+                    </guest_quote>
+                    <store_not_exists>
+                        <code>105</code>
+                        <message>No store found with requested id or code.</message>
+                    </store_not_exists>
+                </faults>
+            </enterprise_customerbalance_quote>
+        </resources>
+        <resources_alias>
+            <storecredit>enterprise_customerbalance</storecredit>
+            <storecredit_quote>enterprise_customerbalance_quote</storecredit_quote>
+        </resources_alias>
+        <v2>
+            <resources_function_prefix>
+                <storecredit>enterpriseCustomerbalance</storecredit>
+                <storecredit_quote>shoppingCartCustomerbalance</storecredit_quote>
+            </resources_function_prefix>
+        </v2>
+        <acl>
+            <resources>
+                <enterprise_customerbalance translate="title" module="enterprise_customerbalance">
+                    <title>Customer Balance</title>
+                    <balance translate="title" module="enterprise_customerbalance">
+                        <title>Retrieve balance amount</title>
+                    </balance>
+                    <history translate="title" module="enterprise_customerbalance">
+                        <title>Retrieve balance history</title>
+                    </history>
+                </enterprise_customerbalance>
+                <cart>
+                    <storecredit translate="title" module="enterprise_customerbalance">
+                        <title>Customer balance</title>
+                        <set translate="title" module="enterprise_customerbalance">
+                            <title>Set</title>
+                        </set>
+                        <remove translate="title" module="enterprise_customerbalance">
+                            <title>Remove</title>
+                        </remove>
+                    </storecredit>
+                </cart>
+            </resources>
+        </acl>
+    </api>
+</config>

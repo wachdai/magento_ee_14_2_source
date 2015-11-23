@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Pci
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_Pci>
+            <version>1.11.0.0</version>
+        </Enterprise_Pci>
+    </modules>
+    <global>
+        <models>
+            <enterprise_pci>
+                <class>Enterprise_Pci_Model</class>
+                <resourceModel>enterprise_pci_resource</resourceModel>
+            </enterprise_pci>
+            <enterprise_pci_resource>
+                <class>Enterprise_Pci_Model_Resource</class>
+                <deprecatedNode>enterprise_pci_mysql4</deprecatedNode>
+                <entities>
+                    <admin_passwords>
+                        <table>enterprise_admin_passwords</table>
+                    </admin_passwords>
+                </entities>
+            </enterprise_pci_resource>
+        </models>
+        <blocks>
+            <enterprise_pci>
+                <class>Enterprise_Pci_Block</class>
+            </enterprise_pci>
+        </blocks>
+        <helpers>
+            <enterprise_pci>
+                <class>Enterprise_Pci_Helper</class>
+            </enterprise_pci>
+            <core>
+                <encryption_model>Enterprise_Pci_Model_Encryption</encryption_model>
+            </core>
+        </helpers>
+        <resources>
+            <enterprise_pci_setup>
+                <setup>
+                    <module>Enterprise_Pci</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </enterprise_pci_setup>
+        </resources>
+        <events>
+            <admin_user_save_before>
+                <observers>
+                    <enterprise_pci>
+                        <class>enterprise_pci/observer</class>
+                        <method>checkAdminPasswordChange</method>
+                    </enterprise_pci>
+                </observers>
+            </admin_user_save_before>
+            <admin_user_save_after>
+                <observers>
+                    <enterprise_pci>
+                        <class>enterprise_pci/observer</class>
+                        <method>trackAdminNewPassword</method>
+                    </enterprise_pci>
+                </observers>
+            </admin_user_save_after>
+        </events>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_pci>
+                    <file>enterprise/pci.xml</file>
+                </enterprise_pci>
+            </updates>
+        </layout>
+        <events>
+            <admin_user_authenticate_after>
+                <observers>
+                    <enterprise_pci>
+                        <class>enterprise_pci/observer</class>
+                        <method>adminAuthenticate</method>
+                    </enterprise_pci>
+                </observers>
+            </admin_user_authenticate_after>
+            <api_user_authenticated>
+                <observers>
+                    <enterprise_pci>
+                        <class>enterprise_pci/observer</class>
+                        <method>upgradeApiKey</method>
+                    </enterprise_pci>
+                </observers>
+            </api_user_authenticated>
+            <controller_action_predispatch>
+                <observers>
+                    <enterprise_pci>
+                        <class>enterprise_pci/observer</class>
+                        <method>forceAdminPasswordChange</method>
+                    </enterprise_pci>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+        <translate>
+            <modules>
+                <Enterprise_Pci>
+                    <files>
+                        <default>Enterprise_Pci.csv</default>
+                    </files>
+                </Enterprise_Pci>
+            </modules>
+        </translate>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Enterprise_Pci before="Mage_Adminhtml">Enterprise_Pci_Adminhtml</Enterprise_Pci>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <frontend>
+        <events>
+            <customer_customer_authenticated>
+                <observers>
+                    <enterprise_pci>
+                        <class>enterprise_pci/observer</class>
+                        <method>upgradeCustomerPassword</method>
+                    </enterprise_pci>
+                </observers>
+            </customer_customer_authenticated>
+        </events>
+        <translate>
+            <modules>
+                <Enterprise_Pci>
+                    <files>
+                        <default>Enterprise_Pci.csv</default>
+                    </files>
+                </Enterprise_Pci>
+            </modules>
+        </translate>
+    </frontend>
+    <default>
+        <admin>
+            <security>
+                <session_cookie_lifetime>900</session_cookie_lifetime>
+                <lockout_failures>6</lockout_failures>
+                <lockout_threshold>30</lockout_threshold>
+                <password_lifetime>90</password_lifetime>
+                <password_is_forced>1</password_is_forced>
+            </security>
+        </admin>
+    </default>
+</config>

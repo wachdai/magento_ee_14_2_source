@@ -1,0 +1,42 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php if ($this->canUseCustomerBalance()): ?>
+    <input id="p_method_use_customerbalance" value="1" name="payment[use_customer_balance]" type="checkbox" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Store Credit')) ?>" onclick="" <?php if ($this->getUseCustomerBalance()): ?>checked<?php endif; ?> />
+    <label for="p_method_use_customerbalance"><?php echo $this->__('Use Store Credit (%s available)', $this->formatPrice($this->getBalance())) ?></label>
+    <script type="text/javascript">
+        function toggleUseCustomerBalance()
+        {
+            value = ($('p_method_use_customerbalance').checked ? 1 : 0);
+            var data = {};
+            data['payment[use_customer_balance]'] = value;
+
+            order.loadArea(['totals', 'billing_method'], true, data);
+        }
+        Event.observe($('p_method_use_customerbalance'), 'click', toggleUseCustomerBalance);
+        Event.observe(document, 'dom:loaded', toggleUseCustomerBalance);
+    </script>
+<?php endif; ?>

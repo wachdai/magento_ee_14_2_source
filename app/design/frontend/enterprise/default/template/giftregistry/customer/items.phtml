@@ -1,0 +1,72 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Gift Registry Items') ?></h1>
+</div>
+<?php echo $this->getMessagesBlock()->toHtml() ?>
+
+<?php if (count($this->getItems()) > 0): ?>
+<form action="<?php echo $this->getActionUpdateUrl() ?>" method="post">
+    <fieldset>
+        <?php echo $this->getBlockHtml('formkey')?>
+        <table id="shopping-cart-table" class="data-table">
+            <col width="1" />
+            <col />
+            <col width="210" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <col width="1" />
+            <thead>
+                <tr>
+                    <th><span class="nobr"><?php echo $this->__('Product') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Product Name') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Note') ?></span></th>
+                    <th><span class="nobr"><?php echo $this->__('Added On') ?></span></th>
+                    <th class="a-center"><span class="nobr"><?php echo $this->__('Qty') ?></span></th>
+                    <th class="a-center"><span class="nobr"><?php echo $this->__('Qty Fulfilled') ?></span></th>
+                    <th class="a-center"><?php echo $this->__('Delete') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach($this->getItems() as $_item): ?>
+                <?php echo $this->getItemHtml($_item) ?>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+        <script type="text/javascript">decorateTable('shopping-cart-table')</script>
+        <div class="buttons-set2">
+            <button type="submit" class="button btn-update"><span><span><?php echo $this->__('Update Gift Registry') ?></span></span></button>
+        </div>
+    </fieldset>
+</form>
+<?php else: ?>
+    <p><?php echo $this->__('Gift Registry has no items.') ?></p>
+<?php endif ?>
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+</div>

@@ -1,0 +1,53 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<?php
+/**
+ * Template for Enterprise_Staging_Block_Manage_Staging_Backup_Edit
+ * @var $this Enterprise_Staging_Block_Manage_Staging_Backup_Edit
+ */
+?>
+<div id="enterprise_staging_backup">
+    <div class="content-header">
+        <h3 class="icon-head head-staging-backup"><?php echo $this->getHeader() ?></h3>
+        <p class="content-buttons form-buttons">
+            <?php echo $this->getChildHtml('back_button') ?>
+            <?php echo $this->getChildHtml('cancel_button') ?>
+            <?php echo $this->getChildHtml('delete_button') ?>
+            <?php echo $this->getChildHtml('rollback_button') ?>
+        </p>
+    </div>
+    <form action="<?php echo $this->getSaveUrl() ?>" method="post" id="enterprise_staging_backup_form" enctype="multipart/form-data">
+        <?php echo $this->getBlockHtml('formkey')?>
+        <div style="display:none"></div>
+    </form>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+var <?php echo $this->getEditFormJsObject(); ?> = new varienForm('enterprise_staging_backup_form', '<?php echo $this->getValidationUrl() ?>');
+//]]>
+</script>

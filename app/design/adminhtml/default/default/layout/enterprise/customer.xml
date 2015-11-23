@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<layout>
+    <adminhtml_customer_formtype_index>
+        <reference name="content">
+            <block type="enterprise_customer/adminhtml_customer_formtype" name="enterprise_customer_formtype" />
+        </reference>
+    </adminhtml_customer_formtype_index>
+
+    <adminhtml_customer_formtype_new>
+        <reference name="content">
+            <block type="enterprise_customer/adminhtml_customer_formtype_edit" name="enterprise_customer_formtype_new" />
+        </reference>
+    </adminhtml_customer_formtype_new>
+
+    <adminhtml_customer_formtype_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+        </reference>
+        <reference name="content">
+            <block type="enterprise_customer/adminhtml_customer_formtype_edit" name="enterprise_customer_formtype_edit" />
+        </reference>
+        <reference name="left">
+            <block type="enterprise_customer/adminhtml_customer_formtype_edit_tabs" name="enterprise_customer_formtype_edit_tabs">
+                <block type="enterprise_customer/adminhtml_customer_formtype_edit_tab_general" name="enterprise_customer_formtype_edit_tab_general"></block>
+                <action method="addTab">
+                    <name>enterprise_customer_formtype_edit_tab_general</name>
+                    <block>enterprise_customer_formtype_edit_tab_general</block>
+                </action>
+                <block type="enterprise_customer/adminhtml_customer_formtype_edit_tab_tree" name="enterprise_customer_formtype_edit_tab_tree" template="enterprise/customer/formtype/edit/tab/tree.phtml"></block>
+                <action method="addTab">
+                    <name>enterprise_customer_formtype_edit_tab_tree</name>
+                    <block>enterprise_customer_formtype_edit_tab_tree</block>
+                </action>
+            </block>
+        </reference>
+    </adminhtml_customer_formtype_edit>
+
+    <!-- shared scope (website) switcher -->
+    <scope_switcher>
+        <block type="enterprise_customer/adminhtml_form_renderer_fieldset_element" name="fieldset_element_renderer" template="enterprise/customer/form/renderer/fieldset/element.phtml" />
+        <reference name="left">
+            <block type="adminhtml/store_switcher" name="website_switcher" before="-" template="enterprise/customer/website/switcher.phtml">
+                <action method="setStoreVarName"><value>website</value></action>
+                <action method="setDefaultStoreName" translate="name"><name>Default Values</name></action>
+            </block>
+        </reference>
+    </scope_switcher>
+
+    <!-- customer attributes -->
+    <adminhtml_customer_attribute_index>
+        <reference name="content">
+            <block type="enterprise_customer/adminhtml_customer_attribute" name="enterprise_customer_attribute" />
+        </reference>
+    </adminhtml_customer_attribute_index>
+
+    <adminhtml_customer_attribute_edit>
+        <update handle="scope_switcher"/>
+        <reference name="content">
+            <block type="enterprise_customer/adminhtml_customer_attribute_edit" name="enterprise_customer_attribute_edit" />
+        </reference>
+        <reference name="left">
+            <block type="enterprise_customer/adminhtml_customer_attribute_edit_tabs" name="enterprise_customer_attribute_edit_tabs">
+                <block type="enterprise_customer/adminhtml_customer_attribute_edit_tab_main" name="enterprise_customer_attribute_edit_tab_general" />
+                <action method="addTab"><name>general</name><block>enterprise_customer_attribute_edit_tab_general</block></action>
+                <block type="enterprise_customer/adminhtml_customer_attribute_edit_tab_options" name="enterprise_customer_attribute_edit_tab_options" />
+                <action method="addTab"><name>options</name><block>enterprise_customer_attribute_edit_tab_options</block></action>
+            </block>
+        </reference>
+        <reference name="js">
+            <block type="enterprise_customer/adminhtml_customer_attribute_edit_js" template="enterprise/customer/attribute/js.phtml" />
+        </reference>
+    </adminhtml_customer_attribute_edit>
+
+    <adminhtml_customer_attribute_new>
+        <remove name="website_switcher" />
+    </adminhtml_customer_attribute_new>
+
+    <!-- customer address attributes -->
+    <adminhtml_customer_address_attribute_index>
+        <reference name="content">
+            <block type="enterprise_customer/adminhtml_customer_address_attribute" name="enterprise_customer_address_attribute" />
+        </reference>
+    </adminhtml_customer_address_attribute_index>
+
+    <adminhtml_customer_address_attribute_edit>
+        <update handle="scope_switcher"/>
+        <reference name="content">
+            <block type="enterprise_customer/adminhtml_customer_address_attribute_edit" name="enterprise_customer_address_attribute_edit" />
+        </reference>
+        <reference name="left">
+            <block type="enterprise_customer/adminhtml_customer_address_attribute_edit_tabs" name="enterprise_customer_address_attribute_edit_tabs">
+                <block type="enterprise_customer/adminhtml_customer_address_attribute_edit_tab_general" name="enterprise_customer_address_attribute_edit_tab_general" />
+                <action method="addTab"><name>general</name><block>enterprise_customer_address_attribute_edit_tab_general</block></action>
+                <block type="enterprise_customer/adminhtml_customer_address_attribute_edit_tab_options" name="enterprise_customer_address_attribute_edit_tab_options" />
+                <action method="addTab"><name>options</name><block>enterprise_customer_address_attribute_edit_tab_options</block></action>
+            </block>
+        </reference>
+        <reference name="js">
+            <block type="enterprise_customer/adminhtml_customer_attribute_edit_js" template="enterprise/customer/attribute/js.phtml" />
+        </reference>
+    </adminhtml_customer_address_attribute_edit>
+
+    <adminhtml_customer_address_attribute_new>
+        <remove name="website_switcher" />
+    </adminhtml_customer_address_attribute_new>
+</layout>

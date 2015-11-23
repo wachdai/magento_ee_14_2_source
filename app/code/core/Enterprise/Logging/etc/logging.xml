@@ -1,0 +1,1845 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Logging
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<logging>
+    <actions>
+        <view translate="label">
+            <label>View</label>
+        </view>
+        <save translate="label">
+            <label>Save</label>
+        </save>
+        <delete translate="label">
+            <label>Delete</label>
+        </delete>
+        <massDelete translate="label">
+            <label>Mass Delete</label>
+        </massDelete>
+        <export translate="label">
+            <label>Export</label>
+        </export>
+        <import translate="label">
+            <label>Import</label>
+        </import>
+        <edit translate="label">
+            <label>Edit</label>
+        </edit>
+        <massUpdate translate="label">
+            <label>Mass Update</label>
+        </massUpdate>
+        <move translate="label">
+            <label>Move</label>
+        </move>
+        <new translate="label">
+            <label>New</label>
+        </new>
+        <forgotpassword translate="label">
+            <label>Forgot Password</label>
+        </forgotpassword>
+        <global_search translate="label">
+            <label>Global Search</label>
+        </global_search>
+        <apply translate="label">
+            <label>Apply</label>
+        </apply>
+        <reorder translate="label">
+            <label>Reorder</label>
+        </reorder>
+        <print translate="label">
+            <label>Print</label>
+        </print>
+        <email translate="label">
+            <label>Email</label>
+        </email>
+        <run translate="label">
+            <label>Run</label>
+        </run>
+        <rollback translate="label">
+            <label>Rollback</label>
+        </rollback>
+        <reindex_process translate="label">
+            <label>Reindex Process</label>
+        </reindex_process>
+        <clean translate="label">
+            <label>Clean</label>
+        </clean>
+        <flush translate="label">
+            <label>Flush</label>
+        </flush>
+        <fetch translate="label">
+            <label>Fetch</label>
+        </fetch>
+        <updateProfile translate="label">
+            <label>Update Profile</label>
+        </updateProfile>
+        <updateState translate="label">
+            <label>Update State</label>
+        </updateState>
+        <login translate="label">
+            <label>Login</label>
+        </login>
+        <send translate="label">
+            <label>Send</label>
+        </send>
+        <create translate="label">
+            <label>Create</label>
+        </create>
+    </actions>
+
+    <catalog_products translate="label">
+        <label>Catalog Products</label>
+        <expected_models>
+            <catalog__product/>
+        </expected_models>
+        <actions>
+            <adminhtml_catalog_product_edit>
+                <action>view</action>
+            </adminhtml_catalog_product_edit>
+
+            <adminhtml_catalog_product_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_catalog_product_edit />
+                </skip_on_back>
+            </adminhtml_catalog_product_save>
+
+            <adminhtml_catalog_product_delete>
+                <action>delete</action>
+            </adminhtml_catalog_product_delete>
+
+            <adminhtml_catalog_product_massStatus>
+                <action>massUpdate</action>
+                <post_dispatch>postDispatchProductUpdateAttributes</post_dispatch>
+            </adminhtml_catalog_product_massStatus>
+
+            <adminhtml_catalog_product_massDelete>
+                <action>massDelete</action>
+            </adminhtml_catalog_product_massDelete>
+
+            <adminhtml_catalog_product_action_attribute_save>
+                <action>massUpdate</action>
+                <post_dispatch>postDispatchProductUpdateAttributes</post_dispatch>
+            </adminhtml_catalog_product_action_attribute_save>
+        </actions>
+    </catalog_products>
+
+    <catalog_categories translate="label">
+        <label>Catalog Categories</label>
+        <expected_models>
+            <catalog__category/>
+        </expected_models>
+        <actions>
+            <adminhtml_catalog_category_edit>
+                <action>view</action>
+            </adminhtml_catalog_category_edit>
+
+            <adminhtml_catalog_category_save>
+                <action>save</action>
+            </adminhtml_catalog_category_save>
+
+            <adminhtml_catalog_category_move>
+                <action>move</action>
+                <post_dispatch>postDispatchCategoryMove</post_dispatch>
+            </adminhtml_catalog_category_move>
+
+            <adminhtml_catalog_category_delete>
+                <action>delete</action>
+            </adminhtml_catalog_category_delete>
+        </actions>
+    </catalog_categories>
+
+    <core_urlrewrites translate="label">
+        <label>URL Rewrites</label>
+        <expected_models>
+            <core__url_rewrite/>
+        </expected_models>
+        <actions>
+            <adminhtml_urlrewrite_edit>
+                <action>view</action>
+            </adminhtml_urlrewrite_edit>
+
+            <adminhtml_urlrewrite_save>
+                <action>save</action>
+            </adminhtml_urlrewrite_save>
+
+            <adminhtml_urlrewrite_delete>
+                <action>delete</action>
+            </adminhtml_urlrewrite_delete>
+        </actions>
+    </core_urlrewrites>
+
+    <catalogsearch translate="label">
+        <label>Catalog Search</label>
+        <expected_models>
+            <catalogsearch__query/>
+        </expected_models>
+        <actions>
+            <adminhtml_catalog_search_edit>
+                <action>view</action>
+            </adminhtml_catalog_search_edit>
+
+            <adminhtml_catalog_search_save>
+                <action>save</action>
+            </adminhtml_catalog_search_save>
+
+            <adminhtml_catalog_search_delete>
+                <action>delete</action>
+            </adminhtml_catalog_search_delete>
+
+            <adminhtml_catalog_search_massDelete>
+                <action>massDelete</action>
+            </adminhtml_catalog_search_massDelete>
+
+            <adminhtml_index_globalSearch>
+                <action>global_search</action>
+                <post_dispatch>postDispatchGlobalSearch</post_dispatch>
+            </adminhtml_index_globalSearch>
+        </actions>
+    </catalogsearch>
+
+    <rating translate="label">
+        <label>Catalog Ratings</label>
+        <expected_models>
+            <rating__rating/>
+        </expected_models>
+        <actions>
+            <adminhtml_rating_edit>
+                <action>view</action>
+            </adminhtml_rating_edit>
+
+            <adminhtml_rating_save>
+                <action>save</action>
+            </adminhtml_rating_save>
+
+            <adminhtml_rating_delete>
+                <action>delete</action>
+            </adminhtml_rating_delete>
+        </actions>
+    </rating>
+
+    <review translate="label">
+        <label>Catalog Reviews</label>
+        <expected_models>
+            <review__review/>
+        </expected_models>
+        <actions>
+            <adminhtml_catalog_product_review_edit>
+                <action>view</action>
+            </adminhtml_catalog_product_review_edit>
+
+            <adminhtml_catalog_product_review_save>
+                <action>save</action>
+            </adminhtml_catalog_product_review_save>
+
+            <adminhtml_catalog_product_review_post>
+                <action>save</action>
+            </adminhtml_catalog_product_review_post>
+
+            <adminhtml_catalog_product_review_delete>
+                <action>delete</action>
+            </adminhtml_catalog_product_review_delete>
+
+            <adminhtml_catalog_product_review_massUpdateStatus>
+                <action>massUpdate</action>
+            </adminhtml_catalog_product_review_massUpdateStatus>
+
+            <adminhtml_catalog_product_review_massDelete>
+                <action>massDelete</action>
+            </adminhtml_catalog_product_review_massDelete>
+        </actions>
+    </review>
+
+    <catalog_attributes translate="label">
+        <label>Catalog Attributes</label>
+        <expected_models>
+            <catalog__resource_eav_attribute/>
+        </expected_models>
+        <actions>
+            <adminhtml_catalog_product_attribute_edit>
+                <action>view</action>
+            </adminhtml_catalog_product_attribute_edit>
+
+            <adminhtml_catalog_product_attribute_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_catalog_product_attribute_edit />
+                </skip_on_back>
+            </adminhtml_catalog_product_attribute_save>
+
+            <adminhtml_catalog_product_attribute_delete>
+                <action>delete</action>
+            </adminhtml_catalog_product_attribute_delete>
+        </actions>
+    </catalog_attributes>
+
+    <catalog_attributesets translate="label">
+        <label>Catalog Attribute Sets</label>
+        <expected_models>
+            <eav__entity_attribute_set/>
+        </expected_models>
+        <actions>
+            <adminhtml_catalog_product_set_edit>
+                <action>view</action>
+            </adminhtml_catalog_product_set_edit>
+
+            <adminhtml_catalog_product_set_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_catalog_product_set_edit />
+                </skip_on_back>
+            </adminhtml_catalog_product_set_save>
+
+            <adminhtml_catalog_product_set_delete>
+                <action>delete</action>
+            </adminhtml_catalog_product_set_delete>
+        </actions>
+    </catalog_attributesets>
+
+    <tag translate="label">
+        <label>Catalog Tags</label>
+        <expected_models>
+            <tag__tag/>
+        </expected_models>
+        <actions>
+            <adminhtml_tag_edit>
+                <action>view</action>
+            </adminhtml_tag_edit>
+
+            <adminhtml_tag_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_tag_edit />
+                </skip_on_back>
+            </adminhtml_tag_save>
+
+            <adminhtml_tag_delete>
+                <action>delete</action>
+            </adminhtml_tag_delete>
+
+            <adminhtml_tag_massStatus>
+                <action>massUpdate</action>
+            </adminhtml_tag_massStatus>
+
+            <adminhtml_tag_massDelete>
+                <action>massDelete</action>
+            </adminhtml_tag_massDelete>
+        </actions>
+    </tag>
+
+    <admin_login translate="label">
+        <label>Admin Sign In</label>
+        <actions>
+            <adminhtml_index_forgotpassword>
+                <action>forgotpassword</action>
+                <expected_models>
+                    <admin__user/>
+                </expected_models>
+                <post_dispatch>postDispatchForgotPassword</post_dispatch>
+            </adminhtml_index_forgotpassword>
+        </actions>
+    </admin_login>
+
+    <cms_pages translate="label">
+        <label>CMS Pages</label>
+        <expected_models>
+            <cms__page/>
+        </expected_models>
+        <actions>
+            <adminhtml_cms_page_edit>
+                <action>view</action>
+            </adminhtml_cms_page_edit>
+
+            <adminhtml_cms_page_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_cms_page_edit />
+                </skip_on_back>
+            </adminhtml_cms_page_save>
+
+            <adminhtml_cms_page_delete>
+                <action>delete</action>
+            </adminhtml_cms_page_delete>
+        </actions>
+    </cms_pages>
+
+    <cms_blocks translate="label">
+        <label>CMS Blocks</label>
+        <expected_models>
+            <cms__block/>
+        </expected_models>
+        <actions>
+            <adminhtml_cms_block_edit>
+                <action>view</action>
+            </adminhtml_cms_block_edit>
+
+            <adminhtml_cms_block_save>
+                <action>save</action>
+            </adminhtml_cms_block_save>
+
+            <adminhtml_cms_block_delete>
+                <action>delete</action>
+            </adminhtml_cms_block_delete>
+        </actions>
+    </cms_blocks>
+
+    <poll translate="label">
+        <label>CMS Polls</label>
+        <expected_models>
+            <poll__poll/>
+        </expected_models>
+        <actions>
+            <adminhtml_poll_edit>
+                <action>edit</action>
+            </adminhtml_poll_edit>
+
+            <adminhtml_poll_delete>
+                <action>delete</action>
+            </adminhtml_poll_delete>
+
+            <adminhtml_poll_validate>
+                <action>save</action>
+                <post_dispatch>postDispatchPollValidation</post_dispatch>
+            </adminhtml_poll_validate>
+        </actions>
+    </poll>
+
+    <customer translate="label">
+        <label>Customers</label>
+        <expected_models>
+            <customer__customer>
+                <skip_data>
+                    <new_password/>
+                    <password/>
+                    <password_hash/>
+                </skip_data>
+            </customer__customer>
+        </expected_models>
+        <actions>
+            <adminhtml_customer_edit>
+                <action>view</action>
+            </adminhtml_customer_edit>
+
+            <adminhtml_customer_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_customer_edit />
+                </skip_on_back>
+            </adminhtml_customer_save>
+
+            <adminhtml_customer_validate>
+                <action>save</action>
+                <post_dispatch>postDispatchCustomerValidate</post_dispatch>
+            </adminhtml_customer_validate>
+
+            <adminhtml_customer_delete>
+                <action>delete</action>
+            </adminhtml_customer_delete>
+
+            <adminhtml_customer_massSubscribe>
+                <action>massUpdate</action>
+            </adminhtml_customer_massSubscribe>
+
+            <adminhtml_customer_massUnsubscribe>
+                <action>massUpdate</action>
+            </adminhtml_customer_massUnsubscribe>
+
+            <adminhtml_customer_massDelete>
+                <action>massDelete</action>
+            </adminhtml_customer_massDelete>
+
+            <adminhtml_customer_exportCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_customer_exportCsv>
+
+            <adminhtml_customer_exportXml>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_customer_exportXml>
+
+            <adminhtml_customer_massAssignGroup>
+                <action>massUpdate</action>
+            </adminhtml_customer_massAssignGroup>
+        </actions>
+    </customer>
+
+    <customer_groups translate="label">
+        <label>Customer Groups</label>
+        <expected_models>
+            <customer__group/>
+        </expected_models>
+        <actions>
+            <adminhtml_customer_group_edit>
+                <action>view</action>
+            </adminhtml_customer_group_edit>
+
+            <adminhtml_customer_group_save>
+                <action>save</action>
+            </adminhtml_customer_group_save>
+
+            <adminhtml_customer_group_delete>
+                <action>delete</action>
+            </adminhtml_customer_group_delete>
+        </actions>
+    </customer_groups>
+
+    <reports translate="label">
+        <label>Reports</label>
+        <actions>
+            <adminhtml_report_sales_sales>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_sales_sales>
+
+            <adminhtml_report_sales_tax>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_sales_tax>
+
+            <adminhtml_report_sales_shipping>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_sales_shipping>
+
+            <adminhtml_report_sales_invoiced>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_sales_invoiced>
+
+            <adminhtml_report_sales_refunded>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_sales_refunded>
+
+            <adminhtml_report_sales_coupons>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_sales_coupons>
+
+            <adminhtml_report_shopcart_product>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_shopcart_product>
+
+            <adminhtml_report_shopcart_abandoned>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_shopcart_abandoned>
+
+            <adminhtml_report_product_sold>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_product_sold>
+
+            <adminhtml_report_product_ordered>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_product_ordered>
+
+            <adminhtml_report_product_viewed>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_product_viewed>
+
+            <adminhtml_report_product_lowstock>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_product_lowstock>
+
+            <adminhtml_report_product_downloads>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_product_downloads>
+
+            <adminhtml_report_customer_accounts>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_customer_accounts>
+
+            <adminhtml_report_customer_orders>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_customer_orders>
+
+            <adminhtml_report_customer_totals>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_customer_totals>
+
+            <adminhtml_report_review_customer>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_review_customer>
+
+            <adminhtml_report_review_product>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_review_product>
+
+            <adminhtml_report_tag_customer>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_tag_customer>
+
+            <adminhtml_report_tag_product>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_tag_product>
+
+            <adminhtml_report_tag_popular>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_tag_popular>
+
+            <adminhtml_report_search>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_search>
+
+            <adminhtml_report_invitation_index>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_invitation_index>
+
+            <adminhtml_report_invitation_customer>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_invitation_customer>
+
+            <adminhtml_report_invitation_order>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_invitation_order>
+
+            <adminhtml_report_invitation_order>
+                <action>view</action>
+                <post_dispatch>postDispatchReport</post_dispatch>
+            </adminhtml_report_invitation_order>
+
+            <adminhtml_report_sales_exportSalesCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportSalesCsv>
+            <adminhtml_report_sales_exportSalesExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportSalesExcel>
+            <adminhtml_report_sales_exportTaxCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportTaxCsv>
+            <adminhtml_report_sales_exportTaxExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportTaxExcel>
+            <adminhtml_report_sales_exportShippingCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportShippingCsv>
+            <adminhtml_report_sales_exportShippingExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportShippingExcel>
+            <adminhtml_report_sales_exportInvoicedCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportInvoicedCsv>
+            <adminhtml_report_sales_exportInvoicedExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportInvoicedExcel>
+            <adminhtml_report_sales_exportRefundedCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportRefundedCsv>
+            <adminhtml_report_sales_exportRefundedExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportRefundedExcel>
+            <adminhtml_report_sales_exportCouponsCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportCouponsCsv>
+            <adminhtml_report_sales_exportCouponsExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_sales_exportCouponsExcel>
+            <adminhtml_report_shopcart_exportProductCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_shopcart_exportProductCsv>
+            <adminhtml_report_shopcart_exportProductExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_shopcart_exportProductExcel>
+            <adminhtml_report_shopcart_exportAbandonedCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_shopcart_exportAbandonedCsv>
+            <adminhtml_report_shopcart_exportAbandonedExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_shopcart_exportAbandonedExcel>
+            <adminhtml_report_product_exportOrderedCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_product_exportOrderedCsv>
+            <adminhtml_report_product_exportOrderedExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_product_exportOrderedExcel>
+            <adminhtml_report_product_exportViewedCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_product_exportViewedCsv>
+            <adminhtml_report_product_exportViewedExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_product_exportViewedExcel>
+            <adminhtml_report_product_exportSoldCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_product_exportSoldCsv>
+            <adminhtml_report_product_exportSoldExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_product_exportSoldExcel>
+            <adminhtml_report_product_exportLowstockCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_product_exportLowstockCsv>
+            <adminhtml_report_product_exportLowstockExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_product_exportLowstockExcel>
+            <adminhtml_report_product_exportDownloadsCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_product_exportDownloadsCsv>
+            <adminhtml_report_product_exportDownloadsExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_product_exportDownloadsExcel>
+            <adminhtml_report_customer_exportAccountsCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_customer_exportAccountsCsv>
+            <adminhtml_report_customer_exportAccountsExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_customer_exportAccountsExcel>
+            <adminhtml_report_customer_exportTotalsCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_customer_exportTotalsCsv>
+            <adminhtml_report_customer_exportTotalsExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_customer_exportTotalsExcel>
+            <adminhtml_report_customer_exportOrdersCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_customer_exportOrdersCsv>
+            <adminhtml_report_customer_exportOrdersExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_customer_exportOrdersExcel>
+            <adminhtml_report_customer_customersegment_exportCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_customer_customersegment_exportCsv>
+            <adminhtml_report_customer_customersegment_exportExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_customer_customersegment_exportExcel>
+            <adminhtml_report_review_exportCustomerCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_review_exportCustomerCsv>
+            <adminhtml_report_review_exportCustomerExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_review_exportCustomerExcel>
+            <adminhtml_report_review_exportProductCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_review_exportProductCsv>
+            <adminhtml_report_review_exportProductExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_review_exportProductExcel>
+            <adminhtml_report_tag_exportCustomerCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_tag_exportCustomerCsv>
+            <adminhtml_report_tag_exportCustomerExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_tag_exportCustomerExcel>
+            <adminhtml_report_tag_exportProductCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_tag_exportProductCsv>
+            <adminhtml_report_tag_exportProductExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_tag_exportProductExcel>
+            <adminhtml_report_tag_exportPopularCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_tag_exportPopularCsv>
+            <adminhtml_report_tag_exportPopularExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_tag_exportPopularExcel>
+            <adminhtml_report_exportSearchCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_exportSearchCsv>
+            <adminhtml_report_exportSearchExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_exportSearchExcel>
+            <adminhtml_report_invitation_exportCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_invitation_exportCsv>
+            <adminhtml_report_invitation_exportExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_invitation_exportExcel>
+            <adminhtml_report_invitation_exportCustomerCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_invitation_exportCustomerCsv>
+            <adminhtml_report_invitation_exportCustomerExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_invitation_exportCustomerExcel>
+            <adminhtml_report_invitation_exportOrderCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_invitation_exportOrderCsv>
+            <adminhtml_report_invitation_exportOrderExcel>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_report_invitation_exportOrderExcel>
+
+        </actions>
+    </reports>
+
+    <adminhtml_system_config translate="label">
+        <label>System Configuration</label>
+        <actions>
+            <adminhtml_system_config_edit>
+                <action>view</action>
+                <post_dispatch>postDispatchConfigView</post_dispatch>
+            </adminhtml_system_config_edit>
+
+            <adminhtml_system_config_save>
+                <action>save</action>
+                <post_dispatch>postDispatchConfigSave</post_dispatch>
+                <skip_on_back>
+                    <adminhtml_system_config_edit/>
+                </skip_on_back>
+            </adminhtml_system_config_save>
+        </actions>
+    </adminhtml_system_config>
+
+    <catalogrule translate="label">
+        <label>Catalog Price Rules</label>
+        <expected_models>
+            <catalogrule__rule/>
+        </expected_models>
+        <actions>
+            <adminhtml_promo_catalog_edit>
+                <action>view</action>
+            </adminhtml_promo_catalog_edit>
+
+            <adminhtml_promo_catalog_save>
+                <action>save</action>
+                <post_dispatch>postDispatchPromoCatalogSaveAndApply</post_dispatch>
+                <skip_on_back>
+                    <adminhtml_promo_catalog_edit />
+                </skip_on_back>
+            </adminhtml_promo_catalog_save>
+
+            <adminhtml_promo_catalog_delete>
+                <action>delete</action>
+            </adminhtml_promo_catalog_delete>
+
+            <adminhtml_promo_catalog_applyRules>
+                <action>apply</action>
+                <post_dispatch>postDispatchPromoCatalogApply</post_dispatch>
+            </adminhtml_promo_catalog_applyRules>
+        </actions>
+    </catalogrule>
+
+    <salesrule translate="label">
+        <label>Shopping Cart Price Rules</label>
+        <expected_models>
+            <salesrule__rule/>
+        </expected_models>
+        <actions>
+            <adminhtml_promo_quote_edit>
+                <action>view</action>
+            </adminhtml_promo_quote_edit>
+
+            <adminhtml_promo_quote_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_promo_quote_edit />
+                </skip_on_back>
+            </adminhtml_promo_quote_save>
+
+            <adminhtml_promo_quote_delete>
+                <action>delete</action>
+            </adminhtml_promo_quote_delete>
+        </actions>
+    </salesrule>
+
+    <adminhtml_system_account translate="label">
+        <label>Admin My Account</label>
+        <expected_models>
+            <admin__user>
+                <skip_data>
+                    <password/>
+                    <new_password/>
+                    <password_confirmation/>
+                </skip_data>
+            </admin__user>
+        </expected_models>
+        <actions>
+            <adminhtml_system_account_index>
+                <action>view</action>
+            </adminhtml_system_account_index>
+
+            <adminhtml_system_account_save>
+                <action>save</action>
+            </adminhtml_system_account_save>
+        </actions>
+    </adminhtml_system_account>
+
+    <newsletter_queue translate="label">
+        <label>Newsletter Queue</label>
+        <expected_models>
+            <newsletter__queue/>
+        </expected_models>
+        <actions>
+            <adminhtml_newsletter_queue_edit>
+                <action>view</action>
+            </adminhtml_newsletter_queue_edit>
+
+            <adminhtml_newsletter_queue_save>
+                <action>save</action>
+            </adminhtml_newsletter_queue_save>
+        </actions>
+    </newsletter_queue>
+
+    <newsletter_templates translate="label">
+        <label>Newsletter Templates</label>
+        <expected_models>
+            <newsletter__template/>
+        </expected_models>
+        <actions>
+            <adminhtml_newsletter_template_save>
+                <action>save</action>
+            </adminhtml_newsletter_template_save>
+
+            <adminhtml_newsletter_template_edit>
+                <action>view</action>
+            </adminhtml_newsletter_template_edit>
+
+            <adminhtml_newsletter_template_delete>
+                <action>delete</action>
+            </adminhtml_newsletter_template_delete>
+
+            <adminhtml_newsletter_template_preview>
+                <action>preview</action>
+            </adminhtml_newsletter_template_preview>
+        </actions>
+    </newsletter_templates>
+
+    <newsletter_subscribers translate="label">
+        <label>Newsletter Subscribers</label>
+        <expected_models>
+            <newsletter__subscriber/>
+        </expected_models>
+        <actions>
+            <adminhtml_newsletter_subscriber_massUnsubscribe>
+                <action>massUpdate</action>
+            </adminhtml_newsletter_subscriber_massUnsubscribe>
+
+            <adminhtml_newsletter_subscriber_massDelete>
+                <action>massDelete</action>
+            </adminhtml_newsletter_subscriber_massDelete>
+
+            <adminhtml_newsletter_subscriber_exportCsv>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_newsletter_subscriber_exportCsv>
+
+            <adminhtml_newsletter_subscriber_exportXml>
+                <action>export</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_newsletter_subscriber_exportXml>
+        </actions>
+    </newsletter_subscribers>
+
+    <sales_orders translate="label">
+        <label>Sales Orders</label>
+        <expected_models>
+            <sales__order>
+                <additional_data>
+                    <increment_id />
+                </additional_data>
+            </sales__order>
+        </expected_models>
+        <actions>
+
+            <adminhtml_sales_order_pdfdocs>
+                <action>export</action>
+            </adminhtml_sales_order_pdfdocs>
+
+            <adminhtml_sales_order_view>
+                <action>view</action>
+            </adminhtml_sales_order_view>
+
+            <adminhtml_sales_order_create_reorder>
+                <action>reorder</action>
+            </adminhtml_sales_order_create_reorder>
+
+            <adminhtml_sales_order_edit_start>
+                <action>edit</action>
+            </adminhtml_sales_order_edit_start>
+
+            <adminhtml_sales_order_massHold>
+                <action>massUpdate</action>
+                <expected_models extends="merge">
+                    <sales__order_status_history/>
+                </expected_models>
+            </adminhtml_sales_order_massHold>
+
+            <adminhtml_sales_order_massUnhold>
+                <action>massUpdate</action>
+                <expected_models extends="merge">
+                    <sales__order_status_history/>
+                </expected_models>
+            </adminhtml_sales_order_massUnhold>
+
+            <adminhtml_sales_order_massCancel>
+                <action>massUpdate</action>
+                <expected_models extends="merge">
+                    <sales__order_status_history/>
+                </expected_models>
+            </adminhtml_sales_order_massCancel>
+
+            <adminhtml_sales_order_hold>
+                <action>save</action>
+                <expected_models extends="merge">
+                    <sales__order_status_history/>
+                </expected_models>
+            </adminhtml_sales_order_hold>
+
+            <adminhtml_sales_order_unhold>
+                <action>save</action>
+                <expected_models extends="merge">
+                    <sales__order_status_history/>
+                </expected_models>
+            </adminhtml_sales_order_unhold>
+
+            <adminhtml_sales_order_cancel>
+                <action>save</action>
+                <expected_models extends="merge">
+                    <sales__order_status_history/>
+                </expected_models>
+            </adminhtml_sales_order_cancel>
+
+            <adminhtml_sales_order_create_save>
+                <action>save</action>
+                <expected_models extends="merge">
+                    <customer__customer/>
+                    <customer__address/>
+                    <sales__order_status_history/>
+                </expected_models>
+            </adminhtml_sales_order_create_save>
+
+            <adminhtml_sales_order_edit_save>
+                <action>save</action>
+                <expected_models extends="merge">
+                    <customer__customer/>
+                    <customer__address/>
+                    <sales__order_status_history/>
+                </expected_models>
+            </adminhtml_sales_order_edit_save>
+
+            <adminhtml_sales_order_email>
+                <action>send</action>
+                <expected_models extends="merge">
+                    <sales__order_status_history/>
+                </expected_models>
+            </adminhtml_sales_order_email>
+
+            <adminhtml_sales_order_pdfinvoices>
+                <action>export</action>
+            </adminhtml_sales_order_pdfinvoices>
+
+            <adminhtml_sales_order_pdfshipments>
+                <action>export</action>
+            </adminhtml_sales_order_pdfshipments>
+
+            <adminhtml_sales_order_pdfcreditmemos>
+                <action>export</action>
+            </adminhtml_sales_order_pdfcreditmemos>
+
+        </actions>
+    </sales_orders>
+
+    <sales_order_status translate="label">
+        <label>Sales Order Status</label>
+        <actions>
+            <adminhtml_sales_order_addComment>
+                <action>save</action>
+                <expected_models>
+                    <sales__order_status_history/>
+                </expected_models>
+            </adminhtml_sales_order_addComment>
+        </actions>
+    </sales_order_status>
+
+    <sales_invoices translate="label">
+        <label>Sales Invoices</label>
+        <expected_models>
+            <sales__order_invoice>
+                <additional_data>
+                    <increment_id />
+                </additional_data>
+            </sales__order_invoice>
+        </expected_models>
+        <actions>
+            <adminhtml_sales_invoice_view>
+                <action>view</action>
+            </adminhtml_sales_invoice_view>
+
+            <adminhtml_sales_order_invoice_view>
+                <action>view</action>
+            </adminhtml_sales_order_invoice_view>
+
+            <adminhtml_sales_order_invoice_save>
+                <action>save</action>
+                <expected_models extends="merge">
+                    <sales__order_invoice_comment />
+                </expected_models>
+                <skip_on_back>
+                    <adminhtml_system_config_edit/>
+                    <adminhtml_sales_order_view/>
+                </skip_on_back>
+            </adminhtml_sales_order_invoice_save>
+
+            <adminhtml_sales_order_invoice_addComment>
+                <action>save</action>
+                <expected_models>
+                    <sales__order_invoice_comment/>
+                </expected_models>
+            </adminhtml_sales_order_invoice_addComment>
+
+            <adminhtml_sales_invoice_pdfinvoices>
+                <action>export</action>
+            </adminhtml_sales_invoice_pdfinvoices>
+
+            <adminhtml_sales_order_invoice_print>
+                <action>print</action>
+            </adminhtml_sales_order_invoice_print>
+            <adminhtml_sales_order_invoice_email>
+                <action>email</action>
+                <skip_on_back>
+                    <adminhtml_sales_invoice_view />
+                </skip_on_back>
+            </adminhtml_sales_order_invoice_email>
+        </actions>
+    </sales_invoices>
+
+    <sales_shipments translate="label">
+        <label>Sales Shipments</label>
+        <expected_models>
+            <sales__order_shipment>
+                <additional_data>
+                    <increment_id />
+                </additional_data>
+            </sales__order_shipment>
+        </expected_models>
+        <actions>
+            <adminhtml_sales_shipment_view>
+                <action>view</action>
+            </adminhtml_sales_shipment_view>
+
+            <adminhtml_sales_order_shipment_view>
+                <action>view</action>
+            </adminhtml_sales_order_shipment_view>
+
+            <adminhtml_sales_order_shipment_save>
+                <action>save</action>
+                <expected_models extends="merge">
+                    <sales__order_shipment_comment />
+                </expected_models>
+                <skip_on_back>
+                    <adminhtml_sales_order_view/>
+                </skip_on_back>
+            </adminhtml_sales_order_shipment_save>
+
+            <adminhtml_sales_order_shipment_addComment>
+                <action>save</action>
+                <expected_models>
+                    <sales__order_shipment_comment/>
+                </expected_models>
+            </adminhtml_sales_order_shipment_addComment>
+
+            <adminhtml_sales_shipment_pdfshipments>
+                <action>export</action>
+            </adminhtml_sales_shipment_pdfshipments>
+
+            <adminhtml_sales_order_shipment_print>
+                <action>print</action>
+            </adminhtml_sales_order_shipment_print>
+            <adminhtml_sales_order_shipment_email>
+                <action>email</action>
+                <skip_on_back>
+                    <adminhtml_sales_shipment_view />
+                </skip_on_back>
+            </adminhtml_sales_order_shipment_email>
+
+            <adminhtml_sales_order_shipment_addTrack>
+                <action>save</action>
+                <expected_models>
+                    <sales__order_shipment_track/>
+                </expected_models>
+            </adminhtml_sales_order_shipment_addTrack>
+        </actions>
+    </sales_shipments>
+
+    <sales_creditmemos translate="label">
+        <label>Sales Credit Memos</label>
+        <expected_models>
+            <sales__order_creditmemo>
+                <additional_data>
+                    <increment_id />
+                </additional_data>
+            </sales__order_creditmemo>
+        </expected_models>
+        <actions>
+            <adminhtml_sales_creditmemo_view>
+                <action>view</action>
+            </adminhtml_sales_creditmemo_view>
+
+            <adminhtml_sales_order_creditmemo_view>
+                <action>view</action>
+            </adminhtml_sales_order_creditmemo_view>
+
+            <adminhtml_sales_order_creditmemo_save>
+                <action>save</action>
+                <expected_models extends="merge">
+                    <sales__order_creditmemo_comment />
+                </expected_models>
+                <skip_on_back>
+                    <adminhtml_sales_order_view/>
+                </skip_on_back>
+            </adminhtml_sales_order_creditmemo_save>
+
+            <adminhtml_sales_order_creditmemo_addComment>
+                <action>save</action>
+                <expected_models>
+                    <sales__order_creditmemo_comment/>
+                </expected_models>
+            </adminhtml_sales_order_creditmemo_addComment>
+
+            <adminhtml_sales_creditmemo_pdfcreditmemos>
+                <action>export</action>
+            </adminhtml_sales_creditmemo_pdfcreditmemos>
+
+            <adminhtml_sales_order_creditmemo_print>
+                <action>print</action>
+            </adminhtml_sales_order_creditmemo_print>
+            <adminhtml_sales_order_creditmemo_email>
+                <action>email</action>
+                <skip_on_back>
+                    <adminhtml_sales_creditmemo_view />
+                </skip_on_back>
+            </adminhtml_sales_order_creditmemo_email>
+        </actions>
+    </sales_creditmemos>
+
+    <sales_agreement translate="label">
+        <label>Checkout Terms and Conditions</label>
+        <expected_models>
+            <checkout__agreement/>
+        </expected_models>
+        <actions>
+            <adminhtml_checkout_agreement_edit>
+                <action>view</action>
+            </adminhtml_checkout_agreement_edit>
+
+            <adminhtml_checkout_agreement_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_checkout_agreement_edit/>
+                </skip_on_back>
+            </adminhtml_checkout_agreement_save>
+
+            <adminhtml_checkout_agreement_delete>
+                <action>delete</action>
+            </adminhtml_checkout_agreement_delete>
+        </actions>
+    </sales_agreement>
+
+    <api_roles translate="label">
+        <label>Web Services API Roles</label>
+        <expected_models>
+            <api__roles/>
+        </expected_models>
+        <actions>
+            <adminhtml_api_role_editrole>
+                <action>view</action>
+            </adminhtml_api_role_editrole>
+
+            <adminhtml_api_role_saverole>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_api_role_editrole/>
+                </skip_on_back>
+            </adminhtml_api_role_saverole>
+
+            <adminhtml_api_role_delete>
+                <action>delete</action>
+            </adminhtml_api_role_delete>
+        </actions>
+    </api_roles>
+
+    <api_users translate="label">
+        <label>Web Services API Users</label>
+        <expected_models>
+            <api__user>
+                <skip_data>
+                    <api_key/>
+                    <api_key_confirmation/>
+                </skip_data>
+            </api__user>
+        </expected_models>
+        <actions>
+            <adminhtml_api_user_edit>
+                <action>view</action>
+            </adminhtml_api_user_edit>
+
+            <adminhtml_api_user_save>
+                <action>save</action>
+            </adminhtml_api_user_save>
+
+            <adminhtml_api_user_delete>
+                <action>delete</action>
+            </adminhtml_api_user_delete>
+        </actions>
+    </api_users>
+
+    <adminhtml_permission_roles translate="label">
+        <label>Admin Permission Roles</label>
+        <expected_models>
+            <admin__roles/>
+        </expected_models>
+        <actions>
+            <adminhtml_permissions_role_editrole>
+                <action>view</action>
+            </adminhtml_permissions_role_editrole>
+
+            <adminhtml_permissions_role_saverole>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_permissions_role_editrole/>
+                </skip_on_back>
+            </adminhtml_permissions_role_saverole>
+
+            <adminhtml_permissions_role_delete>
+                <action>delete</action>
+            </adminhtml_permissions_role_delete>
+        </actions>
+    </adminhtml_permission_roles>
+
+    <adminhtml_permission_users translate="label">
+        <label>Admin Permission Users</label>
+        <expected_models>
+            <admin__user>
+                <skip_data>
+                    <password/>
+                    <new_password/>
+                    <password_confirmation/>
+                </skip_data>
+            </admin__user>
+        </expected_models>
+        <actions>
+            <adminhtml_permissions_user_edit>
+                <action>view</action>
+            </adminhtml_permissions_user_edit>
+
+            <adminhtml_permissions_user_save>
+                <action>save</action>
+            </adminhtml_permissions_user_save>
+
+            <adminhtml_permissions_user_delete>
+                <action>delete</action>
+            </adminhtml_permissions_user_delete>
+        </actions>
+    </adminhtml_permission_users>
+
+    <adminhtml_system_websites translate="label">
+        <label>Manage Websites</label>
+        <expected_models>
+            <core__website/>
+        </expected_models>
+        <actions>
+            <adminhtml_system_store_editWebsite>
+                <action>view</action>
+            </adminhtml_system_store_editWebsite>
+
+            <adminhtml_system_store_save>
+                <expected_models extends="merge">
+                    <core__store_group/>
+                    <core__store/>
+                </expected_models>
+                <action>save</action>
+            </adminhtml_system_store_save>
+
+            <adminhtml_system_store_deleteWebsitePost>
+                <action>delete</action>
+            </adminhtml_system_store_deleteWebsitePost>
+        </actions>
+    </adminhtml_system_websites>
+
+    <adminhtml_system_store_groups translate="label">
+        <label>Manage Stores</label>
+        <expected_models>
+            <core__store/>
+        </expected_models>
+        <actions>
+            <adminhtml_system_store_editStore>
+                <action>view</action>
+            </adminhtml_system_store_editStore>
+
+            <adminhtml_system_store_deleteStorePost>
+                <action>delete</action>
+            </adminhtml_system_store_deleteStorePost>
+        </actions>
+    </adminhtml_system_store_groups>
+
+    <adminhtml_system_stores translate="label">
+        <label>Manage Store Views</label>
+        <expected_models>
+            <core__store_group/>
+        </expected_models>
+        <actions>
+            <adminhtml_system_store_deleteGroupPost>
+                <action>delete</action>
+            </adminhtml_system_store_deleteGroupPost>
+
+            <adminhtml_system_store_editGroup>
+                <action>view</action>
+            </adminhtml_system_store_editGroup>
+        </actions>
+    </adminhtml_system_stores>
+
+    <adminhtml_system_design translate="label">
+        <label>Manage Design</label>
+        <expected_models>
+            <core__design/>
+        </expected_models>
+        <actions>
+            <adminhtml_system_design_save>
+                <action>save</action>
+            </adminhtml_system_design_save>
+
+            <adminhtml_system_design_delete>
+                <action>delete</action>
+            </adminhtml_system_design_delete>
+        </actions>
+    </adminhtml_system_design>
+
+    <adminhtml_system_convert_gui translate="label">
+        <label>Import/Export Profiles</label>
+        <expected_models>
+            <dataflow__profile/>
+        </expected_models>
+        <actions>
+            <adminhtml_system_convert_gui_save>
+                <action>save</action>
+            </adminhtml_system_convert_gui_save>
+
+            <adminhtml_system_convert_gui_edit>
+                <action>edit</action>
+            </adminhtml_system_convert_gui_edit>
+
+            <adminhtml_system_convert_gui_delete>
+                <action>delete</action>
+            </adminhtml_system_convert_gui_delete>
+
+            <adminhtml_system_convert_gui_run>
+                <action>run</action>
+                <post_dispatch>postDispatchSystemImportExportRun</post_dispatch>
+            </adminhtml_system_convert_gui_run>
+        </actions>
+    </adminhtml_system_convert_gui>
+
+    <adminhtml_system_currency translate="label">
+        <label>Manage Currency Rates</label>
+        <actions>
+            <adminhtml_system_currency_saveRates>
+                <action>save</action>
+                <post_dispatch>postDispatchSystemCurrencySave</post_dispatch>
+            </adminhtml_system_currency_saveRates>
+        </actions>
+    </adminhtml_system_currency>
+
+    <adminhtml_system_email_template translate="label">
+        <label>Transactional Emails</label>
+
+        <expected_models>
+            <core__email_template/>
+        </expected_models>
+
+        <actions>
+            <adminhtml_system_email_template_save>
+                <action>save</action>
+            </adminhtml_system_email_template_save>
+
+            <adminhtml_system_email_template_edit>
+                <action>edit</action>
+            </adminhtml_system_email_template_edit>
+
+            <adminhtml_system_email_template_delete>
+                <action>delete</action>
+            </adminhtml_system_email_template_delete>
+        </actions>
+    </adminhtml_system_email_template>
+
+    <adminhtml_system_variable translate="label">
+        <label>Custom Variables</label>
+        <expected_models>
+            <core__variable/>
+        </expected_models>
+        <actions>
+            <adminhtml_system_variable_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_system_variable_edit/>
+                </skip_on_back>
+            </adminhtml_system_variable_save>
+
+            <adminhtml_system_variable_edit>
+                <action>view</action>
+            </adminhtml_system_variable_edit>
+
+            <adminhtml_system_variable_delete>
+                <action>delete</action>
+            </adminhtml_system_variable_delete>
+        </actions>
+    </adminhtml_system_variable>
+
+    <adminhtml_system_backups translate="label">
+        <label>System Backups</label>
+        <actions>
+            <adminhtml_system_backup_create translate="label">
+                <action>create</action>
+                <label>Create</label>
+                <post_dispatch>postDispatchSystemBackupsCreate</post_dispatch>
+            </adminhtml_system_backup_create>
+
+            <adminhtml_system_backup_massDelete translate="label">
+                <action>massDelete</action>
+                <label>Mass Delete</label>
+                <post_dispatch>postDispatchSystemBackupsDelete</post_dispatch>
+            </adminhtml_system_backup_massDelete>
+
+            <adminhtml_system_backup_rollback translate="label">
+                <action>rollback</action>
+                <label>Rollback</label>
+                <post_dispatch>postDispatchSystemRollback</post_dispatch>
+            </adminhtml_system_backup_rollback>
+        </actions>
+    </adminhtml_system_backups>
+
+    <tax_customer_tax_classes translate="label">
+        <label>Customer Tax Classes</label>
+        <expected_models>
+            <tax__class/>
+        </expected_models>
+        <actions>
+            <adminhtml_tax_class_customer_edit>
+                <action>view</action>
+            </adminhtml_tax_class_customer_edit>
+
+            <adminhtml_tax_class_customer_delete>
+                <action>delete</action>
+            </adminhtml_tax_class_customer_delete>
+
+            <adminhtml_tax_class_save>
+                <action>save</action>
+                <post_dispatch>postDispatchTaxClassSave</post_dispatch>
+            </adminhtml_tax_class_save>
+        </actions>
+    </tax_customer_tax_classes>
+
+    <tax_product_tax_classes translate="label">
+        <label>Catalog Product Tax Classes</label>
+        <expected_models>
+            <tax__class/>
+        </expected_models>
+        <actions>
+            <adminhtml_tax_class_product_edit>
+                <action>view</action>
+            </adminhtml_tax_class_product_edit>
+
+            <adminhtml_tax_class_product_delete>
+                <action>delete</action>
+            </adminhtml_tax_class_product_delete>
+        </actions>
+    </tax_product_tax_classes>
+
+    <tax_rules translate="label">
+        <label>Tax Rules</label>
+        <expected_models>
+            <tax__calculation_rule/>
+        </expected_models>
+        <actions>
+            <adminhtml_tax_rule_edit>
+                <action>view</action>
+            </adminhtml_tax_rule_edit>
+
+            <adminhtml_tax_rule_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_tax_rule_edit />
+                </skip_on_back>
+            </adminhtml_tax_rule_save>
+
+            <adminhtml_tax_rule_delete>
+                <action>delete</action>
+            </adminhtml_tax_rule_delete>
+        </actions>
+    </tax_rules>
+
+    <tax_rates translate="label">
+        <label>Tax Rates</label>
+        <expected_models>
+            <tax__calculation_rate/>
+        </expected_models>
+        <actions>
+            <adminhtml_tax_rate_edit>
+                <action>view</action>
+            </adminhtml_tax_rate_edit>
+
+            <adminhtml_tax_rate_save>
+                <action>save</action>
+            </adminhtml_tax_rate_save>
+
+            <adminhtml_tax_rate_importPost>
+                <action>import</action>
+                <post_dispatch>postDispatchTaxRatesImport</post_dispatch>
+            </adminhtml_tax_rate_importPost>
+
+            <adminhtml_tax_rate_exportPost>
+                <action>export</action>
+                <post_dispatch>postDispatchTaxRatesExport</post_dispatch>
+            </adminhtml_tax_rate_exportPost>
+
+            <adminhtml_tax_rate_delete>
+                <action>delete</action>
+            </adminhtml_tax_rate_delete>
+        </actions>
+    </tax_rates>
+
+    <google_sitemap translate="label">
+        <label>Google Sitemap</label>
+        <expected_models>
+            <sitemap__sitemap/>
+        </expected_models>
+        <actions>
+            <adminhtml_sitemap_edit>
+                <action>view</action>
+            </adminhtml_sitemap_edit>
+
+            <adminhtml_sitemap_save>
+                <action>save</action>
+            </adminhtml_sitemap_save>
+
+            <adminhtml_sitemap_delete>
+                <action>delete</action>
+            </adminhtml_sitemap_delete>
+
+            <adminhtml_sitemap_generate>
+                <action>save</action>
+            </adminhtml_sitemap_generate>
+        </actions>
+    </google_sitemap>
+
+    <googlebase_types translate="label">
+        <label>Google Base</label>
+        <expected_models>
+            <googlebase__type/>
+        </expected_models>
+        <actions>
+            <googlebase_types_edit translate="label">
+                <label>Edit</label>
+                <action>edit</action>
+            </googlebase_types_edit>
+
+            <googlebase_types_save>
+                <action>save</action>
+            </googlebase_types_save>
+
+            <googlebase_types_delete>
+                <action>delete</action>
+            </googlebase_types_delete>
+        </actions>
+    </googlebase_types>
+
+    <widget_instance translate="label">
+        <label>Widget Instances</label>
+        <expected_models>
+            <widget__widget_instance/>
+        </expected_models>
+        <actions>
+            <adminhtml_widget_instance_edit>
+                <action>view</action>
+            </adminhtml_widget_instance_edit>
+            <adminhtml_widget_instance_save>
+                <action>save</action>
+                <skip_on_back>
+                    <adminhtml_widget_instance_edit />
+                </skip_on_back>
+            </adminhtml_widget_instance_save>
+            <adminhtml_widget_instance_delete>
+                <action>delete</action>
+            </adminhtml_widget_instance_delete>
+        </actions>
+    </widget_instance>
+
+    <index_management translate="label">
+        <label>Index Management</label>
+        <expected_models>
+            <index__process/>
+        </expected_models>
+        <actions>
+            <adminhtml_process_edit>
+                <action>view</action>
+            </adminhtml_process_edit>
+            <adminhtml_process_save>
+                <action>save</action>
+            </adminhtml_process_save>
+            <adminhtml_process_massReindex>
+                <action>massUpdate</action>
+                <post_dispatch>postDispatchReindexProcess</post_dispatch>
+            </adminhtml_process_massReindex>
+            <adminhtml_process_massChangeMode>
+                <action>massUpdate</action>
+            </adminhtml_process_massChangeMode>
+            <adminhtml_process_reindexProcess>
+                <action>reindex_process</action>
+                <post_dispatch>postDispatchReindexProcess</post_dispatch>
+            </adminhtml_process_reindexProcess>
+        </actions>
+    </index_management>
+
+    <cache_management translate="label">
+        <label>Cache Management</label>
+        <actions>
+            <adminhtml_cache_massEnable>
+                <action>save</action>
+                <post_dispatch>postDispatchSaveCacheSettings</post_dispatch>
+            </adminhtml_cache_massEnable>
+            <adminhtml_cache_massDisable>
+                <action>save</action>
+                <post_dispatch>postDispatchSaveCacheSettings</post_dispatch>
+            </adminhtml_cache_massDisable>
+            <adminhtml_cache_massRefresh>
+                <action>save</action>
+                <post_dispatch>postDispatchSaveCacheSettings</post_dispatch>
+            </adminhtml_cache_massRefresh>
+            <adminhtml_cache_cleanImages>
+                <action>clean</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_cache_cleanImages>
+            <adminhtml_cache_cleanSwatches>
+                <action>clean</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_cache_cleanSwatches>
+            <adminhtml_cache_cleanMedia>
+                <action>clean</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_cache_cleanMedia>
+            <adminhtml_cache_flushSystem>
+                <action>flush</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_cache_flushSystem>
+            <adminhtml_cache_flushAll>
+                <action>flush</action>
+                <post_dispatch>postDispatchSimpleSave</post_dispatch>
+            </adminhtml_cache_flushAll>
+        </actions>
+    </cache_management>
+
+    <paypal_settlement_reports translate="label">
+        <label>PayPal Settlement Reports</label>
+        <actions>
+            <adminhtml_paypal_reports_details>
+                <action>view</action>
+                <expected_models>
+                    <paypal__report_settlement_row/>
+                </expected_models>
+            </adminhtml_paypal_reports_details>
+            <adminhtml_paypal_reports_fetch>
+                <action>fetch</action>
+                <expected_models>
+                    <paypal__report_settlement/>
+                </expected_models>
+            </adminhtml_paypal_reports_fetch>
+        </actions>
+    </paypal_settlement_reports>
+
+    <adminhtml_sales_recurring_profile translate="label">
+        <label>Recurring Profiles</label>
+        <expected_models>
+            <sales_recurring_profile/>
+        </expected_models>
+        <actions>
+            <adminhtml_sales_recurring_profile_updateProfile>
+                <action>updateProfile</action>
+                <post_dispatch>postDispatchRecurringProfilesUpdate</post_dispatch>
+            </adminhtml_sales_recurring_profile_updateProfile>
+
+            <adminhtml_sales_recurring_profile_updateState>
+                <action>updateState</action>
+                <post_dispatch>postDispatchRecurringProfilesUpdate</post_dispatch>
+            </adminhtml_sales_recurring_profile_updateState>
+        </actions>
+    </adminhtml_sales_recurring_profile>
+</logging>

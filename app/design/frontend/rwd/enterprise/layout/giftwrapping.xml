@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<layout version="0.1.0">
+    <checkout_onepage_additional>
+        <reference name="root">
+            <block type="enterprise_giftwrapping/checkout_options" name="checkout.options" output="toHtml" template="giftwrapping/checkout/options.phtml" />
+        </reference>
+    </checkout_onepage_additional>
+
+    <checkout_multishipping_shipping>
+        <reference name="content">
+            <block type="enterprise_giftwrapping/checkout_options" name="checkout.options" template="giftwrapping/checkout/options.phtml" />
+        </reference>
+    </checkout_multishipping_shipping>
+
+    <checkout_onepage_review>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+    </checkout_onepage_review>
+
+    <checkout_multishipping_overview>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+    </checkout_multishipping_overview>
+
+    <paypal_express_review>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+    </paypal_express_review>
+
+    <sales_order_view>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+        <reference name="order_totals">
+            <block type="enterprise_giftwrapping/sales_totals" name="giftwrapping" />
+        </reference>
+    </sales_order_view>
+
+    <sales_order_print>
+         <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+        <reference name="order_totals">
+            <block type="enterprise_giftwrapping/sales_totals" name="giftwrapping" />
+        </reference>
+    </sales_order_print>
+
+    <sales_email_order_items>
+         <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+        <reference name="order_totals">
+            <block type="enterprise_giftwrapping/sales_totals" name="giftwrapping" />
+        </reference>
+    </sales_email_order_items>
+
+    <sales_order_invoice>
+         <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+        <reference name="invoice_totals">
+            <block type="enterprise_giftwrapping/sales_totals" name="giftwrapping" />
+        </reference>
+    </sales_order_invoice>
+
+    <sales_order_printinvoice>
+         <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+        <reference name="invoice_totals">
+            <block type="enterprise_giftwrapping/sales_totals" name="giftwrapping" />
+        </reference>
+    </sales_order_printinvoice>
+
+    <sales_email_order_invoice_items>
+         <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+        <reference name="invoice_totals">
+            <block type="enterprise_giftwrapping/sales_totals" name="giftwrapping" />
+        </reference>
+    </sales_email_order_invoice_items>
+
+    <sales_order_creditmemo>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+        <reference name="creditmemo_totals">
+            <block type="enterprise_giftwrapping/sales_totals" name="giftwrapping" />
+        </reference>
+    </sales_order_creditmemo>
+
+    <sales_order_printcreditmemo>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+        <reference name="creditmemo_totals">
+            <block type="enterprise_giftwrapping/sales_totals" name="giftwrapping" />
+        </reference>
+    </sales_order_printcreditmemo>
+
+    <sales_email_order_creditmemo_items>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+        <reference name="creditmemo_totals">
+            <block type="enterprise_giftwrapping/sales_totals" name="giftwrapping" />
+        </reference>
+    </sales_email_order_creditmemo_items>
+
+    <sales_order_shipment>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+    </sales_order_shipment>
+
+    <sales_order_printshipment>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+    </sales_order_printshipment>
+
+    <sales_email_order_shipment_items>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftwrapping/product_info" name="giftwrapping.product.info" template="giftwrapping/product/info.phtml" />
+        </reference>
+    </sales_email_order_shipment_items>
+</layout>

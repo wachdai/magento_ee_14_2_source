@@ -1,0 +1,283 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
+  <testCase name="Enterprise\GiftCard\Test\TestCase\CreateGiftCardProductEntityTest">
+    <variation name="CreateGiftCardProductEntityTestVariation1" firstConstraint="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" method="test">
+      <data name="description" xsi:type="string">Gift Card with virtual type.</data>
+      <data name="product/data/url_key" xsi:type="string">giftcardproduct-%isolation%</data>
+      <data name="product/data/status" xsi:type="string">Enabled</data>
+      <data name="product/data/name" xsi:type="string">GiftCardProduct %isolation%</data>
+      <data name="product/data/description" xsi:type="string">Description for gift card product %isolation%.</data>
+      <data name="product/data/short_description" xsi:type="string">Short description for gift card product %isolation%.</data>
+      <data name="product/data/sku" xsi:type="string">giftcard_sku_%isolation%</data>
+      <data name="product/data/weight" xsi:type="string">-</data>
+      <data name="product/data/visibility" xsi:type="string">Catalog, Search</data>
+      <data name="product/data/giftcard_type" xsi:type="string">Virtual</data>
+      <data name="product/data/giftcard_amounts/0" xsi:type="string">10</data>
+      <data name="product/data/giftcard_amounts/1" xsi:type="string">-</data>
+      <data name="product/data/allow_open_amount" xsi:type="string">No</data>
+      <data name="product/data/open_amount_min" xsi:type="string">-</data>
+      <data name="product/data/open_amount_max" xsi:type="string">-</data>
+      <data name="product/data/stock_data/qty" xsi:type="string">10</data>
+      <data name="product/data/stock_data/is_in_stock" xsi:type="string">In Stock</data>
+      <data name="product/data/use_config_lifetime" xsi:type="string">Yes</data>
+      <data name="product/data/lifetime" xsi:type="string">-</data>
+      <data name="product/data/custom_options/preset" xsi:type="string">-</data>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" prev="Mage\Catalog\Test\Constraint\AssertProductSaveMessage"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" next="Mage\Catalog\Test\Constraint\AssertProductSearchable" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSearchable" next="Mage\Catalog\Test\Constraint\AssertProductInStock" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductInStock" next="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory" prev="Mage\Catalog\Test\Constraint\AssertProductSearchable"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage" prev="Mage\Catalog\Test\Constraint\AssertProductInStock"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductAddToCartForm" prev="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductAddToCartForm" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage"/>
+    </variation>
+    <variation name="CreateGiftCardProductEntityTestVariation2" firstConstraint="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" method="test">
+      <data name="description" xsi:type="string">Gift Card with physical type and double amount.</data>
+      <data name="product/data/url_key" xsi:type="string">giftcardproduct-%isolation%</data>
+      <data name="product/data/status" xsi:type="string">Enabled</data>
+      <data name="product/data/name" xsi:type="string">GiftCardProduct %isolation%</data>
+      <data name="product/data/description" xsi:type="string">Description for gift card product %isolation%.</data>
+      <data name="product/data/short_description" xsi:type="string">Short description for gift card product %isolation%.</data>
+      <data name="product/data/sku" xsi:type="string">giftcard_sku_%isolation%</data>
+      <data name="product/data/weight" xsi:type="string">1</data>
+      <data name="product/data/visibility" xsi:type="string">Catalog, Search</data>
+      <data name="product/data/giftcard_type" xsi:type="string">Physical</data>
+      <data name="product/data/giftcard_amounts/0" xsi:type="string">30</data>
+      <data name="product/data/giftcard_amounts/1" xsi:type="string">20</data>
+      <data name="product/data/allow_open_amount" xsi:type="string">No</data>
+      <data name="product/data/open_amount_min" xsi:type="string">-</data>
+      <data name="product/data/open_amount_max" xsi:type="string">-</data>
+      <data name="product/data/stock_data/qty" xsi:type="string">10</data>
+      <data name="product/data/stock_data/is_in_stock" xsi:type="string">In Stock</data>
+      <data name="product/data/use_config_lifetime" xsi:type="string">No</data>
+      <data name="product/data/lifetime" xsi:type="string">365</data>
+      <data name="product/data/custom_options/preset" xsi:type="string">-</data>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" prev="Mage\Catalog\Test\Constraint\AssertProductSaveMessage"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" next="Mage\Catalog\Test\Constraint\AssertProductSearchable" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSearchable" next="Mage\Catalog\Test\Constraint\AssertProductInStock" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductInStock" next="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory" prev="Mage\Catalog\Test\Constraint\AssertProductSearchable"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage" prev="Mage\Catalog\Test\Constraint\AssertProductInStock"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductAddToCartForm" prev="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductAddToCartForm" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage"/>
+    </variation>
+    <variation name="CreateGiftCardProductEntityTestVariation3" firstConstraint="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" method="test">
+      <data name="description" xsi:type="string">Gift Card with combined type and open amount.</data>
+      <data name="product/data/url_key" xsi:type="string">giftcardproduct-%isolation%</data>
+      <data name="product/data/status" xsi:type="string">Enabled</data>
+      <data name="product/data/name" xsi:type="string">GiftCardProduct %isolation%</data>
+      <data name="product/data/description" xsi:type="string">Description for gift card product %isolation%.</data>
+      <data name="product/data/short_description" xsi:type="string">Short description for gift card product %isolation%.</data>
+      <data name="product/data/sku" xsi:type="string">giftcard_sku_%isolation%</data>
+      <data name="product/data/weight" xsi:type="string">1</data>
+      <data name="product/data/visibility" xsi:type="string">Catalog, Search</data>
+      <data name="product/data/giftcard_type" xsi:type="string">Combined</data>
+      <data name="product/data/giftcard_amounts/0" xsi:type="string">-</data>
+      <data name="product/data/giftcard_amounts/1" xsi:type="string">-</data>
+      <data name="product/data/allow_open_amount" xsi:type="string">Yes</data>
+      <data name="product/data/open_amount_min" xsi:type="string">1</data>
+      <data name="product/data/open_amount_max" xsi:type="string">100</data>
+      <data name="product/data/stock_data/qty" xsi:type="string">10</data>
+      <data name="product/data/stock_data/is_in_stock" xsi:type="string">In Stock</data>
+      <data name="product/data/use_config_lifetime" xsi:type="string">Yes</data>
+      <data name="product/data/lifetime" xsi:type="string">-</data>
+      <data name="product/data/custom_options/preset" xsi:type="string">-</data>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" prev="Mage\Catalog\Test\Constraint\AssertProductSaveMessage"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" next="Mage\Catalog\Test\Constraint\AssertProductSearchable" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSearchable" next="Mage\Catalog\Test\Constraint\AssertProductInStock" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductInStock" next="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory" prev="Mage\Catalog\Test\Constraint\AssertProductSearchable"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage" prev="Mage\Catalog\Test\Constraint\AssertProductInStock"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductAddToCartForm" prev="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductAddToCartForm" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage"/>
+    </variation>
+    <variation name="CreateGiftCardProductEntityTestVariation4" firstConstraint="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" method="test">
+      <data name="description" xsi:type="string">Gift Card with combined type and custom options.</data>
+      <data name="product/data/url_key" xsi:type="string">giftcardproduct-%isolation%</data>
+      <data name="product/data/status" xsi:type="string">Enabled</data>
+      <data name="product/data/name" xsi:type="string">GiftCardProduct %isolation%</data>
+      <data name="product/data/description" xsi:type="string">Description for gift card product %isolation%.</data>
+      <data name="product/data/short_description" xsi:type="string">Short description for gift card product %isolation%.</data>
+      <data name="product/data/sku" xsi:type="string">giftcard_sku_%isolation%</data>
+      <data name="product/data/weight" xsi:type="string">1</data>
+      <data name="product/data/visibility" xsi:type="string">Catalog, Search</data>
+      <data name="product/data/giftcard_type" xsi:type="string">Combined</data>
+      <data name="product/data/giftcard_amounts/0" xsi:type="string">10</data>
+      <data name="product/data/giftcard_amounts/1" xsi:type="string">-</data>
+      <data name="product/data/allow_open_amount" xsi:type="string">No</data>
+      <data name="product/data/open_amount_min" xsi:type="string">-</data>
+      <data name="product/data/open_amount_max" xsi:type="string">-</data>
+      <data name="product/data/stock_data/qty" xsi:type="string">10</data>
+      <data name="product/data/stock_data/is_in_stock" xsi:type="string">In Stock</data>
+      <data name="product/data/use_config_lifetime" xsi:type="string">Yes</data>
+      <data name="product/data/lifetime" xsi:type="string">-</data>
+      <data name="product/data/custom_options/preset" xsi:type="string">all_types</data>
+      <data name="issue" xsi:type="string">Bug: MTA-1562</data>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" prev="Mage\Catalog\Test\Constraint\AssertProductSaveMessage"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" next="Mage\Catalog\Test\Constraint\AssertProductSearchable" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSearchable" next="Mage\Catalog\Test\Constraint\AssertProductInStock" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductInStock" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage" prev="Mage\Catalog\Test\Constraint\AssertProductSearchable"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductCustomOptionsOnProductPage" prev="Mage\Catalog\Test\Constraint\AssertProductInStock"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductCustomOptionsOnProductPage" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductPage"/>
+    </variation>
+    <variation name="CreateGiftCardProductEntityTestVariation5" firstConstraint="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" method="test">
+      <data name="description" xsi:type="string">Out of stock Gift Card.</data>
+      <data name="product/data/url_key" xsi:type="string">giftcardproduct-%isolation%</data>
+      <data name="product/data/status" xsi:type="string">Enabled</data>
+      <data name="product/data/name" xsi:type="string">GiftCardProduct %isolation%</data>
+      <data name="product/data/description" xsi:type="string">Description for gift card product %isolation%.</data>
+      <data name="product/data/short_description" xsi:type="string">Short description for gift card product %isolation%.</data>
+      <data name="product/data/sku" xsi:type="string">giftcard_sku_%isolation%</data>
+      <data name="product/data/weight" xsi:type="string">-</data>
+      <data name="product/data/visibility" xsi:type="string">Catalog, Search</data>
+      <data name="product/data/giftcard_type" xsi:type="string">Virtual</data>
+      <data name="product/data/giftcard_amounts/0" xsi:type="string">10</data>
+      <data name="product/data/giftcard_amounts/1" xsi:type="string">-</data>
+      <data name="product/data/allow_open_amount" xsi:type="string">No</data>
+      <data name="product/data/open_amount_min" xsi:type="string">-</data>
+      <data name="product/data/open_amount_max" xsi:type="string">-</data>
+      <data name="product/data/stock_data/qty" xsi:type="string">0</data>
+      <data name="product/data/stock_data/is_in_stock" xsi:type="string">Out of Stock</data>
+      <data name="product/data/use_config_lifetime" xsi:type="string">Yes</data>
+      <data name="product/data/lifetime" xsi:type="string">-</data>
+      <data name="product/data/custom_options/preset" xsi:type="string">-</data>
+      <data name="issue" xsi:type="string">Bug: MPERF-6325</data>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" prev="Mage\Catalog\Test\Constraint\AssertProductSaveMessage"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" next="Mage\Catalog\Test\Constraint\AssertProductOutOfStock" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductOutOfStock" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm"/>
+    </variation>
+    <variation name="CreateGiftCardProductEntityTestVariation6" firstConstraint="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" method="test">
+      <data name="description" xsi:type="string">Disabled Gift Card.</data>
+      <data name="product/data/url_key" xsi:type="string">giftcardproduct-%isolation%</data>
+      <data name="product/data/status" xsi:type="string">Disabled</data>
+      <data name="product/data/name" xsi:type="string">GiftCardProduct %isolation%</data>
+      <data name="product/data/description" xsi:type="string">Description for gift card product %isolation%.</data>
+      <data name="product/data/short_description" xsi:type="string">Short description for gift card product %isolation%.</data>
+      <data name="product/data/sku" xsi:type="string">giftcard_sku_%isolation%</data>
+      <data name="product/data/weight" xsi:type="string">1</data>
+      <data name="product/data/visibility" xsi:type="string">Catalog, Search</data>
+      <data name="product/data/giftcard_type" xsi:type="string">Physical</data>
+      <data name="product/data/giftcard_amounts/0" xsi:type="string">10</data>
+      <data name="product/data/giftcard_amounts/1" xsi:type="string">-</data>
+      <data name="product/data/allow_open_amount" xsi:type="string">No</data>
+      <data name="product/data/open_amount_min" xsi:type="string">-</data>
+      <data name="product/data/open_amount_max" xsi:type="string">-</data>
+      <data name="product/data/stock_data/qty" xsi:type="string">10</data>
+      <data name="product/data/stock_data/is_in_stock" xsi:type="string">In Stock</data>
+      <data name="product/data/use_config_lifetime" xsi:type="string">Yes</data>
+      <data name="product/data/lifetime" xsi:type="string">-</data>
+      <data name="product/data/custom_options/preset" xsi:type="string">-</data>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" prev="Mage\Catalog\Test\Constraint\AssertProductSaveMessage"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" next="Mage\Catalog\Test\Constraint\AssertProductIsNotDisplayingOnFrontend" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductIsNotDisplayingOnFrontend" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm"/>
+    </variation>
+    <variation name="CreateGiftCardProductEntityTestVariation7" firstConstraint="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" method="test">
+      <data name="description" xsi:type="string">Out of stock Gift Card with qty.</data>
+      <data name="product/data/url_key" xsi:type="string">giftcardproduct-%isolation%</data>
+      <data name="product/data/status" xsi:type="string">Enabled</data>
+      <data name="product/data/name" xsi:type="string">GiftCardProduct %isolation%</data>
+      <data name="product/data/description" xsi:type="string">Description for gift card product %isolation%.</data>
+      <data name="product/data/short_description" xsi:type="string">Short description for gift card product %isolation%.</data>
+      <data name="product/data/sku" xsi:type="string">giftcard_sku_%isolation%</data>
+      <data name="product/data/weight" xsi:type="string">-</data>
+      <data name="product/data/visibility" xsi:type="string">Catalog, Search</data>
+      <data name="product/data/giftcard_type" xsi:type="string">Virtual</data>
+      <data name="product/data/giftcard_amounts/0" xsi:type="string">10</data>
+      <data name="product/data/giftcard_amounts/1" xsi:type="string">-</data>
+      <data name="product/data/allow_open_amount" xsi:type="string">No</data>
+      <data name="product/data/open_amount_min" xsi:type="string">-</data>
+      <data name="product/data/open_amount_max" xsi:type="string">-</data>
+      <data name="product/data/stock_data/qty" xsi:type="string">10</data>
+      <data name="product/data/stock_data/is_in_stock" xsi:type="string">Out of Stock</data>
+      <data name="product/data/use_config_lifetime" xsi:type="string">Yes</data>
+      <data name="product/data/lifetime" xsi:type="string">-</data>
+      <data name="product/data/custom_options/preset" xsi:type="string">-</data>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" prev="Mage\Catalog\Test\Constraint\AssertProductSaveMessage"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+    </variation>
+    <variation name="CreateGiftCardProductEntityTestVariation8" firstConstraint="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" method="test">
+      <data name="description" xsi:type="string">Gift Card with visibility in catalog only</data>
+      <data name="product/data/url_key" xsi:type="string">giftcardproduct-%isolation%</data>
+      <data name="product/data/status" xsi:type="string">Enabled</data>
+      <data name="product/data/name" xsi:type="string">GiftCardProduct %isolation%</data>
+      <data name="product/data/description" xsi:type="string">Description for gift card product %isolation%.</data>
+      <data name="product/data/short_description" xsi:type="string">Short description for gift card product %isolation%.</data>
+      <data name="product/data/sku" xsi:type="string">giftcard_sku_%isolation%</data>
+      <data name="product/data/weight" xsi:type="string">-</data>
+      <data name="product/data/visibility" xsi:type="string">Catalog</data>
+      <data name="product/data/giftcard_type" xsi:type="string">Virtual</data>
+      <data name="product/data/giftcard_amounts/0" xsi:type="string">10</data>
+      <data name="product/data/giftcard_amounts/1" xsi:type="string">-</data>
+      <data name="product/data/allow_open_amount" xsi:type="string">No</data>
+      <data name="product/data/open_amount_min" xsi:type="string">-</data>
+      <data name="product/data/open_amount_max" xsi:type="string">-</data>
+      <data name="product/data/stock_data/qty" xsi:type="string">10</data>
+      <data name="product/data/stock_data/is_in_stock" xsi:type="string">In Stock</data>
+      <data name="product/data/use_config_lifetime" xsi:type="string">Yes</data>
+      <data name="product/data/lifetime" xsi:type="string">-</data>
+      <data name="product/data/custom_options/preset" xsi:type="string">-</data>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" prev="Mage\Catalog\Test\Constraint\AssertProductSaveMessage"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" next="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory" next="Mage\Catalog\Test\Constraint\AssertProductNotSearchableBySku" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductNotSearchableBySku" prev="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory"/>
+    </variation>
+    <variation name="CreateGiftCardProductEntityTestVariation9" firstConstraint="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" method="test">
+      <data name="description" xsi:type="string">Gift Card with visibility in search only</data>
+      <data name="product/data/url_key" xsi:type="string">giftcardproduct-%isolation%</data>
+      <data name="product/data/status" xsi:type="string">Enabled</data>
+      <data name="product/data/name" xsi:type="string">GiftCardProduct %isolation%</data>
+      <data name="product/data/description" xsi:type="string">Description for gift card product %isolation%.</data>
+      <data name="product/data/short_description" xsi:type="string">Short description for gift card product %isolation%.</data>
+      <data name="product/data/sku" xsi:type="string">giftcard_sku_%isolation%</data>
+      <data name="product/data/weight" xsi:type="string">-</data>
+      <data name="product/data/visibility" xsi:type="string">Search</data>
+      <data name="product/data/giftcard_type" xsi:type="string">Virtual</data>
+      <data name="product/data/giftcard_amounts/0" xsi:type="string">10</data>
+      <data name="product/data/giftcard_amounts/1" xsi:type="string">-</data>
+      <data name="product/data/allow_open_amount" xsi:type="string">No</data>
+      <data name="product/data/open_amount_min" xsi:type="string">-</data>
+      <data name="product/data/open_amount_max" xsi:type="string">-</data>
+      <data name="product/data/stock_data/qty" xsi:type="string">10</data>
+      <data name="product/data/stock_data/is_in_stock" xsi:type="string">In Stock</data>
+      <data name="product/data/use_config_lifetime" xsi:type="string">Yes</data>
+      <data name="product/data/lifetime" xsi:type="string">-</data>
+      <data name="product/data/custom_options/preset" xsi:type="string">-</data>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSaveMessage" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid" next="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" prev="Mage\Catalog\Test\Constraint\AssertProductSaveMessage"/>
+      <constraint name="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm" next="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardInGrid"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory" next="Mage\Catalog\Test\Constraint\AssertProductSearchable" prev="Enterprise\GiftCard\Test\Constraint\AssertGiftCardProductForm"/>
+      <constraint name="Mage\Catalog\Test\Constraint\AssertProductSearchable" prev="Mage\Catalog\Test\Constraint\AssertProductVisibleInCategory"/>
+    </variation>
+  </testCase>
+</config>

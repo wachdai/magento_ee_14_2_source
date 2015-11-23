@@ -1,0 +1,78 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<div class="page-title">
+    <h1><?php echo Mage::helper('enterprise_giftregistry')->__('Gift Registry'); ?></h1>
+</div>
+<?php $entityCollection = $this->getEntityCollection(); ?>
+<?php echo $this->getMessagesBlock()->toHtml();?>
+
+<?php if ($entityCollection->getSize()):?>
+    <?php echo $this->getChildHtml('pager') ?>
+    <table class="data-table" id="giftregistry-table">
+        <col />
+        <col width="1" />
+        <col />
+        <col width="1" />
+        <thead>
+            <tr>
+                <th><?php echo Mage::helper('enterprise_giftregistry')->__('Event'); ?></th>
+                <th><span class="nobr"><?php echo Mage::helper('enterprise_giftregistry')->__('Created On'); ?></span></th>
+                <th><?php echo Mage::helper('enterprise_giftregistry')->__('Message'); ?></th>
+                <th><?php echo Mage::helper('enterprise_giftregistry')->__('Action'); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($entityCollection as $item): ?>
+                <tr>
+                    <td title="<?php echo $this->getEscapedTitle($item)?>"><?php echo $this->helper('core/string')->truncate($this->getEscapedTitle($item), 70)?></td>
+                    <td><span class="nobr"><?php echo $this->getFormattedDate($item) ?></span></td>
+                    <td><?php echo $this->getEscapedMessage($item)?></td>
+                    <td>
+                        <span class="nobr">
+                            <a href="<?php echo $this->getItemsUrl($item)?>"><?php echo $this->__('Manage Items') ?></a> <span class="separator">|</span>
+                            <a href="<?php echo $this->getShareUrl($item)?>"><?php echo $this->__('Share') ?></a> <span class="separator">|</span>
+                            <a href="<?php echo $this->getEditUrl($item)?>"><?php echo $this->__('Edit') ?></a> <span class="separator">|</span>
+                            <a href="<?php echo $this->getDeleteUrl($item)?>" onclick="return confirm('<?php echo Mage::helper('core')->quoteEscape(Mage::helper('enterprise_giftregistry')->__('Are you sure you want to delete this gift registry?')); ?>');"><?php echo $this->__('Delete') ?></a>
+                        </span>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <script type="text/javascript">decorateTable('giftregistry-table')</script>
+    <?php echo $this->getChildHtml('pager') ?>
+<?php else:?>
+    <p><?php echo Mage::helper('enterprise_giftregistry')->__('There are no created gift registries yet.'); ?></p>
+<?php endif;?>
+
+<div class="buttons-set">
+    <p class="back-link"><a href="<?php echo $this->escapeUrl($this->getBackUrl()) ?>"><small>&laquo; </small><?php echo $this->__('Back') ?></a></p>
+    <?php if ($this->canAddNewEntity()):?>
+        <button type="button" onclick="setLocation('<?php echo $this->escapeUrl($this->getAddUrl()) ?>')" class="button"><span><span><?php echo $this->__('Add New') ?></span></span></button>
+    <?php endif;?>
+</div>

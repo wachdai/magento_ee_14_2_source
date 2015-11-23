@@ -1,0 +1,115 @@
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Mage
+ * @package     Errors
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+* { margin:0; padding:0; }
+
+body { background:#fff; font:11px/1.35 Arial, Helvetica, sans-serif; color:#444; text-align:center; }
+
+a { color:#444; text-decoration:underline; }
+a:hover { color:#444; text-decoration:none; }
+:focus { outline:0; }
+a img { border:0; }
+ul,ol { list-style:none; }
+
+.wrapper { background:#fff; padding-bottom:20px; }
+.page { width:940px; margin:0 auto; text-align:center; }
+.main { margin:0 0 14px; min-height:350px; background-image:url(../images/bkg_cols.gif); background-color:#fff; background-repeat:repeat-y; border:1px solid #cfcfcf; text-align:left; }
+.col1-layout { background-position:-1000px 0; }
+.col-main { float:left; width:715px; padding:0 20px 20px; }
+.col1-layout .col-main { float:none; width:auto; padding:0 20px 20px; }
+.header { padding:8px 0 9px; min-height:60px; position:relative; z-index:5; width:940px; }
+.logo { float:left; width:196px; height:60px; overflow:hidden; }
+.page-title { margin-bottom:20px; padding:23px 20px 11px; background:#f6f6f6 url(../images/bkg_page-title.gif) 0 0 repeat-x; border-bottom:1px solid #cfcfcf; }
+.page-title h1 { font:normal 22px/27px Arial, Helvetica, sans-serif; color:#d12c01; }
+.col-main .page-title { margin-left:-20px; margin-right:-20px; }
+address.copyright { margin-top:6px; font-style:normal; }
+.trace-container { padding:10px; border:1px solid #e1e1e1; background:#f7f5f0; }
+.trace { width:100%; overflow:auto; min-height:250px; }
+.trace pre { font-size:12px; line-height:1.4; }
+input,select,textarea,button { font:12px Arial, Helvetica, sans-serif; vertical-align:middle; color:#444; }
+input.input-text,select,textarea { background:#fff; border:1px solid #c7c7c7; background:#fff url(../images/bkg_input.gif) 0 0 repeat-x; }
+input.input-text,textarea { padding:2px 2px; background:#fff url(../images/bkg_input.gif) 0 0 repeat-x; }
+textarea { overflow:auto; }
+input.radio,input.checkbox { margin-right:3px; font-size:11px !important; margin-top:2px; vertical-align:top; }
+input.radio { font-size:10px !important; }
+button.button::-moz-focus-inner { padding:0; border:0; }
+button.button { -webkit-border-fit:lines; }
+button.button { border:0; padding:0; margin:0; background:transparent; overflow:visible; cursor:pointer; vertical-align:middle; }
+button.button span,
+button.button span span { background-color:transparent; background-image:url(../images/bkg_btn.gif); background-repeat:no-repeat; }
+button.button span { border:0; padding:0 0 0 10px; margin:0; cursor:pointer; background-position:0 0; display:-moz-inline-stack; display:inline-block; color:#c73615; height:21px; text-decoration:none; }
+button.button span span { padding:0 15px 1px 5px; color:#c73615; background-position:100% 0; display:-moz-inline-block; display:inline-block; white-space:nowrap; text-transform:uppercase; font:bold 11px/20px Arial, Helvetica, sans-serif; height:20px; }
+.button:active { bottom:-1px; right:-1px; position:relative; z-index:2; }
+button.button:active span span { margin:0; }
+
+.required em { color:#f15c22; margin-right:4px; }
+p.required { margin:0; padding:5px 0 0 0; text-align:right; width:620px; font-size:11px; color:#f02800; }
+
+.fieldset { font-size:12px; border:0; margin:0 0 16px; }
+.fieldset h3,
+.fieldset p { margin:0 0 1.5em; }
+.fieldset h3 { font-size:14px; font-weight:bold; color:#000; }
+
+.form-list { }
+.form-list li { margin:0 0 9px; vertical-align:top; }
+.form-list label { float:left; width:225px; padding:2px 15px 0 0; font-size:12px; font-weight:bold; color:#444; text-align:right; }
+.form-list .input-box { float:left; }
+.form-list input.input-text,
+.form-list textarea { float:left; width:374px; vertical-align:top; }
+.form-list textarea { width:374px; height:13em; }
+.form-list select { float:left; width:380px; vertical-align:top; }
+
+.group-select .fields { margin:0; }
+.group-select .fields .field { clear:left; padding:0 0 9px; }
+
+.buttons-set { clear:both; margin:15px 0; } /* general for button containing block */
+
+.form-buttons { margin:0; width:620px; }
+.form-buttons .button { float:right; }
+.form-buttons .button { margin-left:15px; }
+.form-buttons p.back-link { float:left; width:225px; padding:2px 15px 0 0; text-align:right; }
+
+.messages { width:100%; overflow:hidden; text-align:left; margin-top:10px; }
+.messages li { margin:0 0 10px; padding:0; }
+.messages ul { padding:10px 17px 18px; margin:0 0 -11px; background-position:35px 100%; background-repeat:no-repeat; position:relative; }
+.messages ul li { margin:0; padding:0 0 3px; }
+.messages a { text-decoration:underline; }
+.messages a:hover { text-decoration:none; }
+.messages li.error-msg,
+.messages li.success-msg,
+.messages li.note-msg,
+.messages li.notice-msg { border-style:solid !important; border-width:1px !important; font-size:12px !important; }
+.messages li.error-msg { border-color:#e9581f; background-color:#fff5f3; color:#d91a00; }
+.messages li.error-msg a { color:#d91a00; }
+.messages li.success-msg { border-color:#446423; background-color:#eff5ea; color:#3d6611; }
+.messages li.success-msg a { color:#3d6611; }
+.messages li.note-msg,
+.messages li.notice-msg { border-color:#fcd344; background-color:#fafaec; color:#3d6611; }
+.messages li.note-msg a,
+.messages li.notice-msg a { color:#3d6611; }
+
+.field:after,
+.buttons-set:after,
+.clear:after,
+.form-list li:after { display:block; content:"."; clear:both; font-size:0; line-height:0; height:0; overflow:hidden; }

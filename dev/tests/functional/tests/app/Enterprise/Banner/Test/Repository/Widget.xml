@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/Magento/Mtf/Repository/etc/repository.xsd">
+    <repository class="Mage\Widget\Test\Repository\Widget">
+        <dataset name="banner_rotator_non_anchor_categories">
+            <field name="type" xsi:type="string">Banner Rotator</field>
+            <field name="title" xsi:type="string">Banner Rotator %isolation%</field>
+            <field name="widget_instance" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="page_group" xsi:type="string">Non-Anchor Categories</item>
+                    <item name="notanchor_categories" xsi:type="array">
+                        <item name="block" xsi:type="string">Main Content Area</item>
+                        <item name="template" xsi:type="string">Banner Block Template</item>
+                    </item>
+                </item>
+            </field>
+            <field name="parameters" xsi:type="array">
+                <item name="display_mode" xsi:type="string">fixed</item>
+                <item name="types" xsi:type="array">
+                    <item name="0" xsi:type="string"></item>
+                </item>
+                <item name="rotate" xsi:type="string"></item>
+                <item name="unique_id" xsi:type="string">hash for widget %isolation%</item>
+            </field>
+            <field name="package_theme" xsi:type="string">rwd/enterprise</field>
+        </dataset>
+        <dataset name="banner_rotator_shoping_cart">
+            <field name="type" xsi:type="string">Banner Rotator</field>
+            <field name="title" xsi:type="string">Banner Rotator %isolation%</field>
+            <field name="store_ids" xsi:type="array">
+                <item name="dataSet" xsi:type="string">default</item>
+            </field>
+            <field name="widget_instance" xsi:type="array">
+                <item name="0" xsi:type="array">
+                    <item name="page_group" xsi:type="string">Specified Page</item>
+                    <item name="pages" xsi:type="array">
+                        <item name="block" xsi:type="string">Main Content Area</item>
+                        <item name="template" xsi:type="string">Banner Block Template</item>
+                        <item name="layout_handle" xsi:type="string">Shopping Cart</item>
+                    </item>
+                </item>
+            </field>
+            <field name="parameters" xsi:type="array">
+                <item name="display_mode" xsi:type="string">fixed</item>
+                <item name="types" xsi:type="array">
+                    <item name="0" xsi:type="string"></item>
+                </item>
+                <item name="rotate" xsi:type="string"></item>
+                <item name="unique_id" xsi:type="string">hash for widget %isolation%</item>
+            </field>
+            <field name="package_theme" xsi:type="string">rwd/enterprise</field>
+        </dataset>
+    </repository>
+</config>

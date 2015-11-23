@@ -1,0 +1,75 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php
+/**
+ * @see Enterprise_Reward_Block_Customer_Reward_Info
+ */
+?>
+<?php
+$helper = Mage::helper('enterprise_reward');
+$maxBalance = $this->getMaxBalance();
+$minBalance = $this->getMinBalance();
+$expireIn = $this->getExpireIn();
+?>
+<div class="box info-box">
+    <h2 class="box-title"><?php echo $this->__('Reward points balance Information'); ?> <span class="separator">|</span> <a href="<?php echo $helper->getLandingPageUrl()?>"><?php echo $this->__('Learn more...')?></a></h2>
+    <dl class="box-content">
+        <dt><?php echo $this->__('Your current balance is %s.', $helper->formatReward($this->getPointsBalance(), $this->getCurrencyBalance()))?></dt>
+        <dt><?php echo $this->__('Current exchange rates:')?></dt>
+<?php if ($this->getPtsToAmountRateAmount() || $this->getAmountToPtsRatePts()): ?>
+    <?php if ($this->getPtsToAmountRateAmount()): ?>
+            <dd><?php echo $this->__('Each %s can be redeemed for %s.', $helper->formatReward($this->getPtsToAmountRatePts(), null, null, '<strong>%s</strong>'), '<strong>' . $helper->formatAmount($this->getPtsToAmountRateAmount()) . '</strong>')?></dd>
+    <?php endif;?>
+    <?php if ($this->getAmountToPtsRatePts()): ?>
+            <dd><?php echo $this->__('Each %s spent will earn %s.', '<strong>' . $helper->formatAmount($this->getAmountToPtsRateAmount()) . '</strong>', $helper->formatReward($this->getAmountToPtsRatePts(), null, null, '<strong>%s</strong>'))?></dd>
+    <?php endif;?>
+<?php else:?>
+             <dd><?php echo $this->__('None.')?></dd>
+<?php endif;?>
+<?php if ($maxBalance || $minBalance):?>
+        <dt><?php echo $this->__('Balance limitations:')?></dt>
+    <?php if ($maxBalance):?>
+            <dd><?php echo $this->__('Balance is capped at %s.', $helper->formatReward($maxBalance))?></dd>
+        <?php if ($this->getIsMaxBalanceReached()):?>
+            <dd class="warning"><?php echo $this->__('Maximum balance is reached.')?></dd>
+        <?php endif;?>
+    <?php endif;?>
+    <?php if ($minBalance):?>
+            <dd><?php echo $this->__('Minimum Balance in order to redeem: %s.', $helper->formatReward($minBalance))?></dd>
+        <?php if (!$this->getIsMinBalanceReached()):?>
+            <dd class="warning"><?php echo $this->__('Minimum balance for redeeming points is not reached.')?></dd>
+        <?php endif;?>
+    <?php endif;?>
+<?php endif;?>
+<?php if ($expireIn):?>
+    <dt><?php echo $this->__('Each earned reward points record expires in %s days.', '<span>' . $expireIn . '</span>')?></dt>
+    <?php if ($this->getIsHistoryPublished()):?>
+            <dd><?php echo $this->__('Refer to reward points history to see if a specific record expires and when.')?></dd>
+    <?php endif;?>
+<?php endif;?>
+    </dl>
+</div>

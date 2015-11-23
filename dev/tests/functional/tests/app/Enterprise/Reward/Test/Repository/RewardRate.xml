@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/Magento/Mtf/Repository/etc/repository.xsd">
+    <repository class="Enterprise\Reward\Test\Repository\RewardRate">
+        <dataset name="rate_points_to_currency">
+            <field name="website_id" xsi:type="array">
+                <item name="dataSet" xsi:type="string">Main Website</item>
+            </field>
+            <field name="customer_group_id" xsi:type="array">
+                <item name="dataSet" xsi:type="string">All Customer Groups</item>
+            </field>
+            <field name="direction" xsi:type="string">Points to Currency</field>
+            <field name="value" xsi:type="string">10</field>
+            <field name="equal_value" xsi:type="string">1</field>
+        </dataset>
+
+        <dataset name="rate_currency_to_points">
+            <field name="website_id" xsi:type="array">
+                <item name="dataSet" xsi:type="string">Main Website</item>
+            </field>
+            <field name="customer_group_id" xsi:type="array">
+                <item name="dataSet" xsi:type="string">All Customer Groups</item>
+            </field>
+            <field name="direction" xsi:type="string">Currency to Points</field>
+            <field name="value" xsi:type="string">10</field>
+            <field name="equal_value" xsi:type="string">1</field>
+        </dataset>
+    </repository>
+</config>

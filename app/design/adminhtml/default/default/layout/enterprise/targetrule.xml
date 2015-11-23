@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+
+<layout>
+    <adminhtml_targetrule_index>
+        <reference name="content">
+            <block type="enterprise_targetrule/adminhtml_targetrule" name="enterprise.targetrule.targetrule" template="widget/grid/container.phtml">
+                <block type="enterprise_targetrule/adminhtml_targetrule_grid" name="enterprise.targetrule.grid"/>
+                <action method="setHeaderText" translate="text">
+                    <text>Rule-Based Product Relations</text>
+                </action>
+            </block>
+        </reference>
+    </adminhtml_targetrule_index>
+
+    <adminhtml_targetrule_new>
+        <update handle="adminhtml_targetrule_edit"/>
+    </adminhtml_targetrule_new>
+
+    <adminhtml_targetrule_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs">
+                <flag>1</flag>
+            </action>
+            <action method="setCanLoadRulesJs">
+                <flag>1</flag>
+            </action>
+        </reference>
+        <reference name="content">
+            <block type="enterprise_targetrule/adminhtml_targetrule_edit"
+                   name="enterprise_targetrule_edit"/>
+        </reference>
+        <reference name="left">
+            <block type="enterprise_targetrule/adminhtml_targetrule_edit_tabs"
+                   name="enterprise_targetrule_edit_tabs">
+                <block type="enterprise_targetrule/adminhtml_targetrule_edit_tab_main"
+                       name="enterprise_targetrule_edit_tab_main"></block>
+                <block type="enterprise_targetrule/adminhtml_targetrule_edit_tab_conditions"
+                       name="enterprise_targetrule_edit_tab_conditions"></block>
+                <block type="enterprise_targetrule/adminhtml_targetrule_edit_tab_actions"
+                       name="enterprise_targetrule_edit_tab_actions"></block>
+
+                <action method="addTab">
+                    <name>enterprise_targetrule_edit_tab_main</name>
+                    <block>enterprise_targetrule_edit_tab_main</block>
+                </action>
+                <action method="addTab">
+                    <name>enterprise_targetrule_edit_tab_conditions</name>
+                    <block>enterprise_targetrule_edit_tab_conditions</block>
+                </action>
+                <action method="addTab">
+                    <name>enterprise_targetrule_edit_tab_actions</name>
+                    <block>enterprise_targetrule_edit_tab_actions</block>
+                </action>
+            </block>
+        </reference>
+    </adminhtml_targetrule_edit>
+
+    <adminhtml_targetrule_grid>
+        <block type="enterprise_targetrule/adminhtml_targetrule_grid" name="root"/>
+    </adminhtml_targetrule_grid>
+
+    <adminhtml_catalog_product_related>
+        <reference name="root">
+            <block type="enterprise_targetrule/adminhtml_product" name="targetrule.adminhtml.product" template="enterprise/targetrule/product.phtml" before="catalog.product.edit.tab.related">
+                <action method="setFormPrefix"><params>related</params></action>
+            </block>
+        </reference>
+    </adminhtml_catalog_product_related>
+
+    <adminhtml_catalog_product_upsell>
+        <reference name="root">
+            <block type="enterprise_targetrule/adminhtml_product" name="targetrule.adminhtml.product" template="enterprise/targetrule/product.phtml" before="catalog.product.edit.tab.upsell">
+                <action method="setFormPrefix"><params>upsell</params></action>
+            </block>
+        </reference>
+    </adminhtml_catalog_product_upsell>
+</layout>

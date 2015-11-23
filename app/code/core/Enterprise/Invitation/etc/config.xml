@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Invitation
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_Invitation>
+            <version>1.11.0.0</version>
+        </Enterprise_Invitation>
+    </modules>
+    <global>
+        <models>
+            <enterprise_invitation>
+                <class>Enterprise_Invitation_Model</class>
+                <resourceModel>enterprise_invitation_resource</resourceModel>
+            </enterprise_invitation>
+            <enterprise_invitation_resource>
+                <class>Enterprise_Invitation_Model_Resource</class>
+                <deprecatedNode>enterprise_invitation_mysql4</deprecatedNode>
+                <entities>
+                    <invitation>
+                        <table>enterprise_invitation</table>
+                    </invitation>
+                    <invitation_history>
+                        <table>enterprise_invitation_status_history</table>
+                    </invitation_history>
+                    <invitation_track>
+                        <table>enterprise_invitation_track</table>
+                    </invitation_track>
+                </entities>
+            </enterprise_invitation_resource>
+        </models>
+        <helpers>
+            <enterprise_invitation>
+                <class>Enterprise_Invitation_Helper</class>
+            </enterprise_invitation>
+        </helpers>
+        <blocks>
+            <enterprise_invitation>
+                <class>Enterprise_Invitation_Block</class>
+            </enterprise_invitation>
+        </blocks>
+        <resources>
+            <enterprise_invitation_setup>
+                <setup>
+                    <module>Enterprise_Invitation</module>
+                </setup>
+            </enterprise_invitation_setup>
+        </resources>
+        <template>
+            <email>
+                <enterprise_invitation_email_template translate="label" module="enterprise_invitation">
+                    <label>Customer Invitation</label>
+                    <file>enterprise/invitation.html</file>
+                    <type>html</type>
+                </enterprise_invitation_email_template>
+            </email>
+        </template>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <enterprise_invitation before="Mage_Adminhtml">Enterprise_Invitation_Adminhtml</enterprise_invitation>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_invitation module="Enterprise_Invitation">
+                    <file>enterprise/invitation.xml</file>
+                </enterprise_invitation>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_Invitation>
+                    <files>
+                        <default>Enterprise_Invitation.csv</default>
+                    </files>
+                </Enterprise_Invitation>
+            </modules>
+        </translate>
+    </adminhtml>
+    <frontend>
+        <enterprise>
+            <websiterestriction>
+                <full_action_names>
+                    <generic>
+                        <enterprise_invitation_customer_account_create/>
+                        <enterprise_invitation_customer_account_createpost/>
+                    </generic>
+                </full_action_names>
+            </websiterestriction>
+        </enterprise>
+        <layout>
+            <updates>
+                <enterprise_invitation>
+                    <file>invitation.xml</file>
+                </enterprise_invitation>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_Invitation>
+                    <files>
+                        <default>Enterprise_Invitation.csv</default>
+                    </files>
+                </Enterprise_Invitation>
+            </modules>
+        </translate>
+        <routers>
+            <enterprise_invitation>
+                <use>standard</use>
+                <args>
+                    <module>Enterprise_Invitation</module>
+                    <frontName>invitation</frontName>
+                </args>
+            </enterprise_invitation>
+        </routers>
+        <events>
+            <customer_registration_is_allowed>
+                <observers>
+                    <enterprise_invitation>
+                        <class>enterprise_invitation/observer</class>
+                        <method>restrictCustomerRegistration</method>
+                    </enterprise_invitation>
+                </observers>
+            </customer_registration_is_allowed>
+        </events>
+        <secure_url>
+            <invitation>/invitation/</invitation>
+        </secure_url>
+    </frontend>
+    <default>
+        <enterprise_invitation>
+            <email>
+                <identity>general</identity>
+                <template>enterprise_invitation_email_template</template>
+            </email>
+            <general>
+                <enabled>1</enabled>
+                <enabled_on_front>1</enabled_on_front>
+                <registration_use_inviter_group>1</registration_use_inviter_group>
+                <registration_required_invitation>0</registration_required_invitation>
+                <max_invitation_amount_per_send>5</max_invitation_amount_per_send>
+                <allow_customer_message>1</allow_customer_message>
+            </general>
+        </enterprise_invitation>
+    </default>
+</config>

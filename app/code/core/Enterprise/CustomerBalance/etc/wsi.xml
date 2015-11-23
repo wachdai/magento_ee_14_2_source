@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:typens="urn:{{var wsdl.name}}"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+             xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+             name="{{var wsdl.name}}"
+             targetNamespace="urn:{{var wsdl.name}}">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:{{var wsdl.name}}">
+             <xsd:complexType name="enterpriseCustomerbalanceHistoryItemEntity">
+                <xsd:sequence>
+                    <xsd:element name="history_id" type="xsd:string" />
+                    <xsd:element name="balance_id" type="xsd:string" />
+                    <xsd:element name="updated_at" type="xsd:string" />
+                    <xsd:element name="action" type="xsd:string" />
+                    <xsd:element name="balance_amount" type="xsd:string" />
+                    <xsd:element name="balance_delta" type="xsd:string" />
+                    <xsd:element name="additional_info" type="xsd:string" />
+                    <xsd:element name="is_customer_notified" type="xsd:string" />
+                    <xsd:element name="customer_id" type="xsd:string" />
+                    <xsd:element name="website_id" type="xsd:string" />
+                    <xsd:element name="base_currency_code" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="enterpriseCustomerbalanceHistoryItemEntityArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:enterpriseCustomerbalanceHistoryItemEntity" />
+                </xsd:sequence>
+            </xsd:complexType>
+
+            <xsd:element name="enterpriseCustomerbalanceBalanceRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="customerId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="websiteId" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="enterpriseCustomerbalanceBalanceResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="enterpriseCustomerbalanceHistoryRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="customerId" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="websiteId" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="enterpriseCustomerbalanceHistoryResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:enterpriseCustomerbalanceHistoryItemEntityArray" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="shoppingCartCustomerbalanceSetAmountRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="quoteId" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="store" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="shoppingCartCustomerbalanceSetAmountResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:float" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="shoppingCartCustomerbalanceRemoveAmountRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="1" maxOccurs="1" name="quoteId" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="store" type="xsd:string" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="shoppingCartCustomerbalanceRemoveAmountResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="xsd:boolean" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="enterpriseCustomerbalanceBalanceRequest">
+        <wsdl:part name="parameters" element="typens:enterpriseCustomerbalanceBalanceRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="enterpriseCustomerbalanceBalanceResponse">
+        <wsdl:part name="parameters" element="typens:enterpriseCustomerbalanceBalanceResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="enterpriseCustomerbalanceHistoryRequest">
+        <wsdl:part name="parameters" element="typens:enterpriseCustomerbalanceHistoryRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="enterpriseCustomerbalanceHistoryResponse">
+        <wsdl:part name="parameters" element="typens:enterpriseCustomerbalanceHistoryResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="shoppingCartCustomerbalanceSetAmountRequest">
+        <wsdl:part name="parameters" element="typens:shoppingCartCustomerbalanceSetAmountRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="shoppingCartCustomerbalanceSetAmountResponse">
+        <wsdl:part name="parameters" element="typens:shoppingCartCustomerbalanceSetAmountResponseParam" />
+    </wsdl:message>
+    <wsdl:message name="shoppingCartCustomerbalanceRemoveAmountRequest">
+        <wsdl:part name="parameters" element="typens:shoppingCartCustomerbalanceRemoveAmountRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="shoppingCartCustomerbalanceRemoveAmountResponse">
+        <wsdl:part name="parameters" element="typens:shoppingCartCustomerbalanceRemoveAmountResponseParam" />
+    </wsdl:message>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+        <wsdl:operation name="enterpriseCustomerbalanceBalance">
+            <wsdl:documentation>Retrieve customer store credit balance information</wsdl:documentation>
+            <wsdl:input message="typens:enterpriseCustomerbalanceBalanceRequest" />
+            <wsdl:output message="typens:enterpriseCustomerbalanceBalanceResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="enterpriseCustomerbalanceHistory">
+            <wsdl:documentation>Retrieve customer store credit history information</wsdl:documentation>
+            <wsdl:input message="typens:enterpriseCustomerbalanceHistoryRequest" />
+            <wsdl:output message="typens:enterpriseCustomerbalanceHistoryResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="shoppingCartCustomerbalanceSetAmount">
+            <wsdl:documentation>Set amount from customer store credit into shopping cart (quote)</wsdl:documentation>
+            <wsdl:input message="typens:shoppingCartCustomerbalanceSetAmountRequest" />
+            <wsdl:output message="typens:shoppingCartCustomerbalanceSetAmountResponse" />
+        </wsdl:operation>
+        <wsdl:operation name="shoppingCartCustomerbalanceRemoveAmount">
+            <wsdl:documentation>Remove amount from shopping cart (quote) and increase customer store credit</wsdl:documentation>
+            <wsdl:input message="typens:shoppingCartCustomerbalanceRemoveAmountRequest" />
+            <wsdl:output message="typens:shoppingCartCustomerbalanceRemoveAmountResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="enterpriseCustomerbalanceBalance">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="enterpriseCustomerbalanceHistory">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="shoppingCartCustomerbalanceSetAmount">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="shoppingCartCustomerbalanceRemoveAmount">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="{{var wsdl.name}}Service">
+        <wsdl:port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+            <soap:address location="{{var wsdl.url}}" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

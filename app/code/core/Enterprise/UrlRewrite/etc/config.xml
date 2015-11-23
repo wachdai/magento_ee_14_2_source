@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_UrlRewrite
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_UrlRewrite>
+            <version>1.12.0.13</version>
+        </Enterprise_UrlRewrite>
+    </modules>
+    <global>
+        <models>
+            <enterprise_urlrewrite>
+                <class>Enterprise_UrlRewrite_Model</class>
+                <resourceModel>enterprise_urlrewrite_resource</resourceModel>
+            </enterprise_urlrewrite>
+            <enterprise_urlrewrite_resource>
+                <class>Enterprise_UrlRewrite_Model_Resource</class>
+                <entities>
+                    <url_rewrite>
+                        <table>enterprise_url_rewrite</table>
+                    </url_rewrite>
+                    <redirect>
+                        <table>enterprise_url_rewrite_redirect</table>
+                    </redirect>
+                    <redirect_rewrite>
+                        <table>enterprise_url_rewrite_redirect_rewrite</table>
+                    </redirect_rewrite>
+                </entities>
+            </enterprise_urlrewrite_resource>
+        </models>
+        <blocks>
+            <enterprise_urlrewrite>
+                <class>Enterprise_UrlRewrite_Block</class>
+            </enterprise_urlrewrite>
+        </blocks>
+        <helpers>
+            <enterprise_urlrewrite>
+                <class>Enterprise_UrlRewrite_Helper</class>
+            </enterprise_urlrewrite>
+        </helpers>
+        <blocks>
+            <enterprise_urlrewrite>
+                <class>Enterprise_UrlRewrite_Block</class>
+            </enterprise_urlrewrite>
+        </blocks>
+        <resources>
+            <enterprise_urlrewrite_setup>
+                <setup>
+                    <module>Enterprise_UrlRewrite</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+            </enterprise_urlrewrite_setup>
+        </resources>
+        <request_rewrite>
+            <model>enterprise_urlrewrite/url_rewrite_request</model>
+        </request_rewrite>
+        <redirect_type_block>
+            <custom>Enterprise_UrlRewrite_Block_Adminhtml_UrlRedirect_Edit</custom>
+        </redirect_type_block>
+        <events>
+            <redirect_save_commit_after>
+                <observers>
+                    <redirect_refresh_url_rewrite>
+                        <class>enterprise_urlrewrite/index_observer</class>
+                        <method>refreshRedirectUrlRewrite</method>
+                    </redirect_refresh_url_rewrite>
+                </observers>
+            </redirect_save_commit_after>
+            <redirect_delete_commit_after>
+                <observers>
+                    <cleanup_redirect_url_rewrite>
+                        <class>enterprise_urlrewrite/index_observer</class>
+                        <method>refreshRedirectUrlRewrite</method>
+                    </cleanup_redirect_url_rewrite>
+                </observers>
+            </redirect_delete_commit_after>
+            <url_redirect_shell_reindex_after>
+                <observers>
+                    <reindex_url_redirect>
+                        <class>enterprise_urlrewrite/index_observer</class>
+                        <method>processShellUrlRedirectReindexEvent</method>
+                    </reindex_url_redirect>
+                </observers>
+            </url_redirect_shell_reindex_after>
+        </events>
+        <index>
+            <indexer>
+                <url_redirect>
+                    <model>enterprise_urlrewrite/index_dummy_redirect</model>
+                    <action_model>
+                        <changelog>enterprise_urlrewrite/index_action_url_rewrite_redirect_refresh_changelog</changelog>
+                        <all>enterprise_urlrewrite/index_action_url_rewrite_redirect_refresh</all>
+                    </action_model>
+                    <index_table>enterprise_url_rewrite_redirect</index_table>
+                    <sort_order>70</sort_order>
+                </url_redirect>
+            </indexer>
+        </index>
+    </global>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_urlrewrite>
+                    <file>enterprise/urlrewrite.xml</file>
+                </enterprise_urlrewrite>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_UrlRewrite>
+                    <files>
+                        <default>Enterprise_UrlRewrite.csv</default>
+                    </files>
+                </Enterprise_UrlRewrite>
+            </modules>
+        </translate>
+    </adminhtml>
+    <frontend>
+        <translate>
+            <modules>
+                <Enterprise_UrlRewrite>
+                    <files>
+                        <default>Enterprise_UrlRewrite.csv</default>
+                    </files>
+                </Enterprise_UrlRewrite>
+            </modules>
+        </translate>
+    </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Enterprise_UrlRewrite before="Mage_Adminhtml">Enterprise_UrlRewrite_Adminhtml</Enterprise_UrlRewrite>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <default>
+        <redirect_type translate="custom" module="enterprise_urlrewrite">
+            <custom>Custom</custom>
+        </redirect_type>
+        <index_management>
+            <index_options>
+                <redirect_url_rewrite>1</redirect_url_rewrite>
+            </index_options>
+        </index_management>
+        <rewrite_matchers>
+            <redirect translate="title" module="enterprise_urlrewrite">
+                <title>Redirect</title>
+                <model>enterprise_urlrewrite/matcher_redirect</model>
+                <priority>10</priority>
+            </redirect>
+        </rewrite_matchers>
+    </default>
+</config>

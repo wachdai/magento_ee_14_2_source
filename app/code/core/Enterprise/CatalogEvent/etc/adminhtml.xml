@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_CatalogEvent
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <menu>
+        <catalog>
+            <children>
+                <categories>
+                    <disabled>1</disabled>
+                </categories>
+                <enterprise_catalogevent translate="title" module="enterprise_catalogevent">
+                    <title>Categories</title>
+                    <sort_order>10</sort_order>
+                    <resource>catalog/categories</resource>
+                    <children>
+                        <categories translate="title" module="catalog">
+                            <title>Manage Categories</title>
+                            <sort_order>0</sort_order>
+                            <action>adminhtml/catalog_category/</action>
+                            <resource>catalog/categories</resource>
+                        </categories>
+                        <events translate="title" module="enterprise_catalogevent">
+                            <title>Catalog Events</title>
+                            <sort_order>10</sort_order>
+                            <action>adminhtml/catalog_event</action>
+                            <depends>
+                                <module>Enterprise_CatalogEvent</module>
+                                <config>catalog/enterprise_catalogevent/enabled</config>
+                            </depends>
+                            <resource>catalog/events</resource>
+                        </events>
+                    </children>
+                </enterprise_catalogevent>
+            </children>
+        </catalog>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                     <catalog>
+                        <children>
+                            <events translate="title" module="enterprise_catalogevent">
+                                <title>Manage Catalog Events</title>
+                                <sort_order>60</sort_order>
+                            </events>
+                        </children>
+                    </catalog>
+                </children>
+            </admin>
+        </resources>
+     </acl>
+</config>

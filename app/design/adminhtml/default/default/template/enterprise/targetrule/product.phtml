@@ -1,0 +1,73 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+/* @var $this Enterprise_TargetRule_Block_Adminhtml_Product */
+?>
+<?php if ($this->getIsReadonly()):?>
+<?php $_readonly = ' disabled="disabled" ';?>
+<?php else: ?>
+<?php $_readonly = '';?>
+<?php endif; ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-edit-form fieldset-legend"><?php echo Mage::helper('enterprise_targetrule')->__('Rule-based Settings') ?></h4>
+    </div>
+    <div class="fieldset">
+        <div class="hor-scroll">
+        <table cellspacing="0" class="form-list" id="table_catalog_targetrule">
+        <tr>
+            <td class="label"><label for="<?php echo $this->getFieldName('position_limit'); ?>"><?php echo Mage::helper('enterprise_targetrule')->__('Rule-based Positions') ?></label></td>
+            <td class="value"><input type="text" class="input-text validate-number" id="<?php echo $this->getFieldName('position_limit'); ?>" name="product[<?php echo $this->getFieldName('position_limit'); ?>]" value="<?php echo (int)$this->getPositionLimit();?>" <?php echo $this->isDefault('position_limit') || $this->getIsReadonly() ? 'disabled="true" ' : ''; ?>/>
+                <input type="checkbox" id="<?php echo $this->getFieldName('position_limit'); ?>_default" name="product[<?php echo $this->getFieldName('position_limit'); ?>_default]" value="1" onclick="targetruleSetDefault(this, '<?php echo $this->getFieldName('position_limit'); ?>');" class="checkbox" <?php echo $_readonly ?><?php echo $this->isDefault('position_limit') ? 'checked' : ''; ?>/>
+                <label for="<?php echo $this->getFieldName('position_limit'); ?>_default" class="normal"><?php echo Mage::helper('enterprise_targetrule')->__('Use Config Settings') ?></label>
+            </td>
+            <td class="value scope-label"><?php echo Mage::helper('adminhtml')->__('[GLOBAL]') ?></td>
+        </tr>
+        <tr>
+            <td class="label"><label for="<?php echo $this->getFieldName('position_behavior'); ?>"><?php echo Mage::helper('enterprise_targetrule')->__('Position Behavior') ?></label></td>
+            <td class="value"><select id="<?php echo $this->getFieldName('position_behavior'); ?>" name="product[<?php echo $this->getFieldName('position_behavior'); ?>]" class="select" <?php echo $this->isDefault('position_behavior') || $this->getIsReadonly() ? 'disabled="true"' : ''; ?>>
+            <?php
+            foreach ($this->getPositionBehaviorOptions() as $key=>$value) {
+                echo "<option value=\"{$key}\"";
+                echo ($key == $this->getPositionBehavior())?'selected':'';
+                echo ">{$value}</option>";
+            }
+            ?>
+            </select>
+            <input type="checkbox" id="<?php echo $this->getFieldName('position_behavior'); ?>_default" name="product[<?php echo $this->getFieldName('position_behavior'); ?>_default]" value="1" onclick="targetruleSetDefault(this, '<?php echo $this->getFieldName('position_behavior'); ?>');" class="checkbox" <?php echo $_readonly?><?php echo $this->isDefault('position_behavior') ? 'checked' : ''; ?>/>
+            <label for="<?php echo $this->getFieldName('position_behavior'); ?>_default" class="normal"><?php echo Mage::helper('enterprise_targetrule')->__('Use Config Settings') ?></label>
+            <td class="value scope-label"><?php echo Mage::helper('adminhtml')->__('[GLOBAL]') ?></td>
+        </tr>
+        </table>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+targetruleSetDefault = function (check, elementId) {
+    var el = $(elementId).disabled = check.checked;
+}
+//]]>
+</script>

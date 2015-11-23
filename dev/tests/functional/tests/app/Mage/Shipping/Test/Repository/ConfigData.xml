@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/Magento/Mtf/Repository/etc/repository.xsd">
+    <repository class="Mage\Core\Test\Repository\ConfigData">
+        <dataset name="ups">
+            <field path="carriers/ups/active" scope="carriers" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="carriers/ups/active_rma" scope="carriers" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="carriers/ups/type" scope="carriers" scope_id="1" label="United Parcel Service XML" xsi:type="string">UPS_XML</field>
+            <field path="carriers/ups/is_account_live" scope="carriers" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="carriers/ups/password" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/ups/username" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/ups/mode_xml" scope="carriers" scope_id="1" label="Development" xsi:type="string">0</field>
+            <field path="carriers/ups/gateway_url" scope="carriers" scope_id="1" xsi:type="string">https://wwwcie.ups.com/ups.app/xml/Rate</field>
+            <field path="carriers/ups/origin_shipment" scope="carriers" scope_id="1" xsi:type="string">Shipments Originating in United States</field>
+            <field path="carriers/ups/access_license_number" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/ups/negotiated_active" scope="carriers" scope_id="1" label="" xsi:type="string">0</field>
+            <field path="carriers/ups/shipper_number" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/ups/container" scope="carriers" scope_id="1" label="Customer Packaging" xsi:type="string">CP</field>
+            <field path="carriers/ups/dest_type" scope="carriers" scope_id="1" label="Residential" xsi:type="string">RES</field>
+            <field path="carriers/ups/tracking_xml_url" scope="carriers" scope_id="1" xsi:type="string">https://wwwcie.ups.com/ups.app/xml/Track</field>
+            <field path="carriers/ups/unit_of_measure" scope="carriers" scope_id="1" label="LBS" xsi:type="string">LBS</field>
+            <field path="carriers/ups/allowed_methods" scope="carriers" scope_id="1" xsi:type="array">
+                <item label="UPS Standard" xsi:type="string">11</item>
+                <item label="UPS Three-Day Select" xsi:type="string">12</item>
+                <item label="UPS Next Day Air Early A.M." xsi:type="string">14</item>
+                <item label="UPS Worldwide Express Plus" xsi:type="string">54</item>
+                <item label="UPS Second Day Air A.M." xsi:type="string">59</item>
+                <item label="UPS Worldwide Saver" xsi:type="string">65</item>
+                <item label="UPS Next Day Air" xsi:type="string">01</item>
+                <item label="UPS Second Day Air" xsi:type="string">02</item>
+                <item label="UPS Ground" xsi:type="string">03</item>
+                <item label="UPS Worldwide Express" xsi:type="string">07</item>
+                <item label="UPS Worldwide Expedited" xsi:type="string">08</item>
+            </field>
+            <field path="carriers/ups/sallowspecific" scope="carriers" scope_id="1" label="All Allowed Countries" xsi:type="string">0</field>
+            <field path="carriers/ups/showmethod" scope="carriers" scope_id="1" label="Yes" xsi:type="string">0</field>
+            <field path="carriers/ups/debug" scope="carriers" scope_id="1" label="Yes" xsi:type="string">1</field>
+        </dataset>
+        <dataset name="ups_rollback">
+            <field path="carriers/ups/active" scope="carriers" scope_id="1" label="No" xsi:type="string">0</field>
+            <field path="carriers/ups/active_rma" scope="carriers" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="usps">
+            <field path="carriers/usps/active" scope="carriers" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="carriers/usps/gateway_url" scope="carriers" scope_id="1" xsi:type="string">http://production.shippingapis.com/ShippingAPI.dll</field>
+            <field path="carriers/usps/gateway_secure_url" scope="carriers" scope_id="1" xsi:type="string">https://secure.shippingapis.com/ShippingAPI.dll</field>
+            <field path="carriers/usps/userid" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/usps/password" scope="carriers" scope_id="1" xsi:type="string" />
+        </dataset>
+        <dataset name="usps_rollback">
+            <field path="carriers/usps/active" scope="carriers" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="fedex">
+            <field path="carriers/fedex/active" scope="carriers" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="carriers/fedex/account" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/fedex/meter_number" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/fedex/key" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/fedex/password" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/fedex/sandbox_mode" scope="carriers" scope_id="1" xsi:type="string">1</field>
+            <field path="carriers/fedex/unit_of_measure" scope="carriers" scope_id="1" label="LB" xsi:type="string">LB</field>
+            <field path="carriers/fedex/allowed_methods" scope="carriers" scope_id="1" xsi:type="array">
+                <item label="Europe First Priority" xsi:type="string">EUROPE_FIRST_INTERNATIONAL_PRIORITY</item>
+                <item label="1 Day Freight" xsi:type="string">FEDEX_1_DAY_FREIGHT</item>
+                <item label="2 Day Freight" xsi:type="string">FEDEX_2_DAY_FREIGHT</item>
+                <item label="2 Day" xsi:type="string">FEDEX_2_DAY</item>
+                <item label="2 Day AM" xsi:type="string">FEDEX_2_DAY_AM</item>
+                <item label="3 Day Freight" xsi:type="string">FEDEX_3_DAY_FREIGHT</item>
+                <item label="Express Saver" xsi:type="string">FEDEX_EXPRESS_SAVER</item>
+                <item label="Ground" xsi:type="string">FEDEX_GROUND</item>
+                <item label="First Overnight" xsi:type="string">FIRST_OVERNIGHT</item>
+                <item label="Home Delivery" xsi:type="string">GROUND_HOME_DELIVERY</item>
+                <item label="International Economy" xsi:type="string">INTERNATIONAL_ECONOMY</item>
+                <item label="Intl Economy Freight" xsi:type="string">INTERNATIONAL_ECONOMY_FREIGHT</item>
+                <item label="International First" xsi:type="string">INTERNATIONAL_FIRST</item>
+                <item label="International Ground" xsi:type="string">INTERNATIONAL_GROUND</item>
+                <item label="International Priority" xsi:type="string">INTERNATIONAL_PRIORITY</item>
+                <item label="Intl Priority Freight" xsi:type="string">INTERNATIONAL_PRIORITY_FREIGHT</item>
+                <item label="Priority Overnight" xsi:type="string">PRIORITY_OVERNIGHT</item>
+                <item label="Smart Post" xsi:type="string">SMART_POST</item>
+                <item label="Standard Overnight" xsi:type="string">STANDARD_OVERNIGHT</item>
+                <item label="Freight" xsi:type="string">FEDEX_FREIGHT</item>
+                <item label="National Freight" xsi:type="string">FEDEX_NATIONAL_FREIGHT</item>
+            </field>
+            <field path="carriers/fedex/debug" scope="carriers" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="carriers/fedex/showmethod" scope="carriers" scope_id="1" label="Yes" xsi:type="string">1</field>
+        </dataset>
+        <dataset name="fedex_rollback">
+            <field path="carriers/fedex/active" scope="carriers" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+        <dataset name="shipping_origin">
+            <field path="shipping/origin/country_id" scope="shipping" scope_id="1" label="United States" xsi:type="string">US</field>
+            <field path="shipping/origin/region_id" scope="shipping" scope_id="1" label="California" xsi:type="string">12</field>
+            <field path="shipping/origin/postcode" scope="shipping" scope_id="1" xsi:type="string">90232</field>
+            <field path="shipping/origin/city" scope="shipping" scope_id="1" xsi:type="string">Culver City</field>
+            <field path="shipping/origin/street_line1" scope="shipping" scope_id="1" xsi:type="string">10441 Jefferson Blvd</field>
+            <field path="shipping/origin/street_line2" scope="shipping" scope_id="1" xsi:type="string">Suite 200</field>
+        </dataset>
+        <dataset name="shipping_origin_rollback">
+            <field path="shipping/origin/country_id" scope="shipping" scope_id="1" label="United States" xsi:type="string">US</field>
+            <field path="shipping/origin/region_id" scope="shipping" scope_id="1" label="California" xsi:type="string">12</field>
+            <field path="shipping/origin/postcode" scope="shipping" scope_id="1" label="" xsi:type="string">90034</field>
+            <field path="shipping/origin/city" scope="shipping" scope_id="1" label="" xsi:type="string"></field>
+            <field path="shipping/origin/street_line1" scope="shipping" scope_id="1" label="" xsi:type="string"></field>
+            <field path="shipping/origin/street_line2" scope="shipping" scope_id="1" label="" xsi:type="string"></field>
+        </dataset>
+        <dataset name="shipping_origin_gb">
+            <field path="shipping/origin/country_id" scope="shipping" scope_id="1" label="United Kingdom" xsi:type="string">GB</field>
+            <field path="shipping/origin/postcode" scope="shipping" scope_id="1" xsi:type="string">SE1 7RW</field>
+            <field path="shipping/origin/city" scope="shipping" scope_id="1" xsi:type="string">London</field>
+            <field path="shipping/origin/street_line1" scope="shipping" scope_id="1" xsi:type="string">172, WestminsterBridge Rd</field>
+            <field path="shipping/origin/street_line2" scope="shipping" scope_id="1" xsi:type="string"></field>
+        </dataset>
+        <dataset name="shipping_origin_gb_rollback">
+            <field path="shipping/origin/country_id" scope="shipping" scope_id="1" label="United States" xsi:type="string">US</field>
+            <field path="shipping/origin/region_id" scope="shipping" scope_id="1" label="California" xsi:type="string">12</field>
+            <field path="shipping/origin/postcode" scope="shipping" scope_id="1" label="" xsi:type="string">90034</field>
+            <field path="shipping/origin/city" scope="shipping" scope_id="1" label="" xsi:type="string"></field>
+            <field path="shipping/origin/street_line1" scope="shipping" scope_id="1" label="" xsi:type="string"></field>
+            <field path="shipping/origin/street_line2" scope="shipping" scope_id="1" label="" xsi:type="string"></field>
+        </dataset>
+        <dataset name="dhl_eu">
+            <field path="carriers/dhlint/active" scope="carriers" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="carriers/dhlint/gateway_url" scope="carriers" scope_id="1" xsi:type="string">https://xmlpi-ea.dhl.com/XMLShippingServlet</field>
+            <field path="carriers/dhlint/id" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/dhlint/password" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/dhlint/content_type" scope="carriers" scope_id="1" label="Documents" xsi:type="string">D</field>
+            <field path="carriers/dhlint/account" scope="carriers" scope_id="1" xsi:type="string" />
+            <field path="carriers/dhlint/showmethod" scope="carriers" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="carriers/dhlint/debug" scope="carriers" scope_id="1" label="Yes" xsi:type="string">1</field>
+            <field path="carriers/dhlint/doc_methods" scope="carriers" scope_id="1" xsi:type="array">
+                <item label="Easy shop" xsi:type="string">2</item>
+                <item label="Sprintline" xsi:type="string">5</item>
+                <item label="Secureline" xsi:type="string">6</item>
+                <item label="Express easy" xsi:type="string">7</item>
+                <item label="Europack" xsi:type="string">9</item>
+                <item label="Break bulk express" xsi:type="string">B</item>
+                <item label="Medical express" xsi:type="string">C</item>
+                <item label="Express worldwide" xsi:type="string">D</item>
+                <item label="Express worldwide " xsi:type="string">U</item>
+                <item label="Express 9:00" xsi:type="string">K</item>
+                <item label="Express 10:30" xsi:type="string">L</item>
+                <item label="Domestic economy select" xsi:type="string">G</item>
+                <item label="Economy select" xsi:type="string">W</item>
+                <item label="Break bulk economy" xsi:type="string">I</item>
+                <item label="Domestic express" xsi:type="string">N</item>
+                <item label="Others" xsi:type="string">O</item>
+                <item label="Globalmail business" xsi:type="string">R</item>
+                <item label="Same day" xsi:type="string">S</item>
+                <item label="Express 12:00" xsi:type="string">T</item>
+                <item label="Express envelope" xsi:type="string">X</item>
+            </field>
+        </dataset>
+        <dataset name="dhl_eu_rollback">
+            <field path="carriers/dhlint/active" scope="carriers" scope_id="1" label="No" xsi:type="string">0</field>
+        </dataset>
+    </repository>
+</config>

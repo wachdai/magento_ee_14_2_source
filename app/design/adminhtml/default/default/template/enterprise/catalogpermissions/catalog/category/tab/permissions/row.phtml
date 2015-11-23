@@ -1,0 +1,98 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+/* @var $this Enterprise_CatalogPermissions_Block_Adminhtml_Catalog_Category_Tab_Permissions_Row */
+?>
+<?php
+/**
+ * Permissions tab row template
+ *
+ * @see Enterprise_CatalogPermissions_Block_Adminhtml_Catalog_Category_Tab_Permissions_Row
+ */
+?>
+<?php if ($this->isReadonly()):?>
+<?php $_readonly = ' disabled="disabled"'; ?>
+<?php else: ?>
+<?php $_readonly = ''; ?>
+<?php endif;?>
+<div class="option-box permission-box" id="{{html_id}}">
+    <?php if (!$this->canEditWebsites()): ?>
+    <input type="hidden" value="<?php echo $this->getDefaultWebsiteId(); ?>" class="<?php echo $this->getFieldClassName('website'); ?>" name="general[permissions][{{index}}][website_id]"/>
+    <?php endif; ?>
+    <input type="hidden" value="" class="<?php echo $this->getFieldClassName('id'); ?>" name="general[permissions][{{index}}][id]"/>
+    <input type="hidden" value="" class="<?php echo $this->getFieldClassName('_deleted'); ?>" name="general[permissions][{{index}}][_deleted]"/>
+    <table cellspacing="0" cellpadding="0" class="option-header">
+        <thead>
+            <tr>
+                <?php if ($this->canEditWebsites()): ?>
+                <th><?php echo $this->helper('enterprise_catalogpermissions')->__('Website');?> <span class="required">*</span></th>
+                <?php endif; ?>
+                <th><?php echo $this->helper('enterprise_catalogpermissions')->__('Customer Group');?> <span class="required">*</span></th>
+                <?php foreach ($this->getGrants() as $_label): ?>
+                <th><?php echo $_label ?></th>
+                <?php endforeach; ?>
+                <th class="a-right"><?php echo $this->getDeleteButtonHtml(); ?></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                 <?php if ($this->canEditWebsites()): ?>
+                 <td><select <?php echo $_readonly;?> class="<?php echo $this->getFieldClassName('website_id'); ?> select is-unique required-entry" name="general[permissions][{{index}}][website_id]">
+                    <option value=""><?php echo $this->helper('enterprise_catalogpermissions')->__('-- Please Select --');?></option>
+                    <option value="-1"><?php echo $this->helper('enterprise_catalogpermissions')->__('All Websites');?></option>
+                    <?php foreach ($this->getWebsiteCollection() as $_website): ?>
+                        <option value="<?php echo $_website->getId() ?>"><?php echo $this->escapeHtml($_website->getName()) ?></option>
+                    <?php endforeach; ?>
+                 </select></td>
+                 <?php endif; ?>
+                 <td>
+                     <select <?php echo $_readonly;?> class="<?php echo $this->getFieldClassName('customer_group_id'); ?> select is-unique required-entry" name="general[permissions][{{index}}][customer_group_id]">
+                        <option value=""><?php echo $this->helper('enterprise_catalogpermissions')->__('-- Please Select --');?></option>
+                        <option value="-1"><?php echo $this->helper('enterprise_catalogpermissions')->__('All Customer Groups');?></option>
+                        <?php foreach ($this->getCustomerGroupCollection() as $_customerGroup): ?>
+                            <option value="<?php echo $_customerGroup->getId() ?>"><?php echo $this->escapeHtml($_customerGroup->getCode()) ?></option>
+                        <?php endforeach; ?>
+                     </select>
+                 </td>
+                <?php foreach ($this->getGrants() as $_fieldId => $_label): ?>
+                <td>
+                    <input <?php echo $_readonly;?> type="radio" class="<?php echo $this->getFieldClassName($_fieldId) ?>" name="general[permissions][{{index}}][<?php echo $_fieldId ?>]" id="category_permissions_{{index}}_<?php echo $_fieldId ?>_allow" value="-1" {{<?php echo $_fieldId ?>_-1}} {{<?php echo $_fieldId ?>_disabled}}/><label for="category_permissions_{{index}}_<?php echo $_fieldId ?>_allow">
+                        <?php echo $this->helper('enterprise_catalogpermissions')->__('Allow') ?>
+                    </label><br />
+                    <input <?php echo $_readonly;?> type="radio" class="<?php echo $this->getFieldClassName($_fieldId) ?>" name="general[permissions][{{index}}][<?php echo $_fieldId ?>]" id="category_permissions_{{index}}_<?php echo $_fieldId ?>_deny" value="-2" {{<?php echo $_fieldId ?>_-2}} {{<?php echo $_fieldId ?>_disabled}}/><label for="category_permissions_{{index}}_<?php echo $_fieldId ?>_deny">
+                        <?php echo $this->helper('enterprise_catalogpermissions')->__('Deny') ?>
+                    </label><br />
+                    <input <?php echo $_readonly;?> type="radio" class="<?php echo $this->getFieldClassName($_fieldId) ?>" name="general[permissions][{{index}}][<?php echo $_fieldId ?>]" id="category_permissions_{{index}}_<?php echo $_fieldId ?>_default" value="0" {{<?php echo $_fieldId ?>_0}} {{<?php echo $_fieldId ?>_disabled}}/><label for="category_permissions_{{index}}_<?php echo $_fieldId ?>_default">
+                        <?php echo $this->helper('enterprise_catalogpermissions')->__('Use parent') ?>
+                        <span class="permissions-use-parent <?php echo $_fieldId?>"></span>
+                    </label>
+                </td>
+                <?php endforeach; ?>
+            </tr>
+        </tbody>
+    </table>
+    <input type="hidden" value="" class="permission-duplicate" id="category_permissions_{{index}}_duplicate"/>
+</div>

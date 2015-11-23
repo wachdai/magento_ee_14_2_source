@@ -1,0 +1,161 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<div id="template_container" class="template" style="display:none;">
+    <div id="template_registrant">
+    <input name="registrant[_index_][person_id]" value="" id="registrant:person_id_index_" type="hidden" />
+        <p class="btn-remove" id="btn-remove_index_"><a href="#" onclick="removeRegistrant(_index_); return false" class="btn-remove">
+        <img src="<?php echo $this->getSkinUrl('images/btn_remove.gif') ?>" alt="<?php echo Mage::helper('core')->quoteEscape($this->__('Remove')) ?>" /></a>
+    </p>
+    <div class="field">
+        <label for="registrant:firstname_index_" class="required"><em>*</em><?php echo $this->__('First Name:') ?></label>
+        <div class="input-box">
+            <input name="registrant[_index_][firstname]" value="" type="text" class="input-text required-entry" id="registrant:firstname_index_" />
+        </div>
+    </div>
+    <div class="field">
+        <label for="registrant:lastname_index_" class="required"><em>*</em><?php echo $this->__('Last Name:') ?></label>
+        <div class="input-box">
+            <input name="registrant[_index_][lastname]" value="" type="text" class="input-text required-entry" id="registrant:lastname_index_" />
+        </div>
+    </div>
+    <div class="field">
+        <label for="registrant:email_index_" class="required"><em>*</em><?php echo $this->__('Email Address:') ?></label>
+        <div class="input-box">
+            <input name="registrant[_index_][email]" value="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Email Address')) ?>" id="registrant:email_index_" type="text" class="input-text required-entry validate-email" />
+        </div>
+    </div>
+
+    <?php foreach ($this->getGroupedRegistrantAttributes() as $field => $data) : ?>
+    <?php $isRequired = $this->isAttributeRequired($data); ?>
+    <?php $isStatic = $this->isAttributeStatic($field); ?>
+        <div class="field">
+            <label for="registrant:<?php if (!$isStatic):?>custom:<?php endif;?><?php echo $field ?>_index_" <?php echo ($isRequired ? 'class="required"' : '') ?>>
+                <?php echo ($isRequired ? '<em>*</em>' : '') . $this->__("%s", $data['label']) ?>
+            </label>
+            <div class="input-box">
+                <?php echo $this->renderField($data, $field, '{{' . $field . '_value}}') ?>
+            </div>
+        </div>
+    <?php endforeach; ?>
+    </div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+    var liIndex=0;
+    var regCount  = 0;
+    var maxRegistrant = '<?php echo $this->getMaxRegistrant() ?>';
+    var myTemplate = new Template($('template_registrant').innerHTML, /(^|.|\r|\n)({{(\w+)}})/);
+    $('template_registrant').remove();
+
+    function removeRegistrant(liIndex){
+        $('registrant:firstname'+liIndex).up(2).remove();
+        regCount--;
+        if(regCount<maxRegistrant && maxRegistrant != 0) {
+            $('add_registrant_button').show();
+            $('max_registrant_message').hide();
+        }
+        return false;
+    }
+    function addRegistrant(){
+        ul = $('registrant_options');
+        var li_registrant = Element.extend(document.createElement("li"));
+        // skipping first row
+        if (liIndex != 0) {
+            li_registrant.addClassName('add-row');
+        }
+        li_registrant.addClassName('fields');
+        date_template = myTemplate.evaluate({});
+        li_registrant.innerHTML = date_template.gsub('_index_', liIndex);
+        liIndex++;
+        regCount++;
+
+        if(regCount>=maxRegistrant && maxRegistrant != 0) {
+            $('add_registrant_button').hide();
+            $('max_registrant_message').show();
+        }
+
+        ul.appendChild(li_registrant);
+
+        // skipping first row
+        if (liIndex == 1) {
+            $('btn-remove0').hide();
+        }
+    }
+//]]>
+</script>
+    <div class="fieldset">
+        <h2 class="legend"><?php echo $this->__('Recipients Information') ?></h2>
+        <ul class="form-list" id="registrant_options">
+            <li class="no-display">&nbsp;</li>
+        </ul>
+        <div class="buttons-set form-buttons">
+            <p class="back-link">
+                <span id="max_registrant_message" style="display:none;">
+                    <?php if ($this->getMaxRegistrant()): ?>
+                        <?php echo $this->__('Maximum %d recipients allowed.', $this->getMaxRegistrant()) ?>
+                    <?php endif; ?>
+                </span>&nbsp;
+            </p>
+            <?php if (1 < $this->getMaxRegistrant()): ?>
+                <button type="button" id="add_registrant_button" onclick="addRegistrant();" class="button"><span><span><?php echo $this->__('Add Recipient') ?></span></span></button>
+            <?php endif; ?>
+        </div>
+    </div>
+
+<script type="text/javascript">
+//<![CDATA[
+//drawing first registrant
+
+document.observe("dom:loaded", function() {
+<?php
+/* @var $this Enterprise_GiftRegistry_Block_Customer_Edit*/
+$registrantsData = $this->getRegistrantPresets($this->getEntity()->getId());
+$i = 0;
+?>
+<?php foreach ($registrantsData as $registrant) : ?>
+    addRegistrant();
+    <?php foreach ($registrant as $field => $value) : ?>
+        <?php if (!is_array($value)) : ?>
+            setFieldById(<?php echo '"registrant:'.$field.$i.'", "'.addslashes($value).'"' ?>);
+        <?php else : ?>
+            <?php foreach ($value as $customId => $customValue) : ?>
+                setFieldById(<?php echo '"registrant:custom:'.$customId.$i.'", "'.addslashes($customValue).'"' ?>);
+            <?php endforeach;?>
+        <?php endif; ?>
+    <?php endforeach; ?>
+
+    <?php $i++; ?>
+<?php endforeach; ?>
+<?php echo "liIndex = $i;\n"; ?>
+    if (liIndex == 0) {
+        addRegistrant();
+    }
+});
+//]]>
+</script>

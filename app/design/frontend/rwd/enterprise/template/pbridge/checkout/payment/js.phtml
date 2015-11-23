@@ -1,0 +1,161 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<script type="text/javascript">
+//<![CDATA[
+    function reloadIframe(method) {
+        var iframeContainer = $('payment_form_' + method + '_container');
+        if (iframeContainer) {
+            var hiddenElms = iframeContainer.up('li').select('input');
+            if (hiddenElms) {
+                hiddenElms.each(function(elm){
+                    if (elm) elm.remove();
+                });
+            }
+
+            new Ajax.Updater(
+                iframeContainer,
+                "<?php echo $this->getUrl('enterprise_pbridge/pbridge/iframe', array('_current' => true, '_secure' => true)); ?>",
+                {parameters : {method_code : method},
+                 onSuccess: function(transport) {
+                         if (iframeContainer.previous('span.pbridge-reload') && iframeContainer.previous('span.pbridge-reload').down('a')) {
+                             iframeContainer.previous('span.pbridge-reload').down('a').show();
+                         }
+                         toggleContinueButton(iframeContainer.up('ul'));
+                     }
+                }
+            );
+            if (isPaymentSubmitted(method)) {
+                delete submittedPayments[method];
+            }
+        }
+    }
+    function toggleContinueButton(target) {
+        var buttonsContainer = $('payment-buttons-container');
+        if (buttonsContainer && buttonsContainer.down('button.button')) {
+            var continueButton = buttonsContainer.down('button.button');
+            var checkedRadio = $$('#co-payment-form input[type="radio"][name="payment[method]"]:checked');
+            var isPbridgeMethod = checkedRadio.length && checkedRadio[0].match('[value^="pbridge"]');
+            if ((target.type != 'checkbox' || !target.checked) && isPbridgeMethod) {
+                return continueButton.setStyle({display:'none'});
+            }
+            if (!isPbridgeMethod || isPaymentSubmitted(checkedRadio[0].value)) {
+                continueButton.setStyle({display:'block'});
+            }
+        }
+    }
+
+    function isPaymentSubmitted(method)
+    {
+        return submittedPayments.hasOwnProperty(method);
+    }
+
+    function validateAgreementOnIframe()
+    {
+        checkout.setLoadWaiting('review');
+        var params = Form.serialize(payment.form) + '&' + Form.serialize(review.agreementsForm);
+        var request = new Ajax.Request(
+            getAgreementValidationUrl(),
+            {
+                method: 'post',
+                parameters: params,
+                onComplete: review.onComplete,
+                onSuccess: validateAgreements,
+                onFailure: checkout.ajaxFailure.bind(checkout)
+            }
+        );
+    }
+
+    function loadReviewIframe(method) {
+        var iframeContainer = $('checkout-pbridgeiframe-load');
+        var methodCode = method || payment.currentMethod;
+        new Ajax.Updater(
+            iframeContainer,
+            "<?php echo $this->getUrl('enterprise_pbridge/pbridge/review', array('_current' => true, '_secure' => true)); ?>",
+            {parameters : {method_code : methodCode, data: {is_review_iframe: 1}}}
+        );
+        $('iframe-warning').show();
+        $('btn-pay-now').hide();
+    }
+
+    /**
+    * Hold validation actions before loading review iframe
+    */
+    function preLoadReviewIframe() {
+        if (review.agreementsForm) {
+            validateAgreementOnIframe();
+        } else {
+            loadReviewIframe();
+        }
+    }
+
+    function saveOrderAndLoadReviewIframe()
+    {
+        if (review.agreementsForm) {
+            validateAgreementOnIframe();
+        } else {
+            var headers = $$('#' + checkout.accordion.container.readAttribute('id') + ' .section');
+            headers.each(function(header) {
+                header.removeClassName('allow');
+            });
+            review.save();
+            $('iframe-warning').show();
+            $('btn-pay-now').hide();
+        }
+    }
+
+    /**
+    * Validate agreemnets
+    */
+    function validateAgreements(transport) {
+        if (transport && transport.responseText) {
+            try{
+                response = eval('(' + transport.responseText + ')');
+            }
+            catch (e) {
+                response = {};
+            }
+            if (response.success) {
+                /* Accepted terms and conditions are no longer available to decline */
+                review.agreementsForm.hide();
+                loadReviewIframe();
+            } else {
+                review.nextStep(transport);
+            }
+        }
+    }
+
+    /**
+    * Get url for server agreements validation
+    *
+    * @return string
+    */
+    function getAgreementValidationUrl() {
+        return "<?php echo $this->getUrl('enterprise_pbridge/pbridge/validateAgreement', array('_current' => true)); ?>";
+    }
+//]]>
+</script>

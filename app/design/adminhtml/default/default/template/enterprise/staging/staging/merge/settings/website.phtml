@@ -1,0 +1,237 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php /* @var $this Enterprise_Staging_Block_Manage_Staging_Merge_Settings_Website */?>
+<?php $staging          = $this->getStaging(); ?>
+<?php $items            = $staging->getItemsCollection(); ?>
+<?php $masterWebsites   = $this->getWebsiteCollection(); ?>
+<?php $stagingWebsites  = $this->getStagingWebsiteCollection(); ?>
+<?php $stagingWebsite   = $staging->getStagingWebsite(); ?>
+<div>
+    <h3 class="icon-head head-categories"><?php echo $staging->getName(); ?></h3>
+</div>
+<?php if($this->getPagerVisibility() || $this->getExportTypes() || $this->getFilterVisibility()): ?>
+    <table cellspacing="0" class="actions">
+        <tr>
+    <?php if($this->getExportTypes()): ?>
+        <td class="export a-right">
+            <img src="<?php echo $this->getSkinUrl('images/icon_export.gif') ?>" alt="" class="v-middle"/>&nbsp; <?php echo $this->__('Export to:') ?>
+            <select name="<?php echo $this->getId() ?>_export" id="<?php echo $this->getId() ?>_export" style="width:8em;">
+            <?php foreach ($this->getExportTypes() as $_type): ?>
+                <option value="<?php echo $_type->getUrl() ?>"><?php echo $_type->getLabel() ?></option>
+            <?php endforeach; ?>
+            </select>
+            <?php echo $this->getExportButtonHtml() ?>
+        </td>
+    <?php endif; ?>
+        <td class="filter-actions a-right">
+            <?php echo $this->getMainButtonsHtml() ?>
+        </td>
+        </tr>
+    </table>
+<?php endif; ?>
+<?php if($this->getMassactionBlock()->isAvailable()): ?>
+<?php echo $this->getMassactionBlockHtml() ?>
+<?php endif ?>
+
+<form action="<?php echo $this->getSaveUrl() ?>" method="post" id="enterprise_staging_merge_form" enctype="multipart/form-data">
+
+<div class="content-header">
+<table cellspacing="0">
+    <tr>
+        <td style="width:50%;"><h3 class="icon-head head-staging"><h3><?php echo $this->__('Staging Website - Merge Configuration'); ?></h3></h3></td>
+        <td class="a-right">
+            <div class="entry-edit staging-datetime-advice" align="right">
+                    <span class="hor-scroll">
+                        <span class="a-center">
+                            <button onclick="<?php echo $this->getJsObjectName() ?>.stagingMerge(); return false;" class="staging-mapper-add-website-btn button">
+                                <span><span><span><?php echo $this->__('Merge Now') ?></span></span></span>
+                            </button>
+                        </span>
+                    </span>
+                    <span style="padding: 0px 20px 0px 20px;"><b><?php echo $this->__('or') ?></b></span>
+                    <span class="hor-scroll">
+                        <span class="a-center">
+                            <button onclick="<?php echo $this->getJsObjectName() ?>.stagingMerge( {merge_later: 1} ); return false;" class="staging-mapper-add-website-btn button">
+                                <span><span><span><?php echo $this->__('Schedule Merge') ?></span></span></span>
+                            </button>
+                        </span>
+                        <span>
+                            <img style="" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Select Date')) ?>" id="schedule_merge_later_trig" class="v-middle" alt="" src="<?php echo $this->getSkinUrl("images/grid-cal.gif");?> "/>
+                            <input type="text" style="width: 120px;" class="schedule_merge_later schedule_merge_empty input-text" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Set Staging Merge Date')) ?>" value="" id="schedule_merge_later" name="schedule_merge_later"/>
+                            <script type="text/javascript">
+                            //<![CDATA[
+                                Calendar.setup({
+                                    inputField: "schedule_merge_later",
+                                    ifFormat: "%m/%e/%Y %H:%M:%S",
+                                    showsTime: true,
+                                    button: "schedule_merge_later_trig",
+                                    align: "Bl",
+                                    singleClick : true
+                                });
+                            //]]>
+                            </script>
+                        </span>
+
+                    </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td align="right">
+            <div style="width: 220px;">
+                    <input type="hidden" class="schedule_merge_later_flag" name="schedule_merge_later_flag" value="" id="schedule_merge_later_flag">
+            </div>
+        </td>
+    </tr>
+</table>
+</div>
+
+
+<?php echo $this->getBlockHtml('formkey')?>
+<div id="<?php echo $this->getId() ?>" class="grid">
+    <div class="hor-scroll">
+    <table cellspacing="0" class="data" id="<?php echo $this->getId() ?>_table">
+        <col />
+        <col />
+        <col width="200" />
+        <thead>
+            <tr class="headings">
+                <th><?php echo $this->__('From'); ?></th>
+                <th><?php echo $this->__('To'); ?></th>
+                <th><?php echo $this->__('Action'); ?></th>
+            </tr>
+        </thead>
+        <tbody id="<?php echo $this->getId() ?>_rows">
+            <tr id="<?php echo $this->getId() ?>_website_template" style="display: none;">
+                <td class="mapper-name"><?php echo $this->__('Staging Website: '); ?>&nbsp;&nbsp;&nbsp;
+                    <input type="hidden" name="map[websites][from][]" class="validate-select-website staging-mapper-website-from" value="<?php echo $stagingWebsite->getId(); ?>" />
+                    <span><?php echo $stagingWebsite->getName(); ?></span>
+                </td>
+                <td class="mapper-select"><?php echo $this->__('Website: '); ?>&nbsp;&nbsp;&nbsp;
+                    <select name="map[websites][to][]" class="validate-select-website staging-mapper-website-to">
+                        <option value=""><?php echo $this->__('Select website to map'); ?></option>
+                    <?php foreach ($masterWebsites as $website): ?>
+                        <option value="<?php echo $website->getId(); ?>"><?php echo $website->getName(); ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                </td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr id="<?php echo $this->getId() ?>_store_template" style="display: none;">
+                <td class="mapper-name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->__('Staging Store: '); ?>&nbsp;&nbsp;&nbsp;
+                    {{store_from_select}}
+                </td>
+                <td class="mapper-select">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->__('Store: '); ?>&nbsp;&nbsp;&nbsp;
+                    {{store_to_select}}
+                </td>
+                <td><button class="button" onclick="<?php echo $this->getJsObjectName() ?>.removeStoreMap(this); return false;"><span><span><span><?php echo $this->__('Remove'); ?></span></span></span></button></td>
+            </tr>
+            <tr id="<?php echo $this->getId() ?>_store_add_btn_template" style="display: none;">
+                <td></td>
+                <td></td>
+                <td>
+                    <button class="staging-mapper-add-store-btn button disabled" disabled="disabled" onclick="<?php echo $this->getJsObjectName() ?>.addStoreMap(this); return false;"><span><span><span><?php echo $this->__('Add new store view map'); ?></span></span></span></button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+</div>
+<div class="entry-edit">
+    <div id="staging_merge_additional_config" class="fieldset">
+        <table class="form-list" cellspacing="0">
+            <tr>
+                <td class="label"><label for="staging_merge_backup_flag"><?php echo $this->__('Create a backup') ?></label></td>
+                <td class="value"><input type="checkbox" checked="checked" value="1" name="map[backup]" id="staging_merge_backup_flag" /></td>
+            </tr>
+        </table>
+    </div>
+</div>
+<h3 class="icon-head head-staging"><h3><?php echo $this->__('Content'); ?></h3></h3>
+<?php echo $this->getChildHtml('items'); ?>
+
+</form>
+<script type="text/javascript">
+//<![CDATA[
+<?php echo $this->getJsObjectName() ?> = new Enterprise.Staging.Mapper('<?php echo $this->getId() ?>', '<?php echo $this->getGridUrl() ?>', '<?php echo $this->getVarNamePage() ?>', '<?php echo $this->getVarNameSort() ?>', '<?php echo $this->getVarNameDir() ?>', '<?php echo $this->getVarNameFilter() ?>', 'enterprise_staging_merge_form', <?php echo $this->getAllStoresJson(); ?>);
+var stagingGrid = <?php echo $this->getJsObjectName() ?>.grid;
+stagingGrid.useAjax = '<?php echo $this->getUseAjax() ?>';
+<?php if ($this->getRowClickCallback()): ?>
+stagingGrid.rowClickCallback = <?php echo $this->getRowClickCallback() ?>;
+<?php endif; ?>
+<?php if ($this->getCheckboxCheckCallback()): ?>
+stagingGrid.checkboxCheckCallback = <?php echo $this->getCheckboxCheckCallback() ?>;
+<?php endif; ?>
+<?php if ($this->getRowInitCallback()): ?>
+stagingGrid.initRowCallback = <?php echo $this->getRowInitCallback() ?>;
+stagingGrid.rows.each(function(row){<?php echo $this->getRowInitCallback() ?>(stagingGrid, row)});
+<?php endif; ?>
+
+Validation.addAllThese([
+    ['schedule_merge_later', '<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('catalog')->__('Please set up merge date/time later then present date')) ?>', function(v) {
+        if ($('schedule_merge_later_flag').value == 1) {
+            var dateV = $('schedule_merge_later').value;
+            if (!dateV) {
+                return true;
+            }
+            var mergeDate   = new Date(dateV);
+            var currentTime = new Date();
+            currentTime.setTime((CalendarDateObject._SERVER_TIMZEONE_SECONDS + currentTime.getTimezoneOffset()*60)*1000);
+            if (v == '' || (currentTime.getTime() >= mergeDate.getTime())) {
+                return false;
+            }
+        }
+        return true;
+    }],
+    ['schedule_merge_empty', '<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('catalog')->__('Please set up merge date/time')) ?>', function(v) {
+        if ($('schedule_merge_later_flag').value == 1) {
+            var dateV = $('schedule_merge_later').value;
+            if (!dateV) {
+                return false;
+            }
+        }
+        return true;
+    }],
+    ['validate-select-website', '<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('catalog')->__('Please select website')) ?>', function(v, elem) {
+        if (elem.parentNode.parentNode.style.display != 'none') {
+
+        }
+        return true;
+    }],
+    ['validate-select-store', '<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('catalog')->__('Please select store view')) ?>', function(v, elem) {
+        if (elem.parentNode.parentNode.style.display != 'none') {
+            return ((v != "none") && (v != null) && (v.length != 0));
+        }
+        return true;
+    }]]);
+
+
+//]]>
+
+<?php echo $this->getJsObjectName() ?>.addWebsiteMap();
+</script>

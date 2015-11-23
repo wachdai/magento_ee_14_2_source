@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_GiftCard
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <api>
+        <resources>
+            <giftcard_customer translate="title" module="enterprise_giftcard">
+                <model>enterprise_giftcard/customer_api</model>
+                <title>GiftCard API</title>
+                <acl>giftcard_customer</acl>
+                <methods>
+                    <info translate="title" module="enterprise_giftcard">
+                        <title>Retrieve giftcard customer data</title>
+                        <acl>giftcard_customer/info</acl>
+                    </info>
+                    <redeem translate="title" module="enterprise_giftcard">
+                        <title>Redeem giftcard to customer store credit</title>
+                        <acl>giftcard_customer/redeem</acl>
+                    </redeem>
+                </methods>
+                <faults>
+                    <not_exists>
+                        <code>100</code>
+                        <message>Gift card does not exists.</message>
+                    </not_exists>
+                    <not_valid>
+                        <code>101</code>
+                        <message>Gift card is not valid.</message>
+                    </not_valid>
+                    <redemption_disabled>
+                        <code>103</code>
+                        <message>Redemption functionality is disabled.</message>
+                    </redemption_disabled>
+                    <unable_redeem>
+                        <code>104</code>
+                        <message>Unable to redeem gift card.</message>
+                    </unable_redeem>
+                </faults>
+            </giftcard_customer>
+            <cart_giftcard translate="title" module="enterprise_giftcard">
+                <model>enterprise_giftcard/checkout_cart_api</model>
+                <title>GiftCard for Shopping Cart API</title>
+                <acl>cart_giftcard</acl>
+                <methods>
+                    <list translate="title" module="enterprise_giftcard">
+                        <title>Retrieve list of giftcards in shopping cart</title>
+                        <method>items</method>
+                        <acl>cart_giftcard/list</acl>
+                    </list>
+                    <add translate="title" module="enterprise_giftcard">
+                        <title>Add giftcard to shopping cart (quote)</title>
+                        <acl>cart_giftcard/add</acl>
+                    </add>
+                    <remove translate="title" module="enterprise_giftcard">
+                        <title>Remove giftcard from shopping cart (quote)</title>
+                        <acl>cart_giftcard/remove</acl>
+                    </remove>
+                </methods>
+                <faults>
+                    <store_not_exists>
+                        <code>1001</code>
+                        <message>Can not make operation because store is not exists</message>
+                    </store_not_exists>
+                    <quote_not_exists>
+                        <code>1002</code>
+                        <message>Can not make operation because quote is not exists</message>
+                    </quote_not_exists>
+                    <invalid_input_data>
+                        <code>1003</code>
+                        <message>Provided data is invalid</message>
+                    </invalid_input_data>
+                    <giftcard_account_not_found_by_code>
+                        <code>1004</code>
+                        <message>Gift card account with requested code does not exist</message>
+                    </giftcard_account_not_found_by_code>
+                    <save_error>
+                        <code>1005</code>
+                        <message>Error happened while adding gift card to quote</message>
+                    </save_error>
+                </faults>
+            </cart_giftcard>
+        </resources>
+        <v2>
+            <resources_function_prefix>
+                <giftcard_customer>giftcardCustomer</giftcard_customer>
+                <cart_giftcard>shoppingCartGiftcard</cart_giftcard>
+            </resources_function_prefix>
+        </v2>
+        <acl>
+            <resources>
+                <giftcard_customer translate="title" module="enterprise_giftcard">
+                     <title>Gift Card for Customer</title>
+                     <sort_order>1</sort_order>
+                     <info translate="title" module="enterprise_giftcard">
+                        <title>Retrieve gift card customer info</title>
+                     </info>
+                     <redeem translate="title" module="enterprise_giftcard">
+                        <title>Redeem giftcard to customer store credit</title>
+                     </redeem>
+                </giftcard_customer>
+                <cart_giftcard translate="title" module="enterprise_giftcard">
+                     <title>Gift Card for Shopping Cart</title>
+                     <sort_order>1</sort_order>
+                     <list translate="title" module="enterprise_giftcard">
+                        <title>Retrieve list of Giftcards in shopping cart</title>
+                     </list>
+                     <add translate="title" module="enterprise_giftcard">
+                         <title>Add</title>
+                     </add>
+                     <remove translate="title" module="enterprise_giftcard">
+                         <title>Remove</title>
+                     </remove>
+                </cart_giftcard>
+            </resources>
+        </acl>
+    </api>
+</config>

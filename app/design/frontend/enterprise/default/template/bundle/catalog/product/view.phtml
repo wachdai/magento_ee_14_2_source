@@ -1,0 +1,194 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php
+/* @var $this Mage_Bundle_Block_Catalog_Product_View */
+$_helper = $this->helper('catalog/output');
+$_product = $this->getProduct();
+?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div id="bundle-product-wrapper">
+    <div id="bundleProduct">
+        <div id="productView" class="product-view">
+            <div class="product-essential">
+                <div class="product-shop">
+                    <div class="product-main-info">
+                        <div class="product-name">
+                            <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                        </div>
+                        <p class="product-ids"><?php echo $this->__('SKU#%s',$this->escapeHtml($_product->getSku())); ?></p>
+                        <?php echo $this->getReviewsSummaryHtml($_product, false, true)?>
+                        <?php echo $this->getChildHtml('product_type_data') ?>
+                        <?php echo $this->getChildHtml('alert_urls') ?>
+                    </div>
+                    <?php echo $this->getChildHtml('tierprices') ?>
+                    <?php echo $this->getChildHtml('extrahint') ?>
+                    <?php echo $this->getChildHtml('customize_button') ?>
+                    <?php if (!$this->hasOptions()):?>
+                        <?php if($_product->isSaleable()): ?>
+                            <button type="button" onclick="window.location='<?php echo Mage::getBaseUrl().$_product->getRequestPath();?>?startcustomization=1'" class="button btn-cart" id="customize_and_add_to_cart"><span><span><?php echo $this->__("Customize and Add to Cart") ?></span></span></button>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    <?php echo $this->getChildHtml('addto') ?>
+
+                    <?php if ($_product->getShortDescription()):?>
+                        <div class="short-description std">
+                            <h2><?php echo $this->__('Quick Overview') ?></h2>
+                            <?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?>
+                        </div>
+                    <?php endif;?>
+
+                    <?php echo $this->getChildHtml('other');?>
+
+                </div>
+                <div class="product-img-box">
+                    <?php echo $this->getChildHtml('media') ?>
+                </div>
+            </div>
+            <div class="product-collateral">
+                <?php $_description = $this->getChildHtml('description') ?>
+                <?php $_additional = $this->getChildHtml('additional') ?>
+                <?php if($_description || $_additional):?>
+                    <dl id="collateral-tabs" class="collateral-tabs">
+                    <?php if($_description):?>
+                        <dt class="tab"><span><?php echo $this->__('Details') ?></span></dt>
+                        <dd class="tab-container">
+                           <div class="tab-content"><?php echo $_description ?></div>
+                        </dd>
+                    <?php endif;?>
+                    <?php if($_additional):?>
+                        <dt class="tab"><span><?php echo $this->__('Additional Information') ?></span></dt>
+                        <dd class="tab-container">
+                            <div class="tab-content"><?php echo $_additional ?></div>
+                        </dd>
+                    <?php endif;?>
+                    </dl>
+                    <script type="text/javascript">
+                    //<![CDATA[
+                        var collateralTabs = new Enterprise.Tabs('collateral-tabs');
+                        Event.observe(window, 'load', function() {
+                            collateralTabs.select();
+                        });
+                    //]]>
+                    </script>
+                <?php endif; ?>
+                <?php if ($this->canEmailToFriend()): ?>
+                    <p class="emailto-link"><a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>"><?php echo $this->__('Email to a Friend') ?></a></p>
+                <?php endif; ?>
+            </div>
+            <div class="clearer"></div>
+            <?php echo $this->getChildHtml('relatedProducts') ?>
+            <?php echo $this->getChildHtml('upsell_products') ?>
+            <?php echo $this->getChildHtml('productTagList') ?>
+            <?php echo $this->getChildHtml('product_additional_data') ?>
+        </div>
+        <form action="<?php echo $this->getSubmitUrl($_product, array('_secure' => $this->_isSecure())) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <div class="no-display">
+                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                <input type="hidden" name="related_product" id="related-products-field" value="" />
+            </div>
+            <?php if ($_product->isSaleable() && $this->hasOptions()): ?>
+            <div id="options-container" style="display:none">
+                <div id="customizeTitle" class="page-title title-buttons">
+                    <h1><?php echo $this->__('Customize %s', $_helper->productAttribute($_product, $_product->getName(), 'name')) ?></h1>
+                    <a href="#" onclick="Enterprise.Bundle.end(); return false;"><small>&lsaquo;</small> Go back to product detail</a>
+                </div>
+                <?php echo $this->getChildHtml('bundleSummary') ?>
+                <?php if ($this->getChildChildHtml('container1')):?>
+                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+                <?php elseif ($this->getChildChildHtml('container2')):?>
+                    <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+                <?php endif;?>
+            </div>
+            <?php endif;?>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+        <?php if ($this->isStartCustomization()): ?>
+            Enterprise.Bundle.start();
+        <?php endif;?>
+        var productAddToCartForm = new VarienForm('product_addtocart_form');
+        productAddToCartForm.submit = function(button, url) {
+            if (this.validator.validate()) {
+                var form = this.form;
+                var oldUrl = form.action;
+
+                if (url) {
+                   form.action = url;
+                }
+                var e = null;
+                try {
+                    this.form.submit();
+                } catch (e) {
+                }
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+
+                if (button && button != 'undefined') {
+                    button.disabled = true;
+                }
+            }
+        }.bind(productAddToCartForm);
+
+        productAddToCartForm.submitLight = function(button, url){
+            if(this.validator) {
+                var nv = Validation.methods;
+                delete Validation.methods['required-entry'];
+                delete Validation.methods['validate-one-required'];
+                delete Validation.methods['validate-one-required-by-name'];
+                // Remove custom datetime validators
+                for (var methodName in Validation.methods) {
+                    if (methodName.match(/^validate-datetime-.*/i)) {
+                        delete Validation.methods[methodName];
+                    }
+                }
+
+                if (this.validator.validate()) {
+                    if (url) {
+                        this.form.action = url;
+                    }
+                    this.form.submit();
+                }
+                Object.extend(Validation.methods, nv);
+            }
+        }.bind(productAddToCartForm);
+
+        Enterprise.Bundle.initialize();
+</script>

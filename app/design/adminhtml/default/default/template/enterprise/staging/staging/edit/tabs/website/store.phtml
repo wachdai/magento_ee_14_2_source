@@ -1,0 +1,97 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php echo $this->getUsedStoresHtml(); ?>
+<?php $_storeCollection = $this->getStoreCollection() ?>
+<?php if ($_storeCollection->getSize()): ?>
+<div id="staging_website_stores_container_<?php echo $this->getWebsite()->getId(); ?>">
+<div class="entry-edit-head">
+    <h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Create New Staging Store View') ?></h4>
+</div>
+<p class="switcher"><label for="staging_website_stores"><?php echo $this->__('Choose Store View:') ?></label>
+<?php echo $this->getHintHtml() ?>
+<select name="staging_website_stores" id="staging_website_stores_<?php echo $this->getWebsite()->getId(); ?>" class="left-col-block">
+    <option value=""><?php echo $this->__('Please, select a store view') ?></option>
+    <?php foreach ($_storeCollection as $_store): ?>
+        <option value="<?php echo $_store->getId() ?>"><?php echo $_store->getName() ?></option>
+    <?php endforeach; ?>
+</select>
+<button class="button" onclick="addStagingStore('<?php echo $this->getWebsite()->getId(); ?>'); return false;"><span><span><span><?php echo $this->__('Add'); ?></span></span></span></button>
+</p>
+</div>
+<?php endif; ?>
+<script type="text/javascript">
+var addNewStagingStoreCount = 0;
+
+var getStoreUrl = '<?php echo $this->getCreateStagingStoreUrl(); ?>';
+
+var currentId = null;
+
+function addStagingStore(id)
+{
+    currentId = id;
+    var selector = $('staging_website_stores_' + currentId);
+
+    var value = selector.value;
+    if (!value) {
+        alert('<?php echo $this->jsQuoteEscape($this->__('Please, select a store view'));?>');
+        return false;
+    }
+
+    new Ajax.Request(getStoreUrl, {
+        parameters: {store:value, count:addNewStagingStoreCount},
+        onComplete: insertStagingStore.bind(this)
+    });
+}
+
+function insertStagingStore(transport)
+{
+    var selector = $('staging_website_stores_' + currentId);
+    var store = transport.responseText;
+    new Insertion.After($('staging_website_stores_container_'+currentId), store);
+    addNewStagingStoreCount++;
+    selector.value='';
+}
+function removeStagingStore(storeContainerId)
+{
+    var element = $(storeContainerId);
+    if (element) {
+        element.remove();
+    }
+}
+function toggleStagingStoreItems(itemsSelectorId)
+{
+    var element = $(itemsSelectorId);
+    if (element) {
+        element.disabled = !element.disabled;
+        if (element.disabled) {
+            element.hide();
+        } else {
+            element.show();
+        }
+    }
+}
+</script>

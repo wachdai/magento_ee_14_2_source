@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+-->
+<layout version="0.1.0">
+    <customer_logged_in>
+        <block type="enterprise_invitation/link" name="invitation_link_top">
+            <action method="addAccountLink" translate="label title" module="enterprise_invitation"><block>account.links</block><label>Send Invitations</label><url helper="enterprise_invitation/data/getCustomerInvitationFormUrl" /><title>Send Invitations</title><prepare /><urlParams /><position>1</position><li>id="invitation-send-link"</li></action>
+        </block>
+    </customer_logged_in>
+
+    <enterprise_invitation_index_send translate="label">
+        <label>Customer My Account Invitations Form</label>
+        <update handle="customer_account"/>
+        <reference name="customer_account_navigation">
+            <action method="setActive"><path>enterprise_invitation/index/index</path></action>
+        </reference>
+        <reference name="my.account.wrapper">
+            <block type="core/template" name="invitationForm" template="invitation/form.phtml">
+                <block type="page/html_wrapper" name="invitations.form.form.before" as="form_before" translate="label">
+                    <label>Invitation Form Before</label>
+                    <!--action method="setMayBeInvisible"><value>1</value></action-->
+                    <action method="setElementClass"><value>rewards</value></action>
+                </block>
+            </block>
+        </reference>
+    </enterprise_invitation_index_send>
+
+    <enterprise_invitation_index_index translate="label">
+        <label>Customer My Account Invitations List</label>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="enterprise_invitation/customer_list" name="invitations_list" template="invitation/list.phtml">
+                <block type="page/html_wrapper" name="invitations.list.list.before" as="list_before" translate="label">
+                    <label>Invitation List Before</label>
+                    <!--action method="setMayBeInvisible"><value>1</value></action-->
+                    <action method="setElementClass"><value>rewards</value></action>
+                </block>
+            </block>
+        </reference>
+    </enterprise_invitation_index_index>
+
+    <customer_account>
+        <block type="enterprise_invitation/link" name="invitation_link_dashboard">
+            <action method="addDashboardLink" translate="label" module="enterprise_invitation"><block>customer_account_navigation</block><name>invitations</name><path>enterprise_invitation/</path><label>My Invitations</label></action>
+        </block>
+    </customer_account>
+
+    <enterprise_invitation_customer_account_create translate="label">
+        <label>Customer Account Registration by Invitation Form</label>
+        <update handle="customer_account_create" />
+        <reference name="content">
+            <remove name="customer_form_register" />
+            <block type="enterprise_invitation/customer_form_register" name="customer_form_register_invitation" template="customer/form/register.phtml">
+                <action method="append"><block>customer.form.register.fields.before</block><alias>form_fields_before</alias></action>
+                <action method="append"><block>customer_form_user_attributes</block></action>
+                <action method="append"><block>customer_form_address_user_attributes</block></action>
+            </block>
+        </reference>
+    </enterprise_invitation_customer_account_create>
+</layout>

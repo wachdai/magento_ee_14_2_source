@@ -1,0 +1,39 @@
+<!--@subject Reward Points Balance Updated at {{var store.getFrontendName()|escape}} @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var logo_url":"Email Logo Image Url",
+"var logo_alt":"Email Logo Image Alt",
+"config path='trans_email/ident_sales/email'":"Sales Contact Email",
+"config path='general/store_information/phone'":"Sales Contact Phone",
+"var unsubscription_url":"Unsubscription URL",
+"var points_balance":"Current Points Amount",
+"var customer.getName()|escape":"Customer Name",
+"var reward_pts_was":"Previous Points Amount",
+"var reward_pts_change":"Points Change",
+"var reward_amount_was":"Previous Reward Amount",
+"var reward_amount_now":"Current Reward Amount",
+"var update_message":"Update Message",
+"var update_comment":"Update Comment"}
+@-->
+<!--@styles
+@-->
+
+{{template config_path="design/email/header"}}
+{{inlinecss file="email-inline.css"}}
+
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="action-content">
+            <h1>{{var customer.getName()|escape}},</h1>
+            <p>You have {{var points_balance}} pts that can be used in our store <a href="{{store url=""}}">{{var store.getFrontendName()|escape}}</a>.</p>
+            <p>
+                If you have any questions about your account or any other matter, please feel free to contact us at
+                <a href="mailto:{{var store_email}}">{{var store_email}}</a>
+                {{depend store_phone}} or by phone at <a href="tel:{{var phone}}">{{var store_phone}}</a>{{/depend}}.
+            </p>
+            <p>You can <a href="{{var unsubscription_url}}">unsubscribe</a> from such notifications.</p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer"}}

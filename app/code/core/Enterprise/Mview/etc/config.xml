@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Mview
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_Mview>
+            <version>1.12.0.2</version>
+        </Enterprise_Mview>
+    </modules>
+    <global>
+        <models>
+            <enterprise_mview>
+                <class>Enterprise_Mview_Model</class>
+                <resourceModel>enterprise_mview_resource</resourceModel>
+            </enterprise_mview>
+            <enterprise_mview_resource>
+                <class>Enterprise_Mview_Model_Resource</class>
+                <entities>
+                    <metadata>
+                        <table>enterprise_mview_metadata</table>
+                    </metadata>
+                    <subscriber>
+                        <table>enterprise_mview_subscriber</table>
+                    </subscriber>
+                    <event>
+                        <table>enterprise_mview_event</table>
+                    </event>
+                    <metadata_event>
+                        <table>enterprise_mview_metadata_event</table>
+                    </metadata_event>
+                    <metadata_group>
+                        <table>enterprise_mview_metadata_group</table>
+                    </metadata_group>
+                </entities>
+            </enterprise_mview_resource>
+        </models>
+        <resources>
+            <enterprise_mview_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </enterprise_mview_write>
+            <enterprise_mview_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </enterprise_mview_read>
+            <enterprise_mview_setup>
+                <setup>
+                    <module>Enterprise_Mview</module>
+                </setup>
+            </enterprise_mview_setup>
+        </resources>
+        <helpers>
+            <enterprise_mview>
+                <class>Enterprise_Mview_Helper</class>
+            </enterprise_mview>
+        </helpers>
+    </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <Enterprise_Mview>
+                    <files>
+                        <default>Enterprise_Mview.csv</default>
+                    </files>
+                </Enterprise_Mview>
+            </modules>
+        </translate>
+    </adminhtml>
+</config>

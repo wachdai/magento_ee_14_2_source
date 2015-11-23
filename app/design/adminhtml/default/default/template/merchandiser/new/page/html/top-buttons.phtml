@@ -1,0 +1,221 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<?php $helper = Mage::helper('merchandiser'); ?>
+
+<div class="page-title category-title">
+    <h1><?php echo $this->getCategory()->getName() ?></h1>
+</div>
+
+<div id="category-link" class="top-button"></div>
+
+<div id="select-action-container" class="top-button">
+
+    <label for="actionMenu"><?php echo $helper->__('Storefronts : ') ?></label>
+    <?php $storeFrontFromSession = Mage::getSingleton('adminhtml/session')->getStoreFront(); ?>
+    <select name="sores" id="front_stores" onchange="showStoreProducts(1)" autocomplete="off">
+        <option value="0"><?php echo $this->__("All Storefronts") ?></option>
+        <?php $allWebsites = Mage::app()->getWebsites(); ?>
+        <?php foreach ($allWebsites as $websiteId => $val): ?>
+            <?php $_websiteName = Mage::app()->getWebsite($websiteId)->getName() ?>
+            <?php $isSelected = $storeFrontFromSession==$websiteId?"selected":""; ?>
+            <option value="<?php echo $websiteId ?>" <?php echo $isSelected; ?>>
+               <?php echo $_websiteName ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+
+    <label for="actionMenu"><?php echo $helper->__('Options: ') ?></label>
+        <select id="actionMenu" name="actionMenu">
+        <?php $actions = $helper->getConfigAction(); ?>
+        <?php if (sizeof($actions) > 0): ?>
+            <optgroup label="<?php echo $this->__("Sort options") ?>">
+            <?php foreach ($actions as $action_index => $action): ?>
+                <option value="<?php echo $action_index ?>"><?php echo $action['name'] ?></option>
+            <?php endforeach; ?>
+            </optgroup>
+        <?php endif; ?>
+        <optgroup label="<?php echo $this->__("Utilities") ?>">
+            <option value="massproductassignment"><?php echo $helper->__('Mass Product Assignment') ?></option>
+            <option value="downloadskus"><?php echo $helper->__('Download SKUs') ?></option>
+        </optgroup>
+    </select>
+
+    <button onclick="processActionMenu(); return false;" class="button" type="button">
+        <span>
+            <span><?php echo $helper->__('Submit') ?></span>
+        </span>
+    </button>
+</div>
+
+<form action="<?php echo Mage::helper('adminhtml')->getUrl('merchandiser/adminhtml/downloadskus') ?>" method="POST" id="downloadskuform">
+    <input type="hidden" value="" id="downloadskus"  name="product_ids" />
+    <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" name="form_key" />
+</form>
+
+<div id="select-container" class="top-button">
+    <form id="product-refresh-form" action="" method="post">
+        <input type="hidden" name="category_id" value="<?php echo $this->getCategoryId() ?>" />
+        <input type="hidden" name="store_id" value="<?php echo $this->getRequest()->getParam('store_id') ?>" />
+        <input type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" name="form_key" />
+        <input type="hidden" name="column_count" id="column_count" value="" />
+        <input type="hidden" name="action_index" id="action_index" value="" />
+        <script type="text/javascript">
+            //<![CDATA[
+            jQuery.noConflict();
+
+            jQuery(document).ready(function() {
+                jQuery('#changeColumn').val('<?php echo $this->getColumnCount() ?>').attr('selected',true);
+            });
+
+            function processActionMenu(){
+                var slec = jQuery('#actionMenu').val();
+                jQuery('#action_index').val(slec);
+                if (slec == "massproductassignment") {
+                    checkifAllowed();
+                } else if(slec == "downloadskus") {
+                    downloadskus();
+                } else {
+                    submitAction();
+                }
+            }
+
+            function processChangeColumn(){
+                var slec = jQuery('#changeColumn').val();
+                jQuery('#column_count').val(slec);
+                submitMerchandiserSelect(this);
+            }
+
+            function submitMoveInStockToTheTop(form) {
+                jQuery('#dimwindow').show();
+                jQuery('#spinner2').show();
+                var f = $('product-refresh-form');
+                f.action='<?php echo $this->getUrl('merchandiser/adminhtml/moveInStockToTheTop') ?>';
+                f.submit();
+            }
+
+            function submitMerchandiserSelect(form) {
+                var f = $('product-refresh-form');
+                f.action='<?php echo $this->getUrl('merchandiser/adminhtml/changeColumn') ?>';
+                f.submit();
+            }
+
+            function submitNewestFirst(form) {
+                jQuery('#dimwindow').show();
+                jQuery('#spinner2').show();
+                var f = $('product-refresh-form');
+                f.action='<?php echo $this->getUrl('merchandiser/adminhtml/orderByCreatedDate') ?>';
+                f.submit();
+            }
+
+            function submitAction() {
+                jQuery('#dimwindow').show();
+                jQuery('#spinner2').show();
+                var f = $('product-refresh-form');
+                f.action='<?php echo $this->getUrl('merchandiser/adminhtml/processAction') ?>';
+                f.submit();
+            }
+
+            function checkifAllowed() {
+                if ('<?php echo $helper->isCurrentCategoryRuled($this->getCategoryId()) ?>' == 1) {
+                    alert('<?php echo $helper->jsQuoteEscape($this->__("This category is set to only include products matched by rules")) ?>');
+                } else {
+                    var merJSObject = new merchandiserJS();
+                    merJSObject.openMassProductAssignment();
+                }
+            }
+
+            function downloadskus() {
+                var productIDs = '';
+                $$('.ui-sortable li div input.productid').each(function(e){
+                    var inputName = e.readAttribute('rel');
+                    productIDs += inputName + ',';
+                });
+                $$('input.hiddenbox').each(function(e){
+                    var inputName = e.readAttribute('rel');
+                    productIDs += inputName + ',';
+                });
+
+                if(productIDs != ''){
+                    $('downloadskus').value = productIDs;
+                    $('downloadskuform').submit();
+                }
+            }
+            //]]>
+        </script>
+    </form>
+</div>
+
+<script type="text/javascript">
+    //<![CDATA[
+    function showStoreProducts(isChanged) {
+        var storeId = $('front_stores').value;
+        var pageLimit = getNumberExtraProducts();
+        var totalProducts = getTotalCount();
+
+        if (storeId == 0 ) {
+            $$("li.product-shop").each(function(e) {
+                e.style.display = 'block';
+            });
+        } else {
+            $$("li.product-shop").each(function(e) {
+                if(!e.hasClassName('search-result'))
+                    e.style.display = 'none';
+            });
+            var eleCount = 0;
+            $$('li.website-' + storeId).each(function(e){
+                e.style.display = 'block';
+                eleCount++;
+            });
+            var totalProductBoxes = $$("li.product-shop").length;
+
+            if (eleCount<pageLimit && totalProductBoxes<totalProducts) {
+                sendAjaxRequest();
+            }
+        }
+        storeFrontInSession(storeId);
+        if (isChanged == 1 && $('search').value != '' && $('search').value != '<?php echo Mage::helper('core')->jsQuoteEscape($this->__("Search entire store here...")) ?>') {
+            submitMerchandiserSearch($('search_mini_form'));
+        }
+    }
+
+    function storeFrontInSession(storefront){
+        jQuery.ajax({
+            type: "get",
+            data: { store_front: storefront} ,
+            url:"<?php echo Mage::helper('adminhtml')->getUrl("merchandiser/adminhtml/storefront") ?>",
+            success:function(result){
+            }
+        });
+    }
+
+    //]]>
+</script>
+
+<div class="col-right">
+    <?php echo $this->getChildHtml('merchandiserSearch'); ?>
+</div>

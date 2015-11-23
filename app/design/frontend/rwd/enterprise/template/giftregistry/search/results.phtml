@@ -1,0 +1,67 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<?php if ($this->getSearchResults() && $this->getSearchResults()->getSize()): ?>
+<div class="fieldset">
+    <h2 class="legend"><?php echo $this->__('Search Results') ?></h2>
+</div>
+<?php echo $this->getChildHtml('pager') ?>
+<table class="data-table" id="giftregistry-search-results">
+    <col />
+    <col />
+    <col />
+    <col width="1" />
+    <col width="1" />
+    <col width="1" />
+    <thead>
+        <tr>
+            <th><?php echo $this->__('Name') ?></th>
+            <th class="location"><?php echo $this->__('Location') ?></th>
+            <th><?php echo $this->__('Event') ?></th>
+            <th class="event-type"><?php echo $this->__('Type') ?></th>
+            <th><span class="nobr"><?php echo $this->__('Event Date') ?></span></th>
+            <th><?php echo $this->__('Actions') ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php foreach($this->getSearchResults() as $item): ?>
+        <tr>
+            <td><?php echo $this->escapeHtml($item->getRegistrant()) ?></td>
+            <td class="location"><?php echo $this->escapeHtml($item->getEventLocation()) ?></td>
+            <td><?php echo $this->escapeHtml($item->getTitle()) ?></td>
+            <td class="event-type"><?php echo $this->escapeHtml($item->getType()) ?></td>
+            <td><span class="nobr"><?php echo $this->getFormattedDate($item) ?></span></td>
+            <td><a href="<?php echo $this->getRegistryLink($item) ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('View')) ?>"><?php echo $this->__('View') ?></a></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+<script type="text/javascript">decorateTable('giftregistry-search-results')</script>
+<?php echo $this->getChildHtml('pager') ?>
+<?php else: ?>
+    <p class="error-msg"><?php echo $this->__('Your search returned no results.') ?></p>
+<?php endif; ?>

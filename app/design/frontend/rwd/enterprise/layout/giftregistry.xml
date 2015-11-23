@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_enterprise
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+-->
+<layout version="0.1.0">
+    <checkout_cart_index>
+        <reference name="checkout.cart.methods">
+            <block type="enterprise_giftregistry/cart_link" name="giftregistry.cart.link" template="giftregistry/cart/link.phtml"/>
+        </reference>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftregistry/cart_product_mark" name="giftregistry.product.mark" template="giftregistry/cart/product/mark.phtml"/>
+        </reference>
+    </checkout_cart_index>
+
+    <wishlist_index_index>
+        <reference name="customer.wishlist.item.info">
+            <block type="enterprise_giftregistry/wishlist_item_column_registry" name="customer.wishlist.item.giftregistry" template="giftregistry/wishlist/item/column/registry.phtml"></block>
+        </reference>
+    </wishlist_index_index>
+
+    <enterprise_giftregistry_index_index>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="enterprise_giftregistry/customer_list" name="giftregistry.customer.list" template="giftregistry/customer/list.phtml"></block>
+        </reference>
+    </enterprise_giftregistry_index_index>
+
+    <enterprise_giftregistry_index_view>
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="enterprise_giftregistry/customer_view" name="giftregistry.customer.view" template="giftregistry/customer/view.phtml"></block>
+        </reference>
+    </enterprise_giftregistry_index_view>
+
+    <enterprise_giftregistry_index_share>
+        <update handle="customer_account"/>
+        <reference name="customer_account_navigation">
+            <action method="setActive"><path>enterprise_giftregistry/index/index</path></action>
+        </reference>
+        <reference name="my.account.wrapper">
+            <block type="enterprise_giftregistry/customer_share" name="giftregistry.customer.share" template="giftregistry/customer/share.phtml"></block>
+        </reference>
+    </enterprise_giftregistry_index_share>
+
+    <enterprise_giftregistry_index_items>
+        <update handle="customer_account"/>
+        <reference name="customer_account_navigation">
+            <action method="setActive"><path>enterprise_giftregistry/index/index</path></action>
+        </reference>
+        <reference name="my.account.wrapper">
+            <block type="enterprise_giftregistry/items" name="giftregistry.customer.items" template="giftregistry/customer/items.phtml">
+                <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>giftregistry/customer/items/default.phtml</template></action>
+                <action method="addItemRender"><type>simple</type><block>checkout/cart_item_renderer</block><template>giftregistry/customer/items/default.phtml</template></action>
+                <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>giftregistry/customer/items/default.phtml</template></action>
+                <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>giftregistry/customer/items/default.phtml</template></action>
+                <action method="addItemRender"><type>bundle</type><block>bundle/checkout_cart_item_renderer</block><template>giftregistry/customer/items/default.phtml</template></action>
+                <action method="addItemRender"><type>giftcard</type><block>enterprise_giftcard/checkout_cart_item_renderer</block><template>giftregistry/customer/items/default.phtml</template>
+            </action>
+            </block>
+        </reference>
+    </enterprise_giftregistry_index_items>
+
+     <customer_account>
+        <block type="enterprise_giftregistry/link" name="giftregistry_link_dashboard">
+            <action method="addDashboardLink" translate="label" module="enterprise_giftregistry">
+                <block>customer_account_navigation</block><name>giftregistry</name><path>enterprise_giftregistry/</path><label>Gift Registry</label>
+            </action>
+        </block>
+    </customer_account>
+
+    <enterprise_giftregistry_search_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <update handle="calendar"/>
+        <reference name="left">
+            <remove name="giftregistry.quick.search" />
+        </reference>
+        <reference name="content">
+            <block type="enterprise_giftregistry/search_form" name="giftregistry.search.form" template="giftregistry/search/form.phtml"></block>
+        </reference>
+    </enterprise_giftregistry_search_index>
+
+    <enterprise_giftregistry_search_results>
+        <reference name="root">
+            <action method="setTemplate"><template>page/2columns-right.phtml</template></action>
+        </reference>
+        <update handle="calendar"/>
+        <reference name="left">
+            <remove name="giftregistry.quick.search" />
+        </reference>
+        <reference name="content">
+            <block type="enterprise_giftregistry/search_form" name="giftregistry.search.form" template="giftregistry/search/form.phtml"></block>
+            <block type="enterprise_giftregistry/search_results" name="giftregistry.search.results" template="giftregistry/search/results.phtml"></block>
+        </reference>
+    </enterprise_giftregistry_search_results>
+
+    <enterprise_giftregistry_search_advanced>
+        <block type="enterprise_giftregistry/search_advanced" name="root" template="giftregistry/search/advanced.phtml"></block>
+    </enterprise_giftregistry_search_advanced>
+
+    <enterprise_giftregistry_view_index>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+        <reference name="content">
+            <block type="enterprise_giftregistry/view" name="enterprise.giftregistry.view" template="giftregistry/view.phtml">
+                <block type="enterprise_giftregistry/items" name="giftregistry_items" template="giftregistry/view/items.phtml">
+                    <block type="catalog/product_price" template="catalog/product/price_msrp_item.phtml" name="enterprise.giftregistry.item.price" />
+
+                    <action method="addItemRender"><type>default</type><block>enterprise_giftregistry/items_renderer</block><template>giftregistry/view/items/default.phtml</template></action>
+                    <action method="addItemRender"><type>simple</type><block>enterprise_giftregistry/items_renderer</block><template>giftregistry/view/items/default.phtml</template></action>
+                    <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>giftregistry/view/items/default.phtml</template></action>
+                    <action method="addItemRender"><type>configurable</type><block>enterprise_giftregistry/items_renderer_configurable</block><template>giftregistry/view/items/default.phtml</template></action>
+                    <action method="addItemRender"><type>bundle</type><block>enterprise_giftregistry/items_renderer_bundle</block><template>giftregistry/view/items/default.phtml</template></action>
+                    <action method="addItemRender"><type>giftcard</type><block>enterprise_giftcard/checkout_cart_item_renderer</block><template>giftregistry/view/items/default.phtml</template></action>
+                </block>
+                <block type="enterprise_giftregistry/customer_items" name="giftregistry.view.items" template="giftregistry/view/items.phtml"/>
+            </block>
+        </reference>
+        <reference name="product.tooltip">
+            <block type="page/html_wrapper" name="product.info.addtocart.paypal.wrapper" translate="label">
+                <block type="paypal/express_shortcut" name="product.info.addtocart.paypal" template="paypal/express/shortcut.phtml" module="paypal">
+                    <action method="setIsInCatalogProduct"><value>1</value></action>
+                    <action method="setShowOrPosition"><value>after</value></action>
+                </block>
+            </block>
+        </reference>
+    </enterprise_giftregistry_view_index>
+
+    <catalog_product_view>
+        <reference name="product.info">
+            <block type="enterprise_giftregistry/product_view" name="product.view.block"></block>
+        </reference>
+    </catalog_product_view>
+
+    <PRODUCT_TYPE_bundle>
+        <reference name="product.info">
+            <block type="enterprise_giftregistry/product_view" name="product.customize.button"/>
+        </reference>
+    </PRODUCT_TYPE_bundle>
+
+    <calendar>
+        <reference name="head">
+            <action method="addItem"><type>js_css</type><name>calendar/calendar-win2k-1.css</name><params/></action>
+            <action method="addItem"><type>js</type><name>calendar/calendar.js</name></action>
+            <action method="addItem"><type>js</type><name>calendar/calendar-setup.js</name></action>
+        </reference>
+        <reference name="content">
+            <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>
+        </reference>
+    </calendar>
+
+    <checkout_onepage_index>
+        <reference name="content">
+            <block type="enterprise_giftregistry/customer_checkout" name="giftregistry.customer.checkout" template="giftregistry/customer/checkout/onepage.phtml"/>
+        </reference>
+    </checkout_onepage_index>
+
+    <checkout_multishipping_addresses>
+        <reference name="content">
+            <block type="enterprise_giftregistry/customer_checkout" name="giftregistry.customer.checkout" template="giftregistry/customer/checkout/multishipping.phtml"/>
+        </reference>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftregistry/cart_product_mark" name="giftregistry.product.mark" template="giftregistry/cart/product/mark.phtml"/>
+        </reference>
+    </checkout_multishipping_addresses>
+
+    <checkout_multishipping_shipping>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftregistry/cart_product_mark" name="giftregistry.product.mark" template="giftregistry/cart/product/mark.phtml"/>
+        </reference>
+    </checkout_multishipping_shipping>
+    <checkout_multishipping_overview>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftregistry/cart_product_mark" name="giftregistry.product.mark" template="giftregistry/cart/product/mark.phtml"/>
+        </reference>
+    </checkout_multishipping_overview>
+
+    <enterprise_giftregistry_index_addselect translate="label">
+        <label>Customer My Account GiftRegistry Add</label>
+        <update handle="customer_account"/>
+        <reference name="customer_account_navigation">
+            <action method="setActive"><path>enterprise_giftregistry/index/index</path></action>
+        </reference>
+        <reference name="my.account.wrapper">
+            <block type="enterprise_giftregistry/customer_edit" name="giftregistry_addselect" template="giftregistry/edit/addselect.phtml"></block>
+        </reference>
+    </enterprise_giftregistry_index_addselect>
+
+    <enterprise_giftregistry_index_edit translate="label">
+        <label>Customer My Account GiftRegistry Edit</label>
+        <update handle="customer_account"/>
+        <update handle="calendar"/>
+        <reference name="customer_account_navigation">
+            <action method="setActive"><path>enterprise_giftregistry/index/index</path></action>
+        </reference>
+        <reference name="my.account.wrapper">
+            <block type="enterprise_giftregistry/customer_edit" name="giftregistry_edit" template="giftregistry/edit/edit.phtml">
+                <action method="addInputTypeTemplate"><type>text</type><template>giftregistry/attributes/text.phtml</template></action>
+                <action method="addInputTypeTemplate"><type>region</type><template>giftregistry/attributes/region.phtml</template></action>
+                <block type="enterprise_giftregistry/customer_edit_registry" name="giftregistry_edit_registry" template="giftregistry/edit/registry.phtml"/>
+                <block type="enterprise_giftregistry/customer_edit_registrants" name="giftregistry_edit_registrants" template="giftregistry/edit/registrants.phtml"/>
+                <block type="enterprise_giftregistry/customer_address_edit" name="giftregistry_address_edit" template="giftregistry/address/edit.phtml"/>
+            </block>
+        </reference>
+    </enterprise_giftregistry_index_edit>
+
+    <checkout_onepage_review>
+        <reference name="additional.product.info">
+            <block type="enterprise_giftregistry/cart_product_mark" name="giftregistry.product.mark" template="giftregistry/cart/product/mark.phtml"/>
+        </reference>
+    </checkout_onepage_review>
+
+    <enterprise_giftregistry_email_entity_items>
+        <block type="enterprise_giftregistry/email_items" name="giftregistry.email.items" template="giftregistry/email/items.phtml"></block>
+    </enterprise_giftregistry_email_entity_items>
+</layout>

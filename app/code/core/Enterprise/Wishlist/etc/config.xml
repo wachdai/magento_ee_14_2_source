@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Wishlist
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_Wishlist>
+            <version>1.12.0.0</version>
+        </Enterprise_Wishlist>
+    </modules>
+    <global>
+        <models>
+            <enterprise_wishlist>
+                <class>Enterprise_Wishlist_Model</class>
+                <resourceModel>enterprise_wishlist_resource</resourceModel>
+            </enterprise_wishlist>
+            <enterprise_wishlist_resource>
+                <class>Enterprise_Wishlist_Model_Resource</class>
+            </enterprise_wishlist_resource>
+        </models>
+        <blocks>
+            <enterprise_wishlist>
+                <class>Enterprise_Wishlist_Block</class>
+            </enterprise_wishlist>
+        </blocks>
+        <helpers>
+            <enterprise_wishlist>
+                <class>Enterprise_Wishlist_Helper</class>
+            </enterprise_wishlist>
+        </helpers>
+        <resources>
+            <enterprise_wishlist_setup>
+                <setup>
+                    <module>Enterprise_Wishlist</module>
+                    <class>Enterprise_Wishlist_Model_Resource_Setup</class>
+                </setup>
+            </enterprise_wishlist_setup>
+        </resources>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <enterprise_wishlist before="Mage_Adminhtml">Enterprise_Wishlist_Adminhtml</enterprise_wishlist>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <enterprise_wishlist>
+                    <file>enterprise/wishlist.xml</file>
+                </enterprise_wishlist>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_Wishlist>
+                    <files>
+                        <default>Enterprise_Wishlist.csv</default>
+                    </files>
+                </Enterprise_Wishlist>
+            </modules>
+        </translate>
+    </adminhtml>
+    <frontend>
+        <routers>
+            <wishlist>
+                <args>
+                    <modules>
+                        <enterprise_wishlist before="Mage_Wishlist">Enterprise_Wishlist</enterprise_wishlist>
+                    </modules>
+                </args>
+            </wishlist>
+            <enterprise_wishlist>
+                <use>standard</use>
+                <args>
+                    <module>Enterprise_Wishlist</module>
+                    <frontName>wishlists</frontName>
+                </args>
+            </enterprise_wishlist>
+        </routers>
+        <layout>
+            <updates>
+                <enterprise_wishlist>
+                    <file>enterprise_wishlist.xml</file>
+                </enterprise_wishlist>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Enterprise_Wishlist>
+                    <files>
+                        <default>Enterprise_Wishlist.csv</default>
+                    </files>
+                </Enterprise_Wishlist>
+            </modules>
+        </translate>
+        <events>
+            <wishlist_delete_commit_after>
+                <observers>
+                    <enterprise_pagecache>
+                        <class>enterprise_pagecache/observer</class>
+                        <method>registerWishlistChange</method>
+                    </enterprise_pagecache>
+                    <enterprise_pagecache>
+                        <class>enterprise_pagecache/observer</class>
+                        <method>registerWishlistListChange</method>
+                    </enterprise_pagecache>
+                </observers>
+            </wishlist_delete_commit_after>
+            <wishlist_save_commit_after>
+                <observers>
+                    <enterprise_pagecache>
+                        <class>enterprise_pagecache/observer</class>
+                        <method>registerWishlistListChange</method>
+                    </enterprise_pagecache>
+                </observers>
+            </wishlist_save_commit_after>
+        </events>
+    </frontend>
+    <default>
+        <wishlist>
+            <general>
+                <multiple_wishlist_number>5</multiple_wishlist_number>
+            </general>
+        </wishlist>
+    </default>
+</config>

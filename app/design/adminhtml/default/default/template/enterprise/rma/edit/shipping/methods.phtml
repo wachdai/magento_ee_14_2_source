@@ -1,0 +1,88 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php /** @var $this Enterprise_Rma_Block_Adminhtml_Rma_Edit_Tab_General_Shipping_Methods */ ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+        <h4 class="icon-head head-shipping-method"><?php echo Mage::helper('enterprise_rma')->__('Create Shipping Label') ?></h4>
+    </div>
+    <div class="fieldset">
+        <div class="hor-scroll" style="min-height: 300px; height: 300px;">
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-shipping-method"><?php echo Mage::helper('enterprise_rma')->__('Shipping Information') ?></h4>
+                </div>
+                <div class="fieldset">
+                    <div class="hor-scroll">
+                    <?php if ($this->getShippingMethods()): ?>
+                        <?php $carrier = false; ?>
+                        <div id="checkout-shipping-method-load"><dl class="sp-methods">
+                        <?php foreach ($this->getShippingMethods() as $method): ?>
+                            <?php if ($method->getCode() == $method->getCarrier().'_error'): ?>
+                                <?php continue; ?>
+                            <?php endif; ?>
+                            <?php if ($carrier != $method->getCarrier()): ?>
+                                <?php if ($carrier): ?>
+                                    </ul>
+                                </dd>
+                                <?php endif ;?>
+                                <dt class="option-label">
+                                    <strong>
+                                        <?php echo $this->escapeHtml($method->getCarrierTitle()); ?>
+                                    </strong>
+                                </dt>
+                                <dd>
+                                    <ul>
+                                    <?php $carrier = $method->getCarrier(); ?>
+                            <?php endif; ?>
+                            <li>
+                                <input name="shipping_method" type="radio" value="<?php echo $method->getCode() ?>" id="s_method_<?php echo $method->getCode() ?>" class="radio" />
+                                <div style="display:none;" id="h_method_<?php echo $method->getCode() ?>"><?php echo $this->jsonData($method); ?></div>
+                                <label for="s_method_<?php echo $method->getCode() ?>">
+                                    <?php echo $this->escapeHtml($method->getMethodTitle()) ?>
+                                    <strong class="price"><?php echo $this->getShippingPrice($method->getPrice()) ?></strong>
+                                </label>
+                            </li>
+                        <?php endforeach; ?>
+                        <?php if ($carrier): ?>
+                                </ul>
+                            </dd>
+                        <?php endif; ?>
+                        </dl>
+                    </div>
+                    <?php else: ?>
+                        <?php echo Mage::helper('enterprise_rma')->__('No authorized items or allowed shipping methods') ?>
+                    <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="a-right" style="padding-top:10px;">
+            <button id="get-shipping-method-cancel-button" class="scalable" type="button"><span><span><span><?php echo $this->__('Cancel') ?></span></span></span></button>
+            <button disabled="disabled" id="get-shipping-method-ok-button" class="scalable disabled" type="button"><span><span><span><?php echo $this->__('OK') ?></span></span></span></button>
+        </div>
+    </div>
+</div>

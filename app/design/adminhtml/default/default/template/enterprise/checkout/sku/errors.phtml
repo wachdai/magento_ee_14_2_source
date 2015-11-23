@@ -1,0 +1,67 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+<?php /* @var $this Enterprise_Checkout_Block_Adminhtml_Sku_Errors_Abstract */ ?>
+<div class="entry-edit">
+    <div class="entry-edit-head sku-errors">
+        <h4 class="icon-head"><?php echo $this->getHeaderText() ?></h4>
+        <div class="form-buttons"><?php echo $this->getButtonsHtml() ?></div>
+    </div>
+    <div class="grid"><?php echo $this->getChildHtml() ?></div>
+    <table cellspacing="0" width="100%">
+        <tr>
+            <td class="a-left"></td>
+            <td class="a-right"><?php echo $this->getButtonHtml($this->getAddButtonTitle(), 'addBySku.submitConfigured()') ?></td>
+        </tr>
+    </table>
+    <br />
+    <div class="clear"></div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    function checkoutSkuErrorsInit()
+    {
+        productConfigure.addListType('<?php echo $this->getListType() ?>', {urlFetch: '<?php echo $this->getConfigureUrl() ?>'});
+        <?php echo $this->getAdditionalJavascript() ?>
+    }
+
+    /**
+     * This template may be loaded together with page (if there are any errors) or fetched by AJAX via loadBlock.
+     * We need to make sure initialization got through in any case.
+     */
+    if (window.productConfigure && !productConfigure.listTypes.get('<?php echo $this->getListType() ?>')) {
+        // Template loaded by AJAX
+        checkoutSkuErrorsInit();
+    } else {
+        // Template loaded together with page
+        Event.observe(window, 'load', function ()
+        {
+            // Wait for addBySku to be defined
+            setTimeout(checkoutSkuErrorsInit, 10);
+        });
+    }
+//]]>
+</script>

@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<tabs>
+    <giftcard>
+        <class>\Mage\Adminhtml\Test\Block\Widget\Tab</class>
+        <selector>#product_info_tabs_giftcard_info</selector>
+        <strategy>css selector</strategy>
+        <wrapper>product</wrapper>
+        <fields>
+            <giftcard_type>
+                <input>select</input>
+            </giftcard_type>
+            <use_config_is_redeemable>
+                <selector>#giftcard_use_config_is_redeemable</selector>
+                <input>checkbox</input>
+            </use_config_is_redeemable>
+            <is_redeemable>
+                <input>select</input>
+            </is_redeemable>
+            <use_config_lifetime>
+                <selector>#giftcard_use_config_lifetime</selector>
+                <input>checkbox</input>
+            </use_config_lifetime>
+            <lifetime />
+            <use_config_allow_message>
+                <selector>#giftcard_use_config_allow_message</selector>
+                <input>checkbox</input>
+            </use_config_allow_message>
+            <allow_message>
+                <input>select</input>
+            </allow_message>
+            <use_config_email_template>
+                <selector>#giftcard_use_config_email_template</selector>
+                <input>checkbox</input>
+            </use_config_email_template>
+            <email_template>
+                <input>select</input>
+            </email_template>
+        </fields>
+    </giftcard>
+    <prices>
+        <class>\Enterprise\GiftCard\Test\Block\Adminhtml\Catalog\Product\Edit\Tab\Prices</class>
+        <selector>//ul[@id="product_info_tabs"]/li[2]/a</selector>
+        <strategy>xpath</strategy>
+        <wrapper>product</wrapper>
+        <fields>
+            <giftcard_amounts>
+                <selector>#giftcard_amounts_table</selector>
+                <class>Enterprise\GiftCard\Test\Block\Adminhtml\Catalog\Product\Edit\Tab\Prices\Amount</class>
+            </giftcard_amounts>
+            <allow_open_amount>
+                <input>select</input>
+            </allow_open_amount>
+            <open_amount_min />
+            <open_amount_max />
+        </fields>
+    </prices>
+</tabs>

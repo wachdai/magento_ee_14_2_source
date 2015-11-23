@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_PromotionPermissions
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+    <modules>
+        <Enterprise_PromotionPermissions>
+            <version>1.11.0.0</version>
+        </Enterprise_PromotionPermissions>
+    </modules>
+    <global>
+        <models>
+            <enterprise_promotionpermissions>
+                <class>Enterprise_PromotionPermissions_Model</class>
+            </enterprise_promotionpermissions>
+        </models>
+        <helpers>
+            <enterprise_promotionpermissions>
+                <class>Enterprise_PromotionPermissions_Helper</class>
+            </enterprise_promotionpermissions>
+        </helpers>
+    </global>
+    <adminhtml>
+        <events>
+            <core_block_abstract_to_html_before>
+                <observers>
+                    <enterprise_promotionpermissions>
+                        <class>enterprise_promotionpermissions/observer</class>
+                        <method>coreBlockAbstractToHtmlBefore</method>
+                    </enterprise_promotionpermissions>
+                </observers>
+            </core_block_abstract_to_html_before>
+            <adminhtml_block_html_before>
+                <observers>
+                    <enterprise_promotionpermissions>
+                        <class>enterprise_promotionpermissions/observer</class>
+                        <method>adminhtmlBlockHtmlBefore</method>
+                    </enterprise_promotionpermissions>
+                </observers>
+            </adminhtml_block_html_before>
+            <controller_action_predispatch>
+                <observers>
+                    <enterprise_promotionpermissions>
+                        <class>enterprise_promotionpermissions/observer</class>
+                        <method>controllerActionPredispatch</method>
+                    </enterprise_promotionpermissions>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+        <translate>
+            <modules>
+                <Enterprise_PromotionPermissions>
+                    <files>
+                        <default>Enterprise_PromotionPermissions.csv</default>
+                    </files>
+                </Enterprise_PromotionPermissions>
+            </modules>
+        </translate>
+    </adminhtml>
+</config>

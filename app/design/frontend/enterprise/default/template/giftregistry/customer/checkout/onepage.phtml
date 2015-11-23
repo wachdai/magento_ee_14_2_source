@@ -1,0 +1,107 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+?>
+
+<?php if ($this->getEnabled() && $this->getItem()) : ?>
+<script type="text/javascript">
+//<![CDATA[
+
+var elementRadioTemplate =
+    '<div class="input-box">'+
+         '<input name="billing[use_for_shipping]" id="billing:use_gift_registry_address" value="2" onclick="$(\'shipping:same_as_billing\').checked = false;" class="radio" type="radio">'+
+    '<\/div>'+
+    '<label for="billing:use_gift_registry_address"><?php echo Mage::helper('core')->jsQuoteEscape($this->__("Ship to recipient's address")) ?><\/label>';
+
+var elementCheckboxTemplate =
+    '<input type="checkbox" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Use gift registry shipping address')) ?>" class="checkbox" onclick="giftregistry.checkAddress()" value="<?php echo $this->getAddressIdPrefix(); ?><?php echo $this->getItem(); ?>" id="use_gr_address" name="shipping_address_id" \/> ' +
+    '<label for="use_gr_address"><?php echo Mage::helper('core')->jsQuoteEscape($this->__('Use gift registry shipping address')) ?><\/label>';
+
+var GiftRegistryCheckout = Class.create();
+GiftRegistryCheckout.prototype = {
+    initialize: function() {
+       this.shippingAddressSelect = $('shipping-address-select');
+       this.shippingAddressForm = $('shipping-new-address-form');
+       this.billingAddressForm = $('billing-new-address-form');
+    },
+
+    addElements : function() {
+        var checkBox = new Element('li');
+        checkBox.addClassName('form-alt');
+        checkBox.update(elementCheckboxTemplate);
+        this.shippingAddressForm.insert({'before' : checkBox});
+
+        var radioButton = new Element('li');
+        radioButton.update(elementRadioTemplate);
+        radioButton.addClassName('control');
+        this.billingAddressForm.up().insert({'bottom' : radioButton});
+    },
+
+    checkAddress : function() {
+        if ($('use_gr_address').checked) {
+            if (this.shippingAddressSelect) {
+                this.shippingAddressSelect.disable();
+            }
+            this.shippingAddressForm.hide();
+        } else {
+            if (this.shippingAddressSelect) {
+                this.shippingAddressSelect.enable();
+            } else {
+                this.shippingAddressForm.show();
+            }
+        }
+    },
+
+    getRadioButton : function() {
+        return Form.getInputs('co-billing-form','radio','billing[use_for_shipping]').find(function(radio) {
+            return radio.checked;
+        }).value;
+    }
+}
+
+var giftregistry = new GiftRegistryCheckout();
+giftregistry.addElements();
+
+billing.onComplete = function(){
+    checkout.setLoadWaiting(false);
+
+    if (giftregistry.getRadioButton() == 2){
+        var checkbox = $('use_gr_address');
+        checkbox.checked = true;
+        giftregistry.checkAddress();
+        shipping.save();
+        $('opc-shipping').addClassName('allow');
+    }
+}
+
+billing.onSave = function(transport){
+    if (giftregistry.getRadioButton() == 2){
+        transport.responseText = transport.responseText.sub('shipping', 'shipping_method');
+    }
+    billing.nextStep(transport);
+}
+//]]>
+</script>
+<?php endif; ?>

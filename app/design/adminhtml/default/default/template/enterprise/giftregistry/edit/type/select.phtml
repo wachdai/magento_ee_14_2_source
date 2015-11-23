@@ -1,0 +1,131 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/* @var $coreHelper Mage_Core_Helper_Data */
+$coreHelper = Mage::helper('core');
+?>
+<div style="display:none; visibility: hidden;">
+    <div id="ui:button:add"><?php echo $this->getAddButtonHtml(); ?></div>
+    <div id="ui:button:delete"><?php echo $this->getDeleteButtonHtml()?></div>
+    <div id="ui:button:delete-title"><?php echo Mage::helper('enterprise_giftregistry')->__('Delete Option'); ?></div>
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+OptionTemplateSelect =
+'<div class="grid">'+
+    '<table class="border" cellpadding="0" cellspacing="0">'+
+        '<thead>'+
+        '<tr class="headings">'+
+            '<th>' + <?php echo $coreHelper->jsonEncode(Mage::helper('enterprise_giftregistry')->__('Code')) ?> + '<span class="required">*</span></th>'+
+            '<th>' + <?php echo $coreHelper->jsonEncode(Mage::helper('enterprise_giftregistry')->__('Label')) ?> + '<span class="required">*</span></th>'+
+            '<th>' + <?php echo $coreHelper->jsonEncode(Mage::helper('enterprise_giftregistry')->__('Is Default')) ?> +'</th>'+
+            '<th class="type-butt scope-item">&nbsp;</th>'+
+        '</tr>'+
+        '</thead>'+
+        '<tbody id="<?php echo $this->getFieldPrefix() ?>_select_option_type_row_{{id}}"></tbody>'+
+        '<tfoot>'+
+            '<tr><td colspan="10" class="a-right scope-item">' + $('ui\:button\:add').innerHTML + '</td></tr>'+
+        '</tfoot>'+
+    '</table>'+
+    '<input type="hidden" class="required-option-select-rows" name="validation_{{id}}_result" value="" >'+
+'</div>';
+
+OptionTemplateSelectRow =
+    '<tr id="{{prefix}}_attribute_{{id}}_select_{{select_id}}">'+
+       '<td>'+
+        '<input type="hidden" class="hidden-code" name="attributes[{{prefix}}][{{id}}][options][{{select_id}}][code]" value="{{code}}" disabled="disabled">'+
+        '<input type="hidden" id="{{prefix}}_attribute_{{id}}_select_{{select_id}}_is_deleted" name="attributes[{{prefix}}][{{id}}][options][{{select_id}}][is_deleted]">'+
+        '<input type="text" class="required-entry validate-code input-text global-scope select-option-code" id="{{prefix}}_attribute_{{id}}_select_{{select_id}}_code" name="attributes[{{prefix}}][{{id}}][options][{{select_id}}][code]" value="{{code}}"></td>'+
+        '<td><input type="text" class="required-entry input-text" id="{{prefix}}_attribute_{{id}}_select_{{select_id}}_label" name="attributes[{{prefix}}][{{id}}][options][{{select_id}}][label]" value="{{label}}">{{checkbox_scope}}</td>'+
+        '<td><input type="radio" class="input-text global-scope" id="{{prefix}}_attribute_{{id}}_select_{{select_id}}_default" name="attributes[{{prefix}}][{{id}}][default]" value="{{select_id}}" {{checked}}></td>'+
+        '<td class="scope-item"><span title="'+$('ui\:button\:delete-title').innerHTML.toString().stripTags()+'">' + $('ui\:button\:delete').innerHTML +'</span></td>'+
+    '</tr>';
+
+selectOptionType = {
+    div : 'select_option_type_row',
+    selectId : 0,
+    templateSyntax : /(^|.|\r|\n)({{(\w+)}})/,
+    templateText : OptionTemplateSelectRow,
+    prefix : '<?php echo $this->getFieldPrefix() ?>',
+    add : function(data) {
+        this.template = new Template(this.templateText, this.templateSyntax);
+
+        if (data.target || data.srcElement) {
+            element = $(Event.findElement(data, 'button'));
+            data = {};
+            data.id = element.readAttribute('id').sub(this.prefix+'_add_select_row_button_', '');
+            data.select_id = this.selectId;
+        }
+        this.selectId++;
+        data.prefix = this.prefix;
+        Element.insert($(this.prefix+'_'+this.div+'_'+data.id), {'bottom':this.template.evaluate(data)});
+
+        if (data.checkbox_scope) {
+            if ($(this.prefix+'_attribute_'+data.id+'_select_'+data.select_id+'_label') && data.label_disabled) {
+                $(this.prefix+'_attribute_'+data.id+'_select_'+data.select_id+'_label').disable();
+            }
+        }
+        this.bindRemoveButtons();
+    },
+    remove : function(event){
+        var element = $(Event.findElement(event, 'tr'));
+
+        if(element){
+            $(element.readAttribute('id')+'_is_deleted').value = '1';
+            element.addClassName('no-display');
+            element.addClassName('ignore-validate');
+            element.hide();
+        }
+    },
+    bindRemoveButtons : function(){
+        var buttons = $$('.delete-select-row');
+        for(var i=0;i<buttons.length;i++){
+            if(!$(buttons[i]).binded){
+                $(buttons[i]).binded = true;
+                Event.observe(buttons[i], 'click', this.remove.bind(this));
+            }
+        }
+    },
+    bindAddButton : function(){
+        var buttons = $$('.add-select-row');
+        for(var i=0;i<buttons.length;i++){
+            if(!$(buttons[i]).binded){
+                $(buttons[i]).binded = true;
+                Event.observe(buttons[i], 'click', this.add.bind(this));
+            }
+        }
+    }
+}
+
+Validation.addAllThese([
+    ['required-option-select-rows', <?php echo $coreHelper->jsonEncode($this->__('Please add rows to option.')); ?>, function(v, elm) {
+        var optionContainerElm = elm.up(1);
+        return !!$(optionContainerElm).select('tr:not(.no-display) .select-option-code').length;
+    }]
+]);
+//]]>
+</script>

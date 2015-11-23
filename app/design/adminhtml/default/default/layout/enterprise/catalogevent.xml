@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<layout version="0.1.0">
+    <adminhtml_catalog_event_index>
+        <reference name="content">
+            <block name="event_grid_container" type="enterprise_catalogevent/adminhtml_event" />
+        </reference>
+    </adminhtml_catalog_event_index>
+    
+    <adminhtml_catalog_event_edit>
+        <reference name="content">
+            <block name="event_edit_page" type="enterprise_catalogevent/adminhtml_event_edit" />
+        </reference>
+        <reference name="left">
+            <block before="-" type="adminhtml/store_switcher" name="store_switcher" template="store/switcher.phtml"></block>
+        </reference>
+    </adminhtml_catalog_event_edit>
+    
+    <adminhtml_catalog_category_edit>
+        <reference name="category.edit">
+            <block name="event.buttons" type="enterprise_catalogevent/adminhtml_catalog_category_edit_buttons">
+                <action method="addButtons"></action>
+            </block>
+        </reference>
+    </adminhtml_catalog_category_edit>
+</layout>

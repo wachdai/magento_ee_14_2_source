@@ -1,0 +1,234 @@
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     enterprise_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+
+/* IE 6 only */
+.col-main .page-title { _position:relative; _z-index:1; }
+.header { _height:56px; }
+.switch ul .current { _padding-right:4.8em;}
+.block-cart .block-title  { _width:242px; }
+.sidebar,
+.main { _height:350px; }
+.restriction-index-stub .main { _height:auto; }
+.opc .step { _height:300px; }
+.account-login { _height:350px; }
+.validation-advice { _height:13px; _display:inline; }
+.cart .cart-collaterals { _height:413px; }
+#options-container { _height:510px; }
+.opc li.section { vertical-align:top; zoom:1; }
+.product-view .box-tags .form-add-tags .input-box .input-text { _display:block; }
+.product-view .box-tags .form-add-tags .input-box .input-text { vertical-align:top; }
+.product-view .box-tags .form-add-tags .button { margin-top:1px; }
+.giftcard-send-form   { float:left; width:416px; display:inline; margin-bottom:-40px;}
+.col2-right-layout .giftcard-send-form,
+.col2-left-layout .giftcard-send-form { width:100%; }
+.top-cart  { _width:10px; }
+.cart .crosssell { _height:400px; }
+.event  .event-bottom { _bottom:-14px }
+.window-overlay { background:#000; filter:alpha(opacity=50); }
+
+/* Doubled Margin Fixes */
+#bundle-product-wrapper,
+.product-view,
+.product-view .product-img-box .more-views li,
+.product-view .box-tags .form-add-tags .input-box,
+.form-list .customer-dob .input-box,
+.sp-methods select.month { display:inline; }
+.header .quick-access .links li { padding:0 6px 0 7px; }
+.header .quick-access .checkout-link li { padding:0 0 0 12px; }
+
+/********** < Navigation styles */
+#nav { _height:28px; zoom:1; }
+#nav li.level-top { _margin-bottom:-2px; }
+#nav li.over a.level-top  { _height:30px; _margin-bottom:-2px; }
+#nav li.active a.level-top  { _position:relative; }
+#nav li,
+#nav li a { zoom:1; }
+#nav li { vertical-align:top; }
+/********** < Navigation styles */
+.split-button { display:inline; zoom:1; }
+.please-wait { filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=80); margin-top:-100px; }
+
+li#remember-me-box.control { white-space:nowrap; min-width:250px; }
+li#remember-me-box.control .link-tip,
+li#remember-me-box.control label { float:none; display:inline-block; vertical-align:top; }
+li#remember-me-box.control label * { white-space:normal }
+
+.form-list .control .input-box { padding-top:2px; }
+.form-list .add-field .input-box { display:inline; }
+input.radio { width:13px; height:13px; }
+input.checkbox { width:13px; height:13px; }
+button.button { height:21px; padding:0 1px 1px 0; }
+a.button { _height:22px; }
+.cart .checkout-types .btn-proceed-checkout,
+.product-view .product-essential button.btn-cart,
+.add-to-cart button.btn-cart { height:27px; }
+
+#invitation-send-link { margin-right:7px; }
+.product-view .add-review .form-list .review-summary-table { width:50px; }
+.product-view .add-review .form-list .review-summary-table .rating-box .rating { height:0px; padding-top:13px; overflow:hidden; }
+.product-options dd select { _margin-bottom:1px; }
+.product-options dd .time-picker select { margin:0; padding:0; position:relative; top:-1px; }
+
+.bundle-summary .product,
+.bundle-summary .summary { border: 1px solid #e6e6e6; }
+
+.col2-right-layout #options-container { margin-left:-3px; }
+
+.options-container-small dd { float:none; }
+
+.cart .totals .btn-remove img { vertical-align:middle; }
+
+/* jQzoom */
+.preload { width:100px; height:55px; }
+/*.jqZoomPup { filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=60); }*/
+
+.options-container-small  dt { margin-top:1px; }
+
+/* Clearer */
+.clearer { display:block; clear:both; font-size:0; line-height:0; height:0; overflow:hidden; }
+.loading-ie { display:block; background:url(../images/opc-ajax-loader.gif) no-repeat 50% 50%; position:absolute; width:100%; height:100%; z-index:99; top:0; left:0; float:left; }
+.popup-block.loading .block-content { //z-index: expression(runtimeStyle.zIndex = 3, insertAdjacentHTML('afterBegin', '<span class="loading-ie">&nbsp;</span>')); } }
+
+* html .switcher-language { zoom:1; }
+
+/**/
+
+.wishlist-management .note-msg,
+.product-options dt,
+#giftcard_balance_lookup .gift-card-info,
+#giftcard_balance_lookup p.error-msg,
+.deals .giftcard,
+.giftcardaccount { zoom:1;}
+
+#bundleProduct,
+.table-caption { position:relative; z-index:1; }
+.data-table { border-collapse:collapse; }
+.sidebar .block-account li.current { position:relative; z-index:1; zoom:1; }
+/* Clears and hasLayout fixes */
+.checkout-onepage-index .col-main .callout,
+.events-slider,
+.product-image-popup .nav,
+.multiple-checkout,
+.gift-item,
+.block-content,
+.block-list li.item,
+.currently li,
+.category-title,
+.order-info,
+.sidebar .block,
+.sidebar .block-account li a,
+.giftcard-send-form,
+.product-options dd .input-box,
+.options-container-small .product-options,
+.product-view .product-shop,
+.product-view .product-shop .product-main-info,
+.product-view,
+.col-main .page-title,
+.top-cart .actions,
+.top-cart .block-content .subtotal,
+.header .quick-access,
+.dashboard .reviews li,
+.dashboard .tags li,
+#events-home-page .slider-panel .event .status,
+.table-caption,
+.info-box,
+.bundle-summary .product,
+.block-cart .block-title a,
+.block-cart .block-content .item,
+.header-container,
+.header-container .top-container,
+.header,
+.header-panel,
+.main,
+.footer-before-container,
+.footer-container,
+.footer,
+.col-main,
+.col2-set,
+.col3-set,
+.col4-set,
+.messages li,
+.search-autocomplete li,
+.block-poll li,
+.product-view .box-related li.item,
+.product-view .box-related li.item .item-info,
+.block-reorder li,
+.block .actions,
+.block-cart .actions,
+.mini-products-list li,
+.cms-index-index .block-featured li.item,
+.cms-index-index .block-featured .track,
+.title-buttons,
+.pager,
+.sorter,
+.ratings,
+.products-grid,
+.products-list .item,
+.add-to-box,
+.add-to-cart,
+.product-view .product-img-box .more-views ul,
+.product-view .box-tags .form-add-tags,
+.product-options .options-list li,
+.product-options-bottom,
+.truncated,
+.truncated .truncated_full_value,
+.truncated .truncated_full_value .item-options dl,
+.product-review,
+.box-collateral,
+.box-collateral .box-content,
+.collateral-tabs .tab-content,
+.account-login,
+.cart .cart-collaterals,
+.cart,
+.cart .checkout-types .paypal-or,
+.opc-wrapper .page-title,
+.opc .step-title,
+.opc .step,
+.sp-methods,
+.checkout-progress,
+.form-list li,
+.form-list li.fields .field,
+.buttons-set2,
+.buttons-set,
+.clearfix,
+.page-print .print-head,
+.cart-tax-total,
+.block-related,
+.new-product-spotlight .more-new,
+.addresses-list .col-2 li,
+.top-container .widget-product-link a,
+.top-container .widget-category-link a,
+.top-container .widget-cms-link a,
+.top-container .widget-hierarchy-link a,
+.footer-before-container .widget-product-link a,
+.footer-before-container .widget-category-link a,
+.footer-before-container .widget-cms-link a,
+.footer-before-container .widget-hierarchy-link a,
+.reward-message,
+.centinel .authentication,
+.bundle-summary .product .block-title { zoom:1; }
+
+/* Hover Fix */
+iframe.hover-fix { position:absolute; left:-1px; top:-1px; z-index:-1; background:transparent; filter:progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0); }

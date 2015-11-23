@@ -1,0 +1,158 @@
+//
+// Magento Enterprise Edition
+//
+// NOTICE OF LICENSE
+//
+// This source file is subject to the Magento Enterprise Edition End User License Agreement
+// that is bundled with this package in the file LICENSE_EE.txt.
+// It is also available through the world-wide-web at this URL:
+// http://www.magento.com/license/enterprise-edition
+// If you did not receive a copy of the license and are unable to
+// obtain it through the world-wide-web, please send an email
+// to license@magento.com so we can send you a copy immediately.
+//
+// DISCLAIMER
+//
+// Do not edit or add to this file if you wish to upgrade Magento to newer
+// versions in the future. If you wish to customize Magento for your
+// needs please refer to http://www.magento.com for more information.
+//
+// @category    design
+// @package     rwd_enterprise
+// @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+// @license http://www.magento.com/license/enterprise-edition
+//
+
+/* ============================================ *
+ * Catalog Event
+ * ============================================ */
+
+.event-container {
+    clear: both;
+    border: 1px solid $c-text-primary;
+    background: $c-module-background-secondary;
+    position: relative;
+    z-index: 2;
+    border-width: 1px 1px;
+    min-height: 59px;
+    margin: 7px 0px 20px;
+
+    &:after {
+        @include triangle(down, 10px, $c-text-primary);
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        margin-left: -10px;
+    }
+
+    .event {
+        padding: 15px 10px 28px;
+        margin-bottom: -18px;
+        min-height: 52px;
+        line-height: 30px;
+        text-align: center;
+        width: auto;
+        position: relative;
+        z-index: 2;
+        border-bottom: 0 !important;
+
+        .event-ticker {
+            display: inline;
+            font-size: 28px;
+            height: auto;
+
+            span {
+                line-height: 50px;
+                height: 50px;
+                padding: 0;
+            }
+        }
+    }
+
+    .container {
+        display: inline;
+        margin: 0;
+        padding: 0;
+        background: none;
+    }
+
+    .status {
+        display: inline;
+        margin: 0 3px 0 0;
+        background: none;
+        font-size: 22px;
+    }
+
+    .event-dates {
+        display: inline;
+        font-size: 22px;
+        height: auto;
+
+        div,
+        p {
+            display: inline;
+        }
+
+        .time-part {
+            font-size: 14px;
+        }
+    }
+}
+
+.events-panel {
+    border-top: 1px solid $c-module-border;
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+
+    .event-item {
+        float: left;
+        width: 100%;
+        margin: 10px 0;
+
+        .status {
+            font-size: 18px;
+        }
+
+        .event-dates, .event-button, .event-ticker {
+            margin-bottom: 10px;
+        }
+
+        .category-show {
+            border: 1px solid $c-module-border;
+            float: left;
+            width: 100%;
+
+            img {
+                width: 100%;
+            }
+
+        }
+
+    }
+}
+
+@include bp(max-width, $bp-medium) {
+    .event-container {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+}
+
+/* Category Event Module - Upcoming */
+.container-upcoming {
+    background: $c-module-background;
+    border-color: $c-module-border;
+}
+.container-upcoming:after {
+    border-top-color: $c-module-border;
+}
+
+/* Category Event Module - Closed */
+.container-closed {
+    background: $c-module-background-dark;
+    border-color: $c-module-border-dark;
+}
+.container-closed:after {
+    border-top-color: $c-module-border-dark;
+}

@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Tests
+ * @package     Tests_Functional
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../vendor/magento/mtf/etc/variations.xsd">
+    <testCase name="Enterprise\Banner\Test\TestCase\AssignRelatedPromotionsToBannerEntityTest">
+        <variation name="AssignRelatedPromotionsToBannerEntityTestVariation1" firstConstraint="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" method="test">
+            <data name="description" xsi:type="string">Assign active cart price rule to banner</data>
+            <data name="product" xsi:type="string">catalogProductSimple::product_with_category</data>
+            <data name="widget" xsi:type="string">banner_rotator_shoping_cart</data>
+            <data name="customer" xsi:type="string">-</data>
+            <data name="customerSegment" xsi:type="string">-</data>
+            <data name="cmsPage/dataSet" xsi:type="string">default</data>
+            <data name="cartPriceRule" xsi:type="string">cart_rule</data>
+            <data name="banner/dataSet" xsi:type="string">default</data>
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" next="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" />
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" next="Enterprise\Banner\Test\Constraint\AssertBannerInShoppingCart" prev="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" />
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerInShoppingCart" next="Enterprise\Banner\Test\Constraint\AssertBannerNotOnCategoryPage" prev="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" />
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerNotOnCategoryPage" prev="Enterprise\Banner\Test\Constraint\AssertBannerInShoppingCart" />
+        </variation>
+        <variation name="AssignRelatedPromotionsToBannerEntityTestVariation2" firstConstraint="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" method="test">
+            <data name="description" xsi:type="string">Assign active catalog price rule with conditions to banner</data>
+            <data name="product" xsi:type="string">catalogProductSimple::product_with_category</data>
+            <data name="widget" xsi:type="string">banner_rotator_non_anchor_categories</data>
+            <data name="customer" xsi:type="string">-</data>
+            <data name="customerSegment" xsi:type="string">-</data>
+            <data name="cmsPage/dataSet" xsi:type="string">default</data>
+            <data name="catalogPriceRule" xsi:type="string">active_catalog_price_rule_with_conditions</data>
+            <data name="banner/dataSet" xsi:type="string">default</data>
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" next="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" />
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" next="Enterprise\Banner\Test\Constraint\AssertBannerOnCategoryPage" prev="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" />
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerOnCategoryPage" next="Enterprise\Banner\Test\Constraint\AssertBannerNotInShoppingCart" prev="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" />
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerNotInShoppingCart" prev="Enterprise\Banner\Test\Constraint\AssertBannerOnCategoryPage" />
+        </variation>
+        <variation name="AssignRelatedPromotionsToBannerEntityTestVariation3" firstConstraint="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" method="test">
+            <data name="description" xsi:type="string">Assign active catalog price rule with conditions to banner and check it with new customer</data>
+            <data name="product" xsi:type="string">catalogProductSimple::product_with_category</data>
+            <data name="widget" xsi:type="string">banner_rotator_non_anchor_categories</data>
+            <data name="customer" xsi:type="string">default</data>
+            <data name="customerSegment" xsi:type="string">default</data>
+            <data name="cmsPage/dataSet" xsi:type="string">default</data>
+            <data name="catalogPriceRule" xsi:type="string">active_catalog_price_rule_with_conditions</data>
+            <data name="banner/dataSet" xsi:type="string">default</data>
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" next="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" />
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" next="Enterprise\Banner\Test\Constraint\AssertBannerNotInShoppingCart" prev="Enterprise\Banner\Test\Constraint\AssertBannerSuccessSaveMessage" />
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerNotInShoppingCart" next="Enterprise\Banner\Test\Constraint\AssertBannerOnCategoryPage" prev="Enterprise\Banner\Test\Constraint\AssertBannerInGrid" />
+            <constraint name="Enterprise\Banner\Test\Constraint\AssertBannerOnCategoryPage" prev="Enterprise\Banner\Test\Constraint\AssertBannerNotInShoppingCart" />
+        </variation>
+        <variation name="AssignRelatedPromotionsToBannerEntityTestVariation4" method="test">
+            <data name="description" xsi:type="string">Assign active catalog price rule with conditions to banner and check it with new customer.</data>
+            <data name="product" xsi:type="string">catalogProductSimple::product_with_category</data>
+            <data name="widget" xsi:type="string">banner_rotator_non_anchor_categories</data>
+            <data name="customer" xsi:type="string">default</data>
+            <data name="customerSegment" xsi:type="string">default</data>
+            <data name="cmsPage/dataSet" xsi:type="string">default</data>
+            <data name="catalogPriceRule" xsi:type="string">active_catalog_price_rule_with_conditions</data>
+            <data name="banner/dataSet" xsi:type="string">default</data>
+            <data name="prices/sub_total" xsi:type="string">100</data>
+            <data name="prices/grand_total" xsi:type="string">90</data>
+            <data name="prices/discount_amount" xsi:type="string">10</data>
+            <data name="prices/special" xsi:type="string">90</data>
+            <data name="prices/regular" xsi:type="string">100</data>
+            <data name="isCatalogRuleApplied" xsi:type="boolean">true</data>
+            <constraint name="Mage\CatalogRule\Test\Constraint\AssertCatalogPriceRuleAppliedInCatalogPage"/>
+            <constraint name="Mage\CatalogRule\Test\Constraint\AssertCatalogPriceRuleAppliedInProductPage"/>
+            <constraint name="Mage\CatalogRule\Test\Constraint\AssertCatalogPriceRuleAppliedInShoppingCart"/>
+        </variation>
+        <variation name="AssignRelatedPromotionsToBannerEntityTestVariation5" method="test">
+            <data name="description" xsi:type="string">Assign active catalog price rule with conditions to banner and check it with new customer on configurable product.</data>
+            <data name="product" xsi:type="string">configurableProduct::configurable_product_with_category</data>
+            <data name="widget" xsi:type="string">banner_rotator_non_anchor_categories</data>
+            <data name="customer" xsi:type="string">default</data>
+            <data name="customerSegment" xsi:type="string">default</data>
+            <data name="cmsPage/dataSet" xsi:type="string">default</data>
+            <data name="catalogPriceRule" xsi:type="string">active_catalog_price_rule_with_conditions</data>
+            <data name="banner/dataSet" xsi:type="string">default</data>
+            <data name="prices/sub_total" xsi:type="string">100</data>
+            <data name="prices/grand_total" xsi:type="string">148.00</data>
+            <data name="prices/discount_amount" xsi:type="string">10</data>
+            <data name="prices/special" xsi:type="string">90</data>
+            <data name="prices/regular" xsi:type="string">100</data>
+            <data name="isCatalogRuleApplied" xsi:type="boolean">true</data>
+            <data name="issue" xsi:type="string">Bug: MPERF-6836</data>
+            <constraint name="Mage\CatalogRule\Test\Constraint\AssertCatalogPriceRuleAppliedInCatalogPage"/>
+            <constraint name="Mage\CatalogRule\Test\Constraint\AssertCatalogPriceRuleAppliedInProductPage"/>
+            <constraint name="Mage\CatalogRule\Test\Constraint\AssertCatalogPriceRuleAppliedInShoppingCart"/>
+        </variation>
+    </testCase>
+</config>

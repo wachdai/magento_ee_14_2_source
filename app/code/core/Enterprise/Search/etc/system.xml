@@ -1,0 +1,208 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Search
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+-->
+<config>
+   <sections>
+        <catalog>
+            <groups>
+                <search>
+                    <fields>
+                        <engine translate="label">
+                            <label>Search Engine</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>enterprise_search/adminhtml_system_config_backend_engine</backend_model>
+                            <source_model>enterprise_search/adminhtml_system_config_source_engine</source_model>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </engine>
+                        <solr_server_hostname translate="label">
+                            <label>Solr Server Hostname</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>51</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>enterprise_search/engine</engine></depends>
+                        </solr_server_hostname>
+                        <solr_server_port translate="label">
+                            <label>Solr Server Port</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>52</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>enterprise_search/engine</engine></depends>
+                        </solr_server_port>
+                        <solr_server_username translate="label">
+                            <label>Solr Server Username</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>53</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>enterprise_search/engine</engine></depends>
+                        </solr_server_username>
+                        <solr_server_password translate="label">
+                            <label>Solr Server Password</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>54</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>enterprise_search/engine</engine></depends>
+                        </solr_server_password>
+                        <solr_server_timeout translate="label">
+                            <label>Solr Server Timeout</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>55</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>enterprise_search/engine</engine></depends>
+                        </solr_server_timeout>
+                        <solr_server_path translate="label comment">
+                            <label>Solr Server Path</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Without starting and trailing slashes.</comment>
+                            <sort_order>56</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>enterprise_search/engine</engine></depends>
+                        </solr_server_path>
+                        <engine_commit_mode translate="label comment">
+                            <label>Indexation Mode</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>enterprise_search/adminhtml_system_config_source_indexationmode</source_model>
+                            <comment>Note: Partial commit mode affects time of indexation, but allows indexed products to be visible on the frontend before indexation is completed.</comment>
+                            <sort_order>57</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>enterprise_search/engine</engine></depends>
+                        </engine_commit_mode>
+                        <solr_test_connect_wizard translate="button_label">
+                            <label></label>
+                            <button_label>Test Connection</button_label>
+                            <frontend_model>enterprise_search/adminhtml_system_config_testconnection</frontend_model>
+                            <sort_order>58</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>enterprise_search/engine</engine></depends>
+                        </solr_test_connect_wizard>
+                        <solr_server_suggestion_enabled translate="label comment">
+                            <label>Enable Search Suggestions</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>Note: Enabling this option affects the performance.</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><engine>enterprise_search/engine</engine></depends>
+                        </solr_server_suggestion_enabled>
+                        <solr_server_suggestion_count translate="label">
+                            <label>Search Suggestions Count</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>71</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <engine>enterprise_search/engine</engine>
+                                <solr_server_suggestion_enabled>1</solr_server_suggestion_enabled>
+                            </depends>
+                        </solr_server_suggestion_count>
+                        <solr_server_suggestion_count_results_enabled translate="label">
+                            <label>Show Results Count for Each Suggestion</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Note: Enabling this option affects the performance.</comment>
+                            <sort_order>72</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <engine>enterprise_search/engine</engine>
+                                <solr_server_suggestion_enabled>1</solr_server_suggestion_enabled>
+                            </depends>
+                        </solr_server_suggestion_count_results_enabled>
+                        <search_recommendations_enabled translate="label comment">
+                            <label>Enable Search Recommendations</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>Note: Enabling this option affects the performance.</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </search_recommendations_enabled>
+                        <search_recommendations_count translate="label">
+                            <label>Search Recommendations Count</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-digits</validate>
+                            <sort_order>81</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><search_recommendations_enabled>1</search_recommendations_enabled></depends>
+                        </search_recommendations_count>
+                        <search_recommendations_count_results_enabled translate="label">
+                            <label>Show Results Count for Each Recommendation</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>82</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends><search_recommendations_enabled>1</search_recommendations_enabled></depends>
+                        </search_recommendations_count_results_enabled>
+                        <solr_server_use_in_catalog_navigation translate="label">
+                            <label>Enable Solr Engine for Catalog Navigation</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>enterprise_search/engine</engine></depends>
+                        </solr_server_use_in_catalog_navigation>
+                        <search_type>
+                            <depends><engine>catalogsearch/fulltext_engine</engine></depends>
+                        </search_type>
+                        <use_layered_navigation_count>
+                            <depends><engine>catalogsearch/fulltext_engine</engine></depends>
+                        </use_layered_navigation_count>
+                    </fields>
+                </search>
+            </groups>
+        </catalog>
+    </sections>
+</config>

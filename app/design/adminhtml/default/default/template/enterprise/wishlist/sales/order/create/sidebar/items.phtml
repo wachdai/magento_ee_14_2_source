@@ -1,0 +1,128 @@
+<?php
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition End User License Agreement
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magento.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license http://www.magento.com/license/enterprise-edition
+ */
+/* @var $this Mage_Adminhtml_Block_Sales_Order_Create_Sidebar_Abstract */
+?>
+<div class="create-order-sidebar-block" id="sidebar_data_<?php echo $this->getDataId() ?>">
+    <div class="head">
+        <h5><?php echo $this->getHeaderText() ?> <span class="normal">(<?php echo $this->getItemCount() ?>)</span></h5>
+        <select class="sidebar-selector">
+            <option value="all">- <?php echo $this->__('All Wishlists');?> -</option>
+            <?php foreach($this->getWishlists() as $id => $name) :?>
+                <option value="<?php echo $id;?>"><?php echo $this->escapeHtml($name);?></option>
+            <?php endforeach;?>
+        </select>
+        <a href="#" title="<?php echo Mage::helper('sales')->__('Refresh') ?>" onclick="order.loadArea('sidebar_<?php echo $this->getDataId() ?>', 'sidebar_data_<?php echo $this->getDataId() ?>');return false;">
+            <img src="<?php echo $this->getSkinUrl('images/fam_refresh.gif') ?>" alt="<?php echo Mage::helper('sales')->__('Refresh') ?>" width="16" height="16"/>
+        </a>
+    </div>
+    <div class="content">
+        <div class="auto-scroll">
+            <?php if($this->getItemCount()): ?>
+            <table style="width:100%">
+                <col />
+                <?php if ($this->canDisplayItemQty()): ?>
+                <col width="20" />
+                <?php endif; ?>
+                <?php if($this->canDisplayPrice()): ?>
+                <col width="60" />
+                <?php endif; ?>
+                <?php if($this->canRemoveItems()): ?>
+                <col width="16" />
+                <?php endif; ?>
+                <col width="16" />
+                <tr>
+                    <th><?php echo Mage::helper('sales')->__('Item') ?></th>
+                    <?php if ($this->canDisplayItemQty()): ?>
+                    <th class="a-center"><?php echo Mage::helper('sales')->__('Qty') ?></th>
+                    <?php endif; ?>
+                    <?php if($this->canDisplayPrice()): ?>
+                    <th><?php echo Mage::helper('sales')->__('Price') ?></th>
+                    <?php endif; ?>
+                    <?php if($this->canRemoveItems()): ?>
+                    <th class="a-center"><img src="<?php echo $this->getSkinUrl('images/fam_bin.gif') ?>" alt="<?php echo Mage::helper('sales')->__('Remove') ?>" title="<?php echo Mage::helper('sales')->__('Remove') ?>" width="16" height="16"/></th>
+                    <?php endif; ?>
+                    <th class="a-center"><img src="<?php echo $this->getSkinUrl('images/fam_package_go.gif') ?>" alt="<?php echo Mage::helper('sales')->__('Add To Order') ?>" title="<?php echo Mage::helper('sales')->__('Add To Order') ?>" width="16" height="16"/></th>
+                </tr>
+                <?php foreach ($this->getItems() as $_item): ?>
+                <tr class="row wishlist-<?php echo $_item->getWishlistId();?>">
+                    <td><?php echo $this->escapeHtml($_item->getName()) ?></td>
+                    <?php if ($this->canDisplayItemQty()): ?>
+                    <td class="a-center">
+                        <?php if ($_item->getProduct()->getTypeId() != Mage_Catalog_Model_Product_Type_Grouped::TYPE_CODE): ?>
+                        <?php echo $_item->getQty()*1 ? $_item->getQty()*1 : 1 ?>
+                        <?php endif; ?>
+                    </td>
+                    <?php endif; ?>
+                    <?php if($this->canDisplayPrice()): ?>
+                    <td><?php echo $this->convertPrice($_item->getPrice()) ?></td>
+                    <?php endif; ?>
+                    <?php if($this->canRemoveItems()): ?>
+                    <td class="a-center"><input type="checkbox" name="sidebar[remove][<?php echo $this->getItemId($_item) ?>]" value="<?php echo $this->getDataId() ?>" title="<?php echo Mage::helper('sales')->__('Remove') ?>"/></td>
+                    <?php endif; ?>
+                    <td class="a-center">
+                        <?php if ($_item->getTypeId() == Mage_Catalog_Model_Product_Type_Grouped::TYPE_CODE && $this->getDataId() == 'wishlist'): ?>
+                        <a href="#" onclick="order.sidebarConfigureProduct('<?php echo 'sidebar_wishlist' ?>', <?php echo $this->getProductId($_item) ?>, <?php echo $this->getItemId($_item) ?>); return false;"><img src="<?php echo $this->getSkinUrl('images/grouped_to_order_icon.png') ?>" class="v-middle" alt="<?php echo Mage::helper('sales')->__('Configure and Add to Order') ?>" title="<?php echo Mage::helper('sales')->__('Configure and Add to Order') ?>" width="16" height="16"/></a>
+                        <?php elseif ($_item->getTypeId() == Mage_Catalog_Model_Product_Type_Grouped::TYPE_CODE): ?>
+                        <a href="#" onclick="order.sidebarConfigureProduct('<?php echo 'sidebar' ?>', <?php echo $this->getProductId($_item) ?>); return false;"><img src="<?php echo $this->getSkinUrl('images/grouped_to_order_icon.png') ?>" class="v-middle" alt="<?php echo Mage::helper('sales')->__('Configure and Add to Order') ?>" title="<?php echo Mage::helper('sales')->__('Configure and Add to Order') ?>" width="16" height="16"/></a>
+                        <?php else: ?>
+                        <input type="checkbox" name="sidebar[<?php echo $this->getSidebarStorageAction() ?>][<?php echo $this->getIdentifierId($_item) ?>]" value="<?php echo $this->canDisplayItemQty() ? $_item->getQty()*1 : 1 ?>" title="<?php echo Mage::helper('sales')->__('Add To Order') ?>"/>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <?php else: ?>
+            <p class="center"><?php echo Mage::helper('sales')->__('No items') ?></p>
+            <?php endif ?>
+        </div>
+        <?php if ($this->getItemCount() && $this->canRemoveItems()): ?>
+        <?php echo $this->getChildHtml('empty_customer_cart_button'); ?>
+        <?php endif; ?>
+    </div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    var wishlistBlockId = 'sidebar_data_<?php echo $this->helper('core')->jsQuoteEscape($this->getDataId()); ?>';
+    var wishlistBlock = {
+        table : $(wishlistBlockId).down('.content table'),
+        selector : $(wishlistBlockId).down('.head select'),
+        init : function() {
+            Event.observe(this.selector, 'change', this.filter.bind(this))
+        },
+        filter : function() {
+            if (this.selector.value) {
+                $(this.table).select('tr.row').each((function(row) {
+                    var wishlistId = $(row).className.split('-')[1];
+                    $(row).setStyle({
+                        'display': (this.selector.value == 'all' || wishlistId == this.selector.value) ? '' : 'none'
+                    });
+                }).bind(this));
+            }
+        }
+    };
+    wishlistBlock.init();
+//]]>
+</script>
